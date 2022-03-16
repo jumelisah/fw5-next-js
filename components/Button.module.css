@@ -1,0 +1,10 @@
+.button {
+  cursor: pointer;
+  color: black;
+  border-radius: 10px;
+  width: 100%;
+}
+.buttonFill{
+  color: white;
+  background-color: #03545C;
+}
