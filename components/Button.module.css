@@ -1,0 +1,11 @@
+.button {
+  cursor: pointer;
+  color: black;
+  border-radius: 10px;
+  width: 100%;
+}
+
+.button-small{
+  width: 150px;
+}
+
