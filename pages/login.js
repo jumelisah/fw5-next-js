@@ -18,7 +18,7 @@ const Login = () => {
           </a>
         </Link>
         <div className='text-center'>
-          <Image src='/images/Group 57.png' alt='background phone' width={400} height={400} layout='fixed' priority />
+          <Image src='/images/Group57.png' alt='background phone' width={400} height={400} layout='fixed' priority />
         </div>
           <h1 className='fs-4'>App that Covering Banking Needs.</h1>
           <p style={{maxWidth: '500px'}}>Zwallet is an application that focussing in banking needs for all users in the world. Always updated and always following world trends. 5000+ users registered in Zwallet everyday with worldwide users coverage.</p>
