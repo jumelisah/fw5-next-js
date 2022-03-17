@@ -1,18 +1,18 @@
 import Head from 'next/head'
 import Image from 'next/image'
 import Button from '../components/Button'
-import Header from '../components/Header'
 import styles from '../styles/Home.module.css'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faPhone, faCoffee } from '@fortawesome/free-solid-svg-icons'
 import About from '../components/About'
-import Footer from '../components/Footer'
 import Layout from '../components/Layout'
+import { BsTelephone } from "react-icons/bs";
+import { FiLock } from "react-icons/fi";
+import { BsDownload } from "react-icons/bs" 
 
 export default function Home() {
   return (
     <Layout>
     <div className='container'>
+      
       <div className='top-wrapper d-flex flex-column-reverse flex-md-row justify-content-center align-items-center'>
         <div className='left-section col-md-6'>
           <Image src='/images/png-phone.png' alt='phone' width={250} height={600} layout='fixed' priority/>
@@ -63,13 +63,13 @@ export default function Home() {
       <p className='mx-auto lh-lg' style={{maxWidth: '500px'}}>We have some great features from the application and it’s totally free to use by all users around the world.</p>
       <div className='row my-5'>
         <div className='col-12 col-md-4'>
-          <About subTitle='24/7 Support' variant='bg-color7'>We have 24/7 contact support so you can contact us whenever you want and we will respond it.</About>
+          <About subTitle='24/7 Support' icon={<BsTelephone />} variant='bg-color7'>We have 24/7 contact support so you can contact us whenever you want and we will respond it.</About>
         </div>
         <div className='col-12 col-md-4'>
-          <About subTitle='Data Privacy' variant='bg-white'>We make sure your data is safe in our database and we will encrypt any data you submitted to us.</About>
+          <About subTitle='Data Privacy' icon={<FiLock />} variant='bg-white'>We make sure your data is safe in our database and we will encrypt any data you submitted to us.</About>
         </div>
         <div className='col-12 col-md-4'>
-          <About subTitle='Easy Download' variant='bg-color7'>BeWallet is 100% totally free to use it’s now available on Google Play Store and App Store.</About>
+          <About subTitle='Easy Download' icon={<BsDownload />} variant='bg-color7'>BeWallet is 100% totally free to use it’s now available on Google Play Store and App Store.</About>
         </div>
       </div>
     </div>

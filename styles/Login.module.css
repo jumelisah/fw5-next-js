@@ -1,0 +1,6 @@
+.leftSection{
+  background-image: url('../public/images/bg-login.png');
+  height: 100vh;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
