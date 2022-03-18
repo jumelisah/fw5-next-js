@@ -20,13 +20,13 @@ const Login = () => {
         <div className='text-center mx-auto' style={{maxWidth: '300px'}}>
           <Image src='/images/Group57.png' alt='background phone' width={200} height={200} layout='responsive' priority />
         </div>
-          <h1 className='fs-4'>App that Covering Banking Needs.</h1>
+          <h1 className='fs-5 fw-bold py-2'>App that Covering Banking Needs.</h1>
           <p style={{maxWidth: '500px'}}>Zwallet is an application that focussing in banking needs for all users in the world. Always updated and always following world trends. 5000+ users registered in Zwallet everyday with worldwide users coverage.</p>
         </div>
       </div>
-      <div className='right-section col-12 col-md-5 p-5 py-md-0 d-flex justify-content-center align-items-center vh-md-100'>
+      <div className='right-section col-12 col-md-5 px-3 px-lg-5 py-5 py-md-0 d-flex justify-content-center align-items-center vh-100'>
         <div className='container'>
-          <h1 className='fs-3 fw-bold'>Start Accessing Banking Needs With All Devices and All Platforms With 30.000+ Users</h1>
+          <h1 className='fs-4 fw-bold'>Start Accessing Banking Needs With All Devices and All Platforms With 30.000+ Users</h1>
           <p className='py-4 m-0'>Transfering money is eassier than ever, you can access BeWallet wherever you are. Desktop, laptop, mobile phone? we cover all of that for you!</p>
           <Form>
             <FormInput icon={<AiOutlineMail />} placeholder='Enter your e-mail' variant='border-0 border-bottom' />
