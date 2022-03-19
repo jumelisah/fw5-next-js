@@ -17,7 +17,8 @@ const auth = (state=initialState, action) => {
       const { data } = action.payload
       state.isLoading = false
       state.isError = false
-      state.token = data.result.token
+      state.token = data.results.token
+      console.log(token)
       window.localStorage.setItem('token', state.token)
       return {...state}
     }

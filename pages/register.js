@@ -10,7 +10,7 @@ import { connect, useDispatch } from 'react-redux';
 import { login } from '../redux/actions/auth';
 import { useNavigate } from 'react-router-dom';
 
-const Login = () => {
+const Register = () => {
   // const navigate = useNavigate()
   const onLogin = (e) => {
     e.preventDefault()
@@ -61,4 +61,4 @@ const Login = () => {
   )
 }
 
-export default Login
+export default Register
