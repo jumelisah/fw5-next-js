@@ -6,23 +6,38 @@ import Link from 'next/link';
 import Button from '../components/Button';
 import Image from 'next/image';
 import styles from '../styles/Login.module.css'
-import { connect, useDispatch } from 'react-redux';
+import { connect, useDispatch, useSelector } from 'react-redux';
 import { login } from '../redux/actions/auth';
-import { useNavigate } from 'react-router-dom';
+import { Router, useNavigate } from 'react-router-dom';
+import { useEffect } from 'react';
+import { useRouter } from 'next/router';
 
 const Login = () => {
+  const { auth } = useSelector(state => state.auth)
+  const dispatch = useDispatch()
+  const route = useRouter()
+  
   // const navigate = useNavigate()
+
+  useEffect ( () => {
+    const token = window.localStorage.getItem('token')
+    if(token){
+      route.push('/dashboard')
+    }
+  }, [route])
+
   const onLogin = (e) => {
     e.preventDefault()
     const email = e.target.elements['email'].value
     const password = e.target.elements['password'].value
-    console.log(login(email, password))
+    dispatch(login(email, password))
+    console.log(auth)
     // navigate('/')
   }
   return(
     <div className='d-flex flex-column-reverse flex-md-row p-0 m-0'>
       <div className={`${styles.leftSection} left-section col-12 col-md-7 px-5 d-flex align-items-center vh-md-100`}>
-        <div className='px-5'>
+        <div className='px-md-5'>
         <Link href='/'>
           <a>
             <Image src='/images/bw.png' alt='logo' width={30} height={30} className={`${styles.logo}`}/>
