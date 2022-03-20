@@ -41,7 +41,7 @@ const CreateNewPassword = ({auth}) => {
       dispatch(createNewPassword(data))
       if(!auth.isLoading && !auth.isError){
         router.push('/login')
-      }else{
+      }else if(auth.isError){
         setIsError(true)
       }
     }

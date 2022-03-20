@@ -4,9 +4,9 @@ import Link from "next/link"
 import { useEffect, useState } from "react"
 import { FiBell } from "react-icons/fi"
 import { connect, useDispatch, useSelector } from "react-redux"
-import { getUserData } from "../redux/actions/auth"
+import { getUserData, getPhoneNumber } from "../redux/actions/auth"
 
-const Header = ({auth, getUserData}) => {
+const Header = ({auth, getUserData, getPhoneNumber}) => {
   const [isLogin, setIsLogin] = useState(true)
   const dispatch = useDispatch()
   useEffect (()=> {
@@ -50,7 +50,7 @@ const Header = ({auth, getUserData}) => {
               <Link href='/register' passHref>
                 <a style={{textDecoration: 'none'}}>
                   <p className="py-0 my-0 text-color3">{auth.user.fullName}</p>
-                  <p className="py-0 my-0 text-color3">+62 8139 3877 7946</p>
+                  <p className="py-0 my-0 text-color3">{auth.phones.length>0 ? auth.phones[0].number : auth.user.email}</p>
                 </a>
               </Link>
             </li>
@@ -67,5 +67,5 @@ const Header = ({auth, getUserData}) => {
   )
 }
 const mapStateToProps = (state) => ({auth: state.auth})
-const mapDispatchToProps = {getUserData}
+const mapDispatchToProps = {getUserData, getPhoneNumber}
 export default connect(mapStateToProps, mapDispatchToProps)(Header)

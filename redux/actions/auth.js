@@ -60,6 +60,27 @@ export const createNewPassword = (data) => {
   })
 }
 
+export const changePassword = (data, token) => {
+  const params = new URLSearchParams()
+  params.append('oldPassword', data.oldPassword)
+  params.append('newPassword', data.newPassword)
+  params.append('confirmPassword', data.confirmPassword)
+  return({
+    type: 'AUTH_CHANGE_PASSWORD',
+    payload: http(token).patch('/profile/change-password', params)
+  })
+}
+
+export const changePinNumber = (data, token) => {
+  const params = new URLSearchParams()
+  params.append('oldPin', data.oldPin)
+  params.append('newPin', data.newPin)
+  return({
+    type: 'AUTH_CHANGE_PIN',
+    payload: http(token).patch('/profile/change-pin', params)
+  })
+}
+
 export const register = (data) => {
   const params = new URLSearchParams()
   params.append('fullName', data.fullName)

@@ -37,6 +37,7 @@ const PersonalInformation = ({auth}) => {
               <p>{lastName}</p>
               <p className='fw-bold'>Verified email</p>
               <p>{auth.user.email}</p>
+              <p className='fw-bold'>Phone number</p>
               {auth.phones.map((data)=>{
                 return(
                   <p key={data.number}>{data.number}</p>
