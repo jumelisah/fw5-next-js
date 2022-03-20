@@ -16,3 +16,7 @@ a {
 .top-wrapper .left-section{
   display: none;
 }
+
+.roundedten {
+  border-radius: 10px;
+}

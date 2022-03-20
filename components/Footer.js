@@ -1,7 +1,7 @@
 const Footer = () => {
   return(
     <div className='bg-color4 text-white'>
-      <div className='container p-5'>
+      <div className='container px-3 py-5 p-md-5'>
         <div className='border-bottom pb-4'>
           <h2 className='pb-4'>BeWallet</h2>
           <p className='lh-lg' style={{maxWidth: "250px"}}>Simplify financial needs and saving much time in banking needs with one single app.</p>
