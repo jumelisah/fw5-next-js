@@ -15,3 +15,4 @@ export const getHistory = (token) => {
     payload: http(token).get('/transactions/history')
   })
 }
+
