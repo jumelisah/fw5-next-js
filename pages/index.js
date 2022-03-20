@@ -7,6 +7,8 @@ import Layout from '../components/Layout'
 import { BsTelephone } from "react-icons/bs";
 import { FiLock } from "react-icons/fi";
 import { BsDownload } from "react-icons/bs" 
+import Otp from '../components/Otp'
+import BarChart from '../components/Chart'
 
 export default function Home() {
   return (
@@ -73,6 +75,8 @@ export default function Home() {
         </div>
       </div>
     </div>
+    <Otp />
+    <BarChart data={[10,50,200,300]} labels={['1','2','3','4']} income={0} expense={0}/>
     </Layout>
   )
 }

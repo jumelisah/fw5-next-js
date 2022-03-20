@@ -2,22 +2,20 @@ import Layout from "../components/Layout"
 import Sidebar from "../components/SideBar"
 import styles from "../styles/Dashboard.module.css"
 import { AiOutlineArrowDown, AiOutlineArrowUp } from "react-icons/ai"
-import { useSelector } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 import { useEffect } from "react"
 import { getUserData } from "../redux/actions/auth"
 import { useRouter } from "next/router"
 
 const Dashboard = () => {
   const { auth } = useSelector(state => state.auth)
+  const dispatch = useDispatch()
   const route = useRouter()
   useEffect (()=> {
     const token = window.localStorage.getItem('token')
-    if(token){
-      getUserData(token)
-    }else{
-      route.push('/login')
-    }
-  }, [route])
+    console.log(token)
+    dispatch(getUserData(token))
+  }, [dispatch])
   return(
     <Layout>
       <div className='container d-flex flex-column flex-md-row bg-color6 mb-5'>

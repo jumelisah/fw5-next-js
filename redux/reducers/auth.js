@@ -1,6 +1,7 @@
 const initialState = {
   token: null,
   user: {},
+  userForm : {},
   isLoading: false,
   isError: false,
   errMessage: null
@@ -28,6 +29,23 @@ const auth = (state=initialState, action) => {
       state.errMessage = data.message
       return {...state}
     }
+    case 'REGISTER_FORM_PENDING': {
+      state.isLoading = true
+      state.isError = false
+      return {...state}
+    }
+    case 'REGISTER_FORM_PENDING': {
+      const { data } = action.payload
+      state.isLoading = false
+      state.isError = false
+      state.userForm = data
+      return {...state}
+    }
+    case 'REGISTER_FORM_PENDING': {
+      state.isLoading = false
+      state.isError = true
+      return {...state}
+    }
     case 'AUTH_GET_USER_PENDING': {
       state.isLoading = true
       state.isError = false
@@ -35,6 +53,7 @@ const auth = (state=initialState, action) => {
     }
     case 'AUTH_GET_USER_FULFILLED': {
       const { data } = action.payload
+      console.log(data)
       state.isLoading = false
       state.isError = false
       state.user = data.results

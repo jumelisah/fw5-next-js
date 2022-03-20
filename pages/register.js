@@ -8,16 +8,20 @@ import Button from '../components/Button';
 import Image from 'next/image';
 import styles from '../styles/Login.module.css'
 import { connect, useDispatch } from 'react-redux';
-import { login } from '../redux/actions/auth';
+import { registerForm } from '../redux/actions/auth';
 import { useNavigate } from 'react-router-dom';
 
 const Register = () => {
   // const navigate = useNavigate()
-  const onLogin = (e) => {
+  const onRegister = (e) => {
     e.preventDefault()
+    const firstName = e.target.elements['firstName'].value
+    const lastName = e.target.elements['lastName'].value
     const email = e.target.elements['email'].value
     const password = e.target.elements['password'].value
-    console.log(login(email, password))
+    const fullName = firstName+lastName
+    const data = {fullName, email, password}
+    registerForm(data)
     // navigate('/')
   }
   return(
@@ -40,11 +44,11 @@ const Register = () => {
         <div className='container'>
           <h1 className='fs-4 fw-bold'>Start Accessing Banking Needs With All Devices and All Platforms With 30.000+ Users</h1>
           <p className='py-4 m-0'>Transfering money is eassier than ever, you can access BeWallet wherever you are. Desktop, laptop, mobile phone? we cover all of that for you!</p>
-          <Form onSubmit={onLogin}>
-            <FormInput type='text' name='fisrtName' icon={<BiUser />} placeholder='Enter your first name' variant='border-0 border-bottom' />
+          <Form onSubmit={onRegister}>
+            <FormInput type='text' name='firstName' icon={<BiUser />} placeholder='Enter your first name' variant='border-0 border-bottom' required />
             <FormInput type='text' name='lastName' icon={<BiUser />} placeholder='Enter your last name' variant='border-0 border-bottom' />
-            <FormInput type='email' name='email' icon={<AiOutlineMail />} placeholder='Enter your e-mail' variant='border-0 border-bottom' />
-            <FormInput type='password' name='password' icon={<FiLock />} placeholder='Create your password' variant='border-0 border-bottom' />
+            <FormInput type='email' name='email' icon={<AiOutlineMail />} placeholder='Enter your e-mail' variant='border-0 border-bottom' required />
+            <FormInput type='password' name='password' icon={<FiLock />} placeholder='Create your password' variant='border-0 border-bottom' required />
             <div className='text-end'>
               <Link href='/'>
                 <a className='text-dark' style={{textDecoration: 'none'}}>Forgot password?</a>

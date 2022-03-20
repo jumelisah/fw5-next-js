@@ -16,3 +16,17 @@ export const getUserData = (token) => {
     payload: http(token).get('/profile')
   })
 }
+
+export const registerForm = (data) => {
+  return({
+    type: 'REGISTER_FORM',
+    payload: data
+  })
+}
+
+export const register = (data) => {
+  const params = new URLSearchParams()
+  params.append('fullName', fullName)
+  params.append('email', email)
+  params.append('password', password)
+}
