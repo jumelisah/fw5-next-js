@@ -17,6 +17,13 @@ export const getUserData = (token) => {
   })
 }
 
+export const getPhoneNumber = (token) => {
+  return({
+    type: 'AUTH_GET_PHONE',
+    payload: http(token).get('/profile/phones')
+  })
+}
+
 export const registerForm = (data) => {
   return({
     type: 'REGISTER_FORM',

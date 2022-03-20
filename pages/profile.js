@@ -7,7 +7,7 @@ import Link from "next/link"
 
 const Profile = () => {
   const data = [
-    {title: 'Personal Information', url: '/personal-infomation'},
+    {title: 'Personal Information', url: '/personal-information'},
     {title: 'Change Password', url: '/change-password'},
     {title: 'Change PIN', url: '/change-pin'},
     {title: 'Logout', url: '/logout'},

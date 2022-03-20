@@ -1,6 +1,7 @@
 const initialState = {
   token: null,
   user: {},
+  phones: [],
   userForm : {},
   isLoading: false,
   isError: false,
@@ -34,7 +35,7 @@ const auth = (state=initialState, action) => {
       state.isError = false
       return {...state}
     }
-    case 'REGISTER_FORM_PENDING': {
+    case 'REGISTER_FORM_FULFILLED': {
       const { data } = action.payload
       console.log(data)
       state.isLoading = false
@@ -42,7 +43,7 @@ const auth = (state=initialState, action) => {
       state.userForm = data
       return {...state}
     }
-    case 'REGISTER_FORM_PENDING': {
+    case 'REGISTER_FORM_REJECTED': {
       state.isLoading = false
       state.isError = true
       return {...state}
@@ -61,6 +62,25 @@ const auth = (state=initialState, action) => {
       return {...state}
     }
     case 'AUTH_GET_USER_REJECTED': {
+      const { data } = action.payload
+      state.isLoading = false
+      state.isError = true
+      state.errMessage = data.message
+    }
+    case 'AUTH_GET_PHONE_PENDING': {
+      state.isLoading = true
+      state.isError = false
+      return {...state}
+    }
+    case 'AUTH_GET_PHONE_FULFILLED': {
+      const { data } = action.payload
+      console.log(data)
+      state.isLoading = false
+      state.isError = false
+      state.phones = data.results
+      return {...state}
+    }
+    case 'AUTH_GET_PHONE_REJECTED': {
       const { data } = action.payload
       state.isLoading = false
       state.isError = true
