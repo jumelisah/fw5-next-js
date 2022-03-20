@@ -60,6 +60,16 @@ export const createNewPassword = (data) => {
   })
 }
 
+export const changePinNumber = (data, token) => {
+  const params = new URLSearchParams()
+  params.append('oldPin', data.oldPin)
+  params.append('newPin', data.newPin)
+  return({
+    type: 'AUTH_CHANGE_PIN',
+    payload: http(token).post('/profile/change-pin', params)
+  })
+}
+
 export const register = (data) => {
   const params = new URLSearchParams()
   params.append('fullName', data.fullName)

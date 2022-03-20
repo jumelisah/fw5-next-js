@@ -14,11 +14,12 @@ const ChangePassword = () => {
     e.preventDefault()
     const currentPassword = e.target.elements['currentPassword'].value
     const newPassword = e.target.elements['newPassword'].value
-    const repeatNewPassword = e.target.elements['repeatNewPassword'].value
-    if(newPassword!==repeatNewPassword){
+    const confirmPassword = e.target.elements['confirmPassword'].value
+    if(newPassword!==confirmPassword){
       setErrPassword(true)
+    }else{
+      setErrPassword(false)
     }
-    alert(`${currentPassword}, ${newPassword}, ${repeatNewPassword}`)
   }
   return(
     <Layout>
@@ -31,7 +32,8 @@ const ChangePassword = () => {
             <Form onSubmit={changePassword}>
               <FormInput name='currentPassword' type='password' variant='border-0 border-bottom' icon={<FiLock />} placeholder='Current Password'/>
               <FormInput name='newPassword' type='password' variant='border-0 border-bottom' icon={<FiLock />} placeholder='New Password'/>
-              <FormInput name='repeatNewPassword' type='password' variant='border-0 border-bottom' icon={<FiLock />} placeholder='Repeat New Password'/>
+              <FormInput name='confirmPassword' type='password' variant='border-0 border-bottom' icon={<FiLock />} placeholder='Repeat New Password'/>
+              <p className={`text-danger ${errPassword ? 'd-block' : 'd-none'}`}>Password not match</p>
               <Button>Change Password</Button>
             </Form>
           </div>

@@ -17,15 +17,15 @@ import { useState } from 'react';
 const CreatePin = ({register, auth}) => {
   const [state, setState] = useState({otp: null})
   const handleChange = (otp) => setState({ otp })
-  const navigate = useRouter()
+  const router = useRouter()
   const onRegister = (e) => {
     e.preventDefault()
     const pin = state.otp
     const data = auth.userForm
     data.pin = pin
     console.log(data)
-    console.log(register(data))
-    navigate.push('/create-pin')
+    register(data)
+    router.push('/login')
   }
   return(
     <div className='d-flex flex-column-reverse flex-md-row p-0 m-0'>
