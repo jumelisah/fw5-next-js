@@ -8,3 +8,10 @@ export const topUp = (amount, token) =>{
     payload: http(token).post('/transactions/topup', data)
   })
 }
+
+export const getHistory = (token) => {
+  return({
+    type: 'GET_HISTORY',
+    payload: http(token).get('/transactions/history')
+  })
+}

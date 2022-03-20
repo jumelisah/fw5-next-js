@@ -10,9 +10,10 @@ import styles from '../styles/Login.module.css'
 import { connect, useDispatch } from 'react-redux';
 import { registerForm } from '../redux/actions/auth';
 import { useNavigate } from 'react-router-dom';
+import { useRouter } from 'next/router';
 
 const Register = () => {
-  // const navigate = useNavigate()
+  const navigate = useRouter()
   const onRegister = (e) => {
     e.preventDefault()
     const firstName = e.target.elements['firstName'].value
@@ -22,7 +23,7 @@ const Register = () => {
     const fullName = firstName+lastName
     const data = {fullName, email, password}
     registerForm(data)
-    // navigate('/')
+    navigate.push('/create-pin')
   }
   return(
     <div className='d-flex flex-column-reverse flex-md-row p-0 m-0'>
@@ -55,7 +56,7 @@ const Register = () => {
               </Link>
             </div>
             <div className='my-4 p-0'>
-              <Button variant='bg-secondary border-0'>Login</Button>
+              <Button variant='bg-secondary border-0'>Sign Up</Button>
             </div>
           </Form>
             <p>Don’t have an account? Let’s 

@@ -1,4 +1,6 @@
 const initialState = {
+  history: [],
+  users: [],
   message: null,
   isLoading: false,
   isError: false,
@@ -26,25 +28,40 @@ const transactions = (state=initialState, action) => {
       state.errMessage = data.message
       return state
     }
-    // case 'AUTH_GET_USER_PENDING': {
-    //   state.isLoading = true
-    //   state.isError = false
-    //   return {...state}
-    // }
-    // case 'AUTH_GET_USER_FULFILLED': {
-    //   const { data } = action.payload
-    //   console.log(data)
-    //   state.isLoading = false
-    //   state.isError = false
-    //   state.user = data.results
-    //   return {...state}
-    // }
-    // case 'AUTH_GET_USER_REJECTED': {
-    //   const { data } = action.payload
-    //   state.isLoading = false
-    //   state.isError = true
-    //   state.errMessage = data.message
-    // }
+    case 'GET_HISTORY_PENDING': {
+      state.isLoading = true
+      state.isError = false
+      return {...state}
+    }
+    case 'GET_HISTORY_FULFILLED': {
+      const { data } = action.payload
+      state.isLoading = false
+      state.isError = false
+      state.history = data.results
+      return {...state}
+    }
+    case 'GET_HISTORY_REJECTED': {
+      state.isLoading = false
+      state.isError = true
+      return {...state}
+    }
+    case 'GET_ALL_USERS_PENDING': {
+      state.isLoading = true
+      state.isError = false
+      return {...state}
+    }
+    case 'GET_ALL_USERS_FULFILLED': {
+      const { data } = action.payload
+      state.isLoading = false
+      state.isError = false
+      state.users = data.results
+      return {...state}
+    }
+    case 'GET_ALL_USERS_REJECTED': {
+      state.isLoading = false
+      state.isError = true
+      return {...state}
+    }
     default: {
         return {...state}
     }

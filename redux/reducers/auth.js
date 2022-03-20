@@ -36,6 +36,7 @@ const auth = (state=initialState, action) => {
     }
     case 'REGISTER_FORM_PENDING': {
       const { data } = action.payload
+      console.log(data)
       state.isLoading = false
       state.isError = false
       state.userForm = data

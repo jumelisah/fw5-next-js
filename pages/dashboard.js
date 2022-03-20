@@ -2,20 +2,25 @@ import Layout from "../components/Layout"
 import Sidebar from "../components/SideBar"
 import styles from "../styles/Dashboard.module.css"
 import { AiOutlineArrowDown, AiOutlineArrowUp } from "react-icons/ai"
-import { useDispatch, useSelector } from "react-redux"
+import { connect, useDispatch, useSelector } from "react-redux"
 import { useEffect } from "react"
 import { getUserData } from "../redux/actions/auth"
 import { useRouter } from "next/router"
+import { getHistory } from "../redux/actions/transactions"
+import { getAllUser } from "../redux/actions/users"
+import transactions from "../redux/reducers/transactions"
 
-const Dashboard = () => {
+const Dashboard = ({getHistory, getAllUser, transactions, users}) => {
   const { auth } = useSelector(state => state.auth)
   const dispatch = useDispatch()
   const route = useRouter()
   useEffect (()=> {
     const token = window.localStorage.getItem('token')
-    console.log(token)
-    dispatch(getUserData(token))
-  }, [dispatch])
+    if(token){
+      getHistory(token)
+      getAllUser(token)
+    }
+  }, [getAllUser, getHistory])
   return(
     <Layout>
       <div className='container d-flex flex-column flex-md-row bg-color6 mb-5'>
@@ -49,4 +54,6 @@ const Dashboard = () => {
   )
 }
 
-export default Dashboard
+const mapStateToProps = (state) => ({transactions: state.transactions, users: state.users})
+const mapDispatchToProps = {getHistory, getAllUser}
+export default connect(mapStateToProps, mapDispatchToProps)(Dashboard)

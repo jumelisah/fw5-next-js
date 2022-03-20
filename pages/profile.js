@@ -1,21 +1,39 @@
+import Image from "next/image"
 import Layout from "../components/Layout"
 import ProfileModule from "../components/ProfileModule"
 import Sidebar from "../components/SideBar"
+import { RiPencilLine } from "react-icons/ri"
+import Link from "next/link"
 
 const Profile = () => {
-  const data = ['Personal Information', 'Change Password', 'Change PIN', 'Logout']
+  const data = [
+    {title: 'Personal Information', url: '/personal-infomation'},
+    {title: 'Change Password', url: '/change-password'},
+    {title: 'Change PIN', url: '/change-pin'},
+    {title: 'Logout', url: '/logout'},
+  ]
   return(
     <Layout>
       <div className='container'>
         <div className='row'>
           <div className='col-12 col-md-3'><Sidebar /></div>
-          <div className='col-12 col-md-9 bg-white'>
-            {data.map((x)=>{
-              {console.log(data, x)}
+          <div className='col-12 col-md-9 bg-white pt-5'>
+            <div className='text-center'>
+              <Image src='/images/user.png' alt='user' width={60} height={60} />
+              <p><RiPencilLine /> Edit</p>
+              <p>Robert Chandler</p>
+              <p>+62 813-9387-7946</p>
+            </div>
+            {data.map((linkData)=>{
               return(
-                <div key={x}>
-                  <ProfileModule>{x}</ProfileModule>
-                </div>
+                <Link href={linkData.url} key={linkData.title}>
+                  <a className='text-white'>
+                    <div>
+                      <ProfileModule>{linkData.title}</ProfileModule>
+                    </div>
+                  </a>
+                </Link>
+                
               )
             })}
           </div>
