@@ -48,7 +48,7 @@ const Dashboard = ({getHistory, getAllUser, getBalance, getPhoneNumber, auth, tr
             </div>
           </div>
           <div className={`${styles.roundedten} bg-white col-12 col-lg-5 ms-lg-auto mt-4`}>
-            <h3>Transaction History</h3>
+            <h3 className='fs-5'>Transaction History</h3>
             <div><History dataHistory={transactions.history} dataUser={users.userList} /></div>
           </div>
         </div>
