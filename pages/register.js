@@ -12,7 +12,7 @@ import { registerForm } from '../redux/actions/auth';
 import { useNavigate } from 'react-router-dom';
 import { useRouter } from 'next/router';
 
-const Register = () => {
+const Register = ({registerForm, auth}) => {
   const navigate = useRouter()
   const onRegister = (e) => {
     e.preventDefault()
@@ -20,9 +20,10 @@ const Register = () => {
     const lastName = e.target.elements['lastName'].value
     const email = e.target.elements['email'].value
     const password = e.target.elements['password'].value
-    const fullName = firstName+lastName
+    const fullName = firstName+' '+lastName
     const data = {fullName, email, password}
     registerForm(data)
+    console.log(auth)
     navigate.push('/create-pin')
   }
   return(
@@ -69,4 +70,6 @@ const Register = () => {
   )
 }
 
-export default Register
+const mapStateToProps = (state) => ({auth: state.auth})
+const mapDispatchToProps = {registerForm}
+export default connect(mapStateToProps, mapDispatchToProps)(Register)

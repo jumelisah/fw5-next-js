@@ -8,12 +8,12 @@ const initialState = {
 
 const users = (state=initialState, action) => {
   switch(action.type){
-    case 'GET_USERS_PENDING': {
+    case 'GET_ALL_USERS_PENDING': {
       state.isLoading = true
       state.isError = false
       return {...state}
     }
-    case 'GET_USERS_FULFILLED': {
+    case 'GET_ALL_USERS_FULFILLED': {
       const { data } = action.payload
       console.log(data.results)
       state.isLoading = false
@@ -22,7 +22,7 @@ const users = (state=initialState, action) => {
       console.log(state.users)
       return {...state}
     }
-    case 'GET_USERS_REJECTED': {
+    case 'GET_ALL_USERS_REJECTED': {
       state.isLoading = false
       state.isError = true
       return {...state}

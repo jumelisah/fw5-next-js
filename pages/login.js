@@ -66,7 +66,7 @@ const Login = () => {
             </div>
           </Form>
             <p>Don’t have an account? Let’s 
-              <Link href='/'>
+              <Link href='/register'>
                 <a className='text-color5' style={{textDecoration: 'none'}}> Sign Up</a>
               </Link></p>
         </div>

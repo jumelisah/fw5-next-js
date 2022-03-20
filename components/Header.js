@@ -39,7 +39,7 @@ const Header = ({auth, getUserData}) => {
               </Link>
             </li>
           </ul>}
-          {!auth.isLoading &&
+          {!auth.isLoading && !auth.isError &&
           <ul className="navbar-nav ms-auto mb-2 mb-lg-0 d-flex align-items-center">
             <li className="nav-item m-2">
               <Link href='/login' passHref>

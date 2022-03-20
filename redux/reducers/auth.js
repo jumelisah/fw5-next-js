@@ -24,18 +24,13 @@ const auth = (state=initialState, action) => {
       return {...state}
     }
     case 'AUTH_LOGIN_REJECTED': {
-      const { data } = action.payload
+      const { data } = action.payload.response
       state.isLoading = false
       state.isError = true
       state.errMessage = data.message
       return {...state}
     }
-    case 'REGISTER_FORM_PENDING': {
-      state.isLoading = true
-      state.isError = false
-      return {...state}
-    }
-    case 'REGISTER_FORM_FULFILLED': {
+    case 'REGISTER_FORM': {
       const { data } = action.payload
       console.log(data)
       state.isLoading = false
@@ -43,7 +38,18 @@ const auth = (state=initialState, action) => {
       state.userForm = data
       return {...state}
     }
-    case 'REGISTER_FORM_REJECTED': {
+    case 'AUTH_REGISTER_PENDING': {
+      state.isLoading = false
+      state.isError = false
+      return {...state}
+    }
+    case 'AUTH_REGISTER_FULFILLED': {
+      const { data } = action.payload
+      state.isLoading = false
+      state.isError = false
+      return {...state}
+    }
+    case 'AUTH_REGISTER_REJECTED': {
       state.isLoading = false
       state.isError = true
       return {...state}
@@ -62,7 +68,7 @@ const auth = (state=initialState, action) => {
       return {...state}
     }
     case 'AUTH_GET_USER_REJECTED': {
-      const { data } = action.payload
+      const { data } = action.payload.response
       state.isLoading = false
       state.isError = true
       state.errMessage = data.message

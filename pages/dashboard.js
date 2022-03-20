@@ -9,6 +9,7 @@ import { useRouter } from "next/router"
 import { getHistory } from "../redux/actions/transactions"
 import { getAllUser } from "../redux/actions/users"
 import transactions from "../redux/reducers/transactions"
+import { History } from "../components/History"
 
 const Dashboard = ({getHistory, getAllUser, transactions, users}) => {
   const { auth } = useSelector(state => state.auth)
@@ -47,6 +48,7 @@ const Dashboard = ({getHistory, getAllUser, transactions, users}) => {
           </div>
           <div className={`${styles.roundedten} bg-white col-12 col-lg-5 ms-lg-auto mt-4`}>
             <h3>Transaction History</h3>
+            <div><History dataHistory={transactions.history} dataUser={users.userList} /></div>
           </div>
         </div>
       </div>
