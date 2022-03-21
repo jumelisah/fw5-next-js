@@ -1,6 +1,8 @@
 import Image from "next/image"
+import { useDispatch } from "react-redux"
 
 export const History = ({dataHistory, dataUser}) => {
+  
   return(
     <div className='container'>
       {dataHistory.map((history)=>{

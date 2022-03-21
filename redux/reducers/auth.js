@@ -185,6 +185,12 @@ const auth = (state=initialState, action) => {
       state.errMessage = data.message
       return {...state}
     }
+    case 'AUTH_LOGOUT': {
+      state.token = null
+      state.userData = {}
+      window.localStorage.removeItem('token')
+      return state
+    }
     default: {
         return {...state}
     }

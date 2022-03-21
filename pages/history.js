@@ -1,4 +1,6 @@
 import Image from "next/image"
+import { Form } from "react-bootstrap"
+import FormInput from "../components/FormInput"
 import Layout from "../components/Layout"
 import Sidebar from "../components/SideBar"
 import styles from "../styles/Dashboard.module.css"
@@ -21,6 +23,9 @@ const History = () =>{
           </div>
           <div className='col-12 col-md-9 bg-white mt-4 mt-md-0 p-3' style={{borderRadius: '10px'}}>
             <h1 className='fs-3'>Transaction History</h1>
+            <Form>
+              <FormInput name='search' type='text' />
+            </Form>
               {transHistory.map((data)=> {
                 return(
                   <div className='mt-4' key={data.id} style={{listStyle: 'none'}}>

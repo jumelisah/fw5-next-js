@@ -32,7 +32,10 @@ const Login = () => {
     const email = e.target.elements['email'].value
     const password = e.target.elements['password'].value
     dispatch(login(email, password))
-    route.push('/dashboard')
+    if(!auth.isLoading && !auth.isError){
+      route.push('/dashboard')
+    }
+    
   }
   return(
     <div className='d-flex flex-column-reverse flex-md-row p-0 m-0'>
