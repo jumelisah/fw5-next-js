@@ -36,9 +36,7 @@ const Register = ({registerForm, auth}) => {
       <div className={`${styles.leftSection} left-section col-12 col-md-7 px-5 d-flex align-items-center vh-md-100 position-fixed`}>
         <div className='px-md-5'>
         <Link href='/'>
-          <a>
-            <Image src='/images/bw.png' alt='logo' width={30} height={30} className={`${styles.logo}`}/>
-          </a>
+          <a className='text-color1 fs-3 fw-bold' style={{textDecoration: 'none'}}>Zwallet</a>
         </Link>
         <div className='text-center mx-auto' style={{maxWidth: '300px'}}>
           <Image src='/images/Group57.png' alt='background phone' width={200} height={200} layout='responsive' priority />
@@ -57,9 +55,6 @@ const Register = ({registerForm, auth}) => {
             <FormInput type='email' name='email' icon={<AiOutlineMail />} placeholder='Enter your e-mail' variant='border-0 border-bottom' required/>
             <FormInput type='password' name='password' icon={<FiLock />} placeholder='Create your password' variant='border-0 border-bottom' required />
             <div className='text-end'>
-              <Link href='/'>
-                <a className='text-dark' style={{textDecoration: 'none'}}>Forgot password?</a>
-              </Link>
             </div>
             <div className='my-4 p-0'>
               <Button variant='bg-secondary border-0'>Sign Up</Button>
