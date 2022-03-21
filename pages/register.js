@@ -14,8 +14,6 @@ import { useRouter } from 'next/router';
 import { useState } from 'react';
 
 const Register = ({registerForm, auth}) => {
-  const [state, setState] = useState({email: null, password: null})
-  const handleChange = (email, password) => setState({ email, password })
   const navigate = useRouter()
   const onRegister = (e) => {
     e.preventDefault()
