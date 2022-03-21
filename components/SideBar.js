@@ -43,7 +43,7 @@ const Sidebar = () => {
               </a>
             </Link>}
             {item.url==='' &&
-            <div onClick={onLogout}>
+            <div onClick={onLogout} style={{cursor: 'pointer'}}>
             <a className={`border-start border-4 ${linkActive===item.url?'text-color4 border-color4':'text-secondary border-secondary'} ps-3`} style={{textDecoration: 'none'}}>
               <Icon className='me-3' />
               {item.name}

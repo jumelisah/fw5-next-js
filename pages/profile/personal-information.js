@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react"
 import { connect, useDispatch, useSelector } from "react-redux"
-import Layout from "../components/Layout"
-import Sidebar from "../components/SideBar"
-import { getPhoneNumber, getUserData } from "../redux/actions/auth"
+import Layout from "../../components/Layout"
+import Sidebar from "../../components/SideBar"
+import { getPhoneNumber, getUserData } from "../../redux/actions/auth"
 
 const PersonalInformation = ({auth}) => {
   const [firstName, setFirstName] = useState('')

@@ -4,19 +4,28 @@ import Link from "next/link"
 import { useEffect, useState } from "react"
 import { FiBell } from "react-icons/fi"
 import { connect, useDispatch, useSelector } from "react-redux"
-import { getUserData, getPhoneNumber } from "../redux/actions/auth"
+import { getUserData, getPhoneNumber, getBalance } from "../redux/actions/auth"
+import { getHistory } from "../redux/actions/transactions"
+import { getAllUser } from "../redux/actions/users"
 import { useRouter } from 'next/router';
 
-const Header = ({auth, getUserData, getPhoneNumber}) => {
+const Header = ({auth, getUserData, getPhoneNumber, getBalance, getHistory, getAllUser}) => {
   
   const [isLogin, setIsLogin] = useState(true)
   const dispatch = useDispatch()
-  const token = window.localStorage.getItem('token')
   useEffect (()=> {
+    const token = window.localStorage.getItem('token')
     if(token){
       getUserData(token)
+      getBalance(token)
+      getHistory(token)
+      getPhoneNumber(token)
+      getAllUser(token)
+    }else{
+      setIsLogin(false)
     }
-  }, [getUserData, token])
+  }, [getUserData, getBalance, getAllUser, getHistory, getPhoneNumber])
+  
   return (
     <>
     <nav className="navbar navbar-expand-lg navbar-light bg-color7">
@@ -29,7 +38,7 @@ const Header = ({auth, getUserData, getPhoneNumber}) => {
           <span className="navbar-toggler-icon"></span>
         </button>
         <div className="collapse navbar-collapse" id="navbarSupportedContent">
-          {!token &&
+          {!isLogin &&
           <ul className="navbar-nav ms-auto mb-2 mb-lg-0 d-flex align-items-center">
             <li className="nav-item m-2">
               <Link href='/login' passHref>
@@ -42,7 +51,7 @@ const Header = ({auth, getUserData, getPhoneNumber}) => {
               </Link>
             </li>
           </ul>}
-          {token && !auth.isLoading && !auth.isError &&
+          {!auth.isLoading && !auth.isError && isLogin &&
           <ul className="navbar-nav ms-auto mb-2 mb-lg-0 d-flex align-items-center">
             <li className="nav-item m-2">
               <Link href='/profile' passHref>
@@ -70,5 +79,5 @@ const Header = ({auth, getUserData, getPhoneNumber}) => {
   )
 }
 const mapStateToProps = (state) => ({auth: state.auth})
-const mapDispatchToProps = {getUserData, getPhoneNumber}
+const mapDispatchToProps = {getUserData, getPhoneNumber, getBalance, getHistory, getAllUser}
 export default connect(mapStateToProps, mapDispatchToProps)(Header)

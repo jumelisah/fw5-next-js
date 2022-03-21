@@ -26,7 +26,7 @@ const Profile = () => {
             </div>
             {data.map((linkData)=>{
               return(
-                <Link href={linkData.url} key={linkData.title}>
+                <Link href={`/profile${linkData.url}`} key={linkData.title}>
                   <a className='text-white'>
                     <div>
                       <ProfileModule>{linkData.title}</ProfileModule>

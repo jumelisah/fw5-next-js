@@ -1,14 +1,14 @@
 import Image from "next/image"
 import { useDispatch } from "react-redux"
 
-export const History = ({dataHistory, dataUser}) => {
+export const DataHistory = ({dataHistory, dataUser}) => {
   
   return(
     <div className='container'>
       {dataHistory.map((history)=>{
         return(
             dataUser.map((users)=>{
-              if(users.id===history.anotherUserId || users.id===history.userId){
+              if(users.id===history.anotherUserId){
                 return(
               <div key={history.id} className='d-flex mb-2 align-items-center'>
                 <Image src={`${users.picture ? users.picture : '/images/ZWALLET.png'}`} alt={users.fullName} width={40} height={40} layout='fixed'/>

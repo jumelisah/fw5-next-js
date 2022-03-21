@@ -1,19 +1,18 @@
 import Image from "next/image"
+import { useEffect } from "react"
 import { Form } from "react-bootstrap"
+import { connect, useSelector } from "react-redux"
 import FormInput from "../components/FormInput"
+import { DataHistory } from "../components/History"
 import Layout from "../components/Layout"
 import Sidebar from "../components/SideBar"
+import transactions from "../redux/reducers/transactions"
 import styles from "../styles/Dashboard.module.css"
 
-const History = () =>{
-  const transHistory = [
-    {id: 1, name: 'Samuel Suhi', type: 'Accept', sum: 50000},
-    {id: 2, name: 'Samuel Suhi', type: 'Accept', sum: 50000},
-    {id: 3, name: 'Samuel Suhi', type: 'Accept', sum: 50000},
-    {id: 4, name: 'Samuel Suhi', type: 'Accept', sum: 50000},
-    {id: 5, name: 'Samuel Suhi', type: 'Accept', sum: 50000},
-    {id: 6, name: 'Samuel Suhi', type: 'Accept', sum: 50000}
-  ]
+const History = ({transactions, users, auth}) =>{
+  useEffect(()=>{
+    console.log(transactions)
+  }, [transactions])
   return(
     <Layout>
       <div className='container'>
@@ -26,22 +25,8 @@ const History = () =>{
             <Form>
               <FormInput name='search' type='text' />
             </Form>
-              {transHistory.map((data)=> {
-                return(
-                  <div className='mt-4' key={data.id} style={{listStyle: 'none'}}>
-                  <div className='d-flex align-items-center position-relative'>
-                    <Image src='/images/user.png' alt='user' width={40} height={40} layout='fixed'/>
-                    <div className='ms-2'>
-                      <p className='m-0 p-0'>{data.name}</p>
-                      <p className='m-0 p-0'>{data.type}</p>
-                    </div>
-                    <div className='position-absolute top-50 end-0 translate-middle-y'>
-                      {data.sum}
-                    </div>
-                  </div>
-                </div>
-                )
-              })}
+            {!auth.isLoading &&
+            <DataHistory dataHistory={transactions.history} dataUser={users.userList} />}
           </div>
         </div>
       </div>
@@ -49,4 +34,5 @@ const History = () =>{
   )
 }
 
-export default History
+const mapStateToProps = (state) => ({transactions: state.transactions, users: state.users, auth: state.auth})
+export default connect(mapStateToProps)(History)

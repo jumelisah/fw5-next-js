@@ -9,20 +9,12 @@ import { useRouter } from "next/router"
 import { getHistory } from "../redux/actions/transactions"
 import { getAllUser } from "../redux/actions/users"
 import transactions from "../redux/reducers/transactions"
-import { History } from "../components/History"
+import { DataHistory } from "../components/History"
 
 const Dashboard = ({getHistory, getAllUser, getBalance, getPhoneNumber, auth, transactions, users}) => {
   const dispatch = useDispatch()
   const route = useRouter()
-  useEffect (()=> {
-    const token = window.localStorage.getItem('token')
-    if(token){
-      getBalance(token)
-      getHistory(token)
-      getPhoneNumber(token)
-      getAllUser(token)
-    }
-  }, [getBalance, getAllUser, getHistory, getPhoneNumber])
+ 
   return(
     <Layout>
       <div className='container d-flex flex-column flex-md-row bg-color6 mb-5'>
@@ -49,7 +41,7 @@ const Dashboard = ({getHistory, getAllUser, getBalance, getPhoneNumber, auth, tr
           </div>
           <div className={`${styles.roundedten} bg-white col-12 col-lg-5 ms-lg-auto mt-4`}>
             <h3 className='fs-5'>Transaction History</h3>
-            <div><History dataHistory={transactions.history} dataUser={users.userList} /></div>
+            <div><DataHistory dataHistory={transactions.history} dataUser={users.userList} /></div>
           </div>
         </div>
       </div>

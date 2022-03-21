@@ -1,15 +1,16 @@
 import { Form } from "react-bootstrap"
-import FormInput from "../components/FormInput"
-import Layout from "../components/Layout"
-import Sidebar from "../components/SideBar"
+import FormInput from "../../components/FormInput"
+import Layout from "../../components/Layout"
+import Sidebar from "../../components/SideBar"
 import { FiLock } from "react-icons/fi"
-import Button from "../components/Button"
+import Button from "../../components/Button"
 import { useState } from "react"
-import { changePassword } from "../redux/actions/auth"
+import { changePassword } from "../../redux/actions/auth"
 import { connect } from "react-redux"
 
 const ChangePassword = ({auth, changePassword}) => {
   const [errPassword, setErrPassword] = useState(false)
+  const [successPass, setSuccessPass] = useState(false)
   const [formFilled, setFormFilled] = useState(false)
 
   const onChangePassword = (e) => {
@@ -28,6 +29,7 @@ const ChangePassword = ({auth, changePassword}) => {
     else{
       setErrPassword(false)
       changePassword(data, token)
+      setSuccessPass(true)
       
     }
   }
@@ -40,6 +42,7 @@ const ChangePassword = ({auth, changePassword}) => {
             <h1 className='fs-6'>Change Password</h1>
             <p style={{maxWidth: '350px'}}>You must enter your current password and then type your new password twice.</p>
             <Form onSubmit={onChangePassword}>
+              <p className={`text-danger ${successPass ? 'd-block' : 'd-none'}`}>Password Changed</p>
               <FormInput name='oldPassword' type='password' variant='border-0 border-bottom' icon={<FiLock />} placeholder='Current Password'/>
               <FormInput name='newPassword' type='password' variant='border-0 border-bottom' icon={<FiLock />} placeholder='New Password'/>
               <FormInput name='confirmPassword' type='password' variant='border-0 border-bottom' icon={<FiLock />} placeholder='Repeat New Password'/>
