@@ -11,6 +11,11 @@ import Otp from '../components/Otp'
 import BarChart from '../components/Chart'
 
 export default function Home() {
+  const data = [
+    {id: 1, subtitle: 'Small Fee', content: 'We only charge 5% of every success transaction done in Zwallet app.'},
+    {id: 2, subtitle: 'Small Fee', content: 'We only charge 5% of every success transaction done in Zwallet app.'},
+    {id: 3, subtitle: 'Small Fee', content: 'We only charge 5% of every success transaction done in Zwallet app.'}
+  ]
   return (
     <Layout>
     <div className='container'>
@@ -73,6 +78,36 @@ export default function Home() {
         <div className='col-12 col-md-4'>
           <About subTitle='Easy Download' icon={<BsDownload />} variant='bg-color7'>BeWallet is 100% totally free to use it’s now available on Google Play Store and App Store.</About>
         </div>
+      </div>
+    </div>
+    <div className='bg-color6'>
+      <div className='container py-5'>
+        <div className='d-flex flex-column flex-md-row'>
+          <Image src='/images/Group54.png' alt='phone54' width={250} height={600} layout='fixed'/>
+          <div className='my-auto ms-5'>
+            <h1 style={{maxWidth: '300px'}}>All The Great Zwallet Features.</h1>
+            <div>
+              {data.map((exp) => {
+                return(
+                  <div className='my-4 p-3 bg-white' key={exp.id} style={{borderRadius: '10px', width: '100%'}}>
+                    <p className='fw-bold py-0 my-0'><span className='me-3 text-color5'>{exp.id}</span>{exp.subtitle}</p>
+                    <p>{exp.content}</p>
+                  </div>
+                )
+              })}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div className='container text-center px-md-5 py-5'>
+      <h1>What Users are Saying.</h1>
+      <p>We have some great features from the application and it’s totally free to use by all users around the world.</p>
+      <div className='bg-white px-3 py-5'>
+        <Image src='/images/AlexHansinburg.png' alt ='Alex Hansinburg' width={60} height={60}/>
+        <h5>Alex Hansinburg</h5>
+        <p>Designer</p>
+        <p>“This is the most outstanding app that I’ve ever try in my live, this app is such an amazing masterpiece and it’s suitable for you who is bussy with their bussiness and must transfer money to another person aut there. Just try this app and see the power!”</p>
       </div>
     </div>
     <Otp />
