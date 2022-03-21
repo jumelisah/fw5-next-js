@@ -17,7 +17,6 @@ const Register = ({registerForm, auth}) => {
   const navigate = useRouter()
   const onRegister = (e) => {
     e.preventDefault()
-    console.log(state)
     const firstName = e.target.elements['firstName'].value
     const lastName = e.target.elements['lastName'].value
     const email = e.target.elements['email'].value
@@ -58,12 +57,9 @@ const Register = ({registerForm, auth}) => {
             <FormInput type='email' name='email' icon={<AiOutlineMail />} placeholder='Enter your e-mail' variant='border-0 border-bottom' required/>
             <FormInput type='password' name='password' icon={<FiLock />} placeholder='Create your password' variant='border-0 border-bottom' required />
             <div className='text-end'>
-              <Link href='/'>
-                <a className='text-dark' style={{textDecoration: 'none'}}>Forgot password?</a>
-              </Link>
             </div>
             <div className='my-4 p-0'>
-              <Button variant={`${state.email ? 'bg-color3' : 'bg-secondary'} border-0`}>Sign Up</Button>
+              <Button variant='bg-secondary border-0'>Sign Up</Button>
             </div>
           </Form>
             <p>Don’t have an account? Let’s 
