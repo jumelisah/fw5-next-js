@@ -36,7 +36,7 @@ const Register = ({registerForm, auth}) => {
       <div className={`${styles.leftSection} left-section col-12 col-md-7 px-5 d-flex align-items-center vh-md-100 position-fixed`}>
         <div className='px-md-5'>
         <Link href='/'>
-          <a>Zwallet</a>
+          <a className='text-color1 fs-3 fw-bold' style={{textDecoration: 'none'}}>Zwallet</a>
         </Link>
         <div className='text-center mx-auto' style={{maxWidth: '300px'}}>
           <Image src='/images/Group57.png' alt='background phone' width={200} height={200} layout='responsive' priority />
