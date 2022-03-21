@@ -20,20 +20,17 @@ const auth = (state=initialState, action) => {
     case 'AUTH_LOGIN_FULFILLED': {
       const { data } = action.payload
       state.isLoading = false
-      state.isError = false
       if(data.results){
+        state.isError = false
+        state.errMessage = null
+        state.successMsg = data.results.message
         state.token = data.results.token
         window.localStorage.setItem('token', state.token)
       }else{
+        state.token = null
+        state.isError = true
         state.errMessage = data.message
       }
-      return {...state}
-    }
-    case 'AUTH_LOGIN_REJECTED': {
-      const { data } = action.payload.response
-      state.isLoading = false
-      state.isError = true
-      state.errMessage = data.message
       return {...state}
     }
     case 'REGISTER_FORM': {
@@ -194,6 +191,10 @@ const auth = (state=initialState, action) => {
       state.userData = {}
       window.localStorage.removeItem('token')
       return state
+    }
+    case 'RESET_AUTH_STATE':{
+      state = initialState
+      return {...state}
     }
     default: {
         return {...state}
