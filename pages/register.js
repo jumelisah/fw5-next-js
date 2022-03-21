@@ -11,20 +11,26 @@ import { connect, useDispatch } from 'react-redux';
 import { registerForm } from '../redux/actions/auth';
 import { useNavigate } from 'react-router-dom';
 import { useRouter } from 'next/router';
+import { useState } from 'react';
 
 const Register = ({registerForm, auth}) => {
   const navigate = useRouter()
   const onRegister = (e) => {
     e.preventDefault()
+    console.log(state)
     const firstName = e.target.elements['firstName'].value
     const lastName = e.target.elements['lastName'].value
     const email = e.target.elements['email'].value
     const password = e.target.elements['password'].value
     const fullName = firstName+' '+lastName
     const data = {fullName, email, password}
-    registerForm(data)
-    console.log(auth)
-    navigate.push('/create-pin')
+    if(password.length < 6){
+      alert('Password should contain at least 6 characters')
+    }else{
+      registerForm(data)
+      console.log(auth)
+      navigate.push('/create-pin')
+    }
   }
   return(
     <div className='d-flex flex-column-reverse flex-md-row p-0 m-0'>
@@ -49,7 +55,7 @@ const Register = ({registerForm, auth}) => {
           <Form onSubmit={onRegister}>
             <FormInput type='text' name='firstName' icon={<BiUser />} placeholder='Enter your first name' variant='border-0 border-bottom' required />
             <FormInput type='text' name='lastName' icon={<BiUser />} placeholder='Enter your last name' variant='border-0 border-bottom' />
-            <FormInput type='email' name='email' icon={<AiOutlineMail />} placeholder='Enter your e-mail' variant='border-0 border-bottom' required />
+            <FormInput type='email' name='email' icon={<AiOutlineMail />} placeholder='Enter your e-mail' variant='border-0 border-bottom' required/>
             <FormInput type='password' name='password' icon={<FiLock />} placeholder='Create your password' variant='border-0 border-bottom' required />
             <div className='text-end'>
               <Link href='/'>
@@ -57,7 +63,7 @@ const Register = ({registerForm, auth}) => {
               </Link>
             </div>
             <div className='my-4 p-0'>
-              <Button variant='bg-secondary border-0'>Sign Up</Button>
+              <Button variant={`${state.email ? 'bg-color3' : 'bg-secondary'} border-0`}>Sign Up</Button>
             </div>
           </Form>
             <p>Don’t have an account? Let’s 

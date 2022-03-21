@@ -20,6 +20,7 @@ const Login = () => {
   // const navigate = useNavigate()
 
   useEffect ( () => {
+    
     const token = window.localStorage.getItem('token')
     if(token){
       route.push('/dashboard')
@@ -54,7 +55,7 @@ const Login = () => {
           <h1 className='fs-4 fw-bold'>Start Accessing Banking Needs With All Devices and All Platforms With 30.000+ Users</h1>
           <p className='py-4 m-0'>Transfering money is eassier than ever, you can access BeWallet wherever you are. Desktop, laptop, mobile phone? we cover all of that for you!</p>
           <Form onSubmit={onLogin}>
-            <FormInput type='email' name='email' icon={<AiOutlineMail />} placeholder='Enter your e-mail' variant='border-0 border-bottom' />
+            <FormInput type='email' name='email' icon={<AiOutlineMail />} placeholder='Enter your e-mail' variant='border-0 border-bottom'/>
             <FormInput type='password' name='password' icon={<FiLock />} placeholder='Enter your password' variant='border-0 border-bottom' />
             <div className='text-end'>
               <Link href='/'>
