@@ -4,8 +4,11 @@ import ProfileModule from "../components/ProfileModule"
 import Sidebar from "../components/SideBar"
 import { RiPencilLine } from "react-icons/ri"
 import Link from "next/link"
+import auth from "../redux/reducers/auth"
+import { useSelector } from "react-redux"
 
 const Profile = () => {
+  const {auth} = useSelector(state => state)
   const data = [
     {title: 'Personal Information', url: '/personal-information'},
     {title: 'Change Password', url: '/change-password'},
@@ -21,7 +24,7 @@ const Profile = () => {
             <div className='text-center'>
               <Image src='/images/user.png' alt='user' width={60} height={60} />
               <p><RiPencilLine /> Edit</p>
-              <p>Robert Chandler</p>
+              <p>{auth.user.fullName}</p>
               <p>+62 813-9387-7946</p>
             </div>
             {data.map((linkData)=>{

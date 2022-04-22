@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react"
 import { connect, useDispatch, useSelector } from "react-redux"
+import FormInput from "../../components/FormInput"
 import Layout from "../../components/Layout"
 import Sidebar from "../../components/SideBar"
 import { getPhoneNumber, getUserData } from "../../redux/actions/auth"
@@ -32,7 +33,7 @@ const PersonalInformation = ({auth}) => {
             <p style={{maxWidth: '350px'}}>We got your personal information from the sign up proccess. If you want to make changes on your information, contact our support.</p>
             {!auth.isLoading && !auth.isError && <div>
               <p className='fw-bold'>First Name</p>
-              <p>{firstName}</p>
+              <FormInput value={auth.user.fullName}/>
               <p className='fw-bold'>Last Name</p>
               <p>{lastName}</p>
               <p className='fw-bold'>Verified email</p>
