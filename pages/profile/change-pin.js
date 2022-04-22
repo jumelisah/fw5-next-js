@@ -1,13 +1,13 @@
 import { Form } from "react-bootstrap"
-import FormInput from "../components/FormInput"
-import Layout from "../components/Layout"
-import Sidebar from "../components/SideBar"
+import FormInput from "../../components/FormInput"
+import Layout from "../../components/Layout"
+import Sidebar from "../../components/SideBar"
 import { FiLock } from "react-icons/fi"
-import Button from "../components/Button"
+import Button from "../../components/Button"
 import { useState } from "react"
 import { useRouter } from 'next/router';
 import OtpInput from 'react-otp-input';
-import { changePinNumber } from "../redux/actions/auth"
+import { changePinNumber } from "../../redux/actions/auth"
 import { connect } from "react-redux"
 
 const ChangePin = ({changePinNumber, auth}) => {
@@ -41,6 +41,9 @@ const ChangePin = ({changePinNumber, auth}) => {
       setNewPin(pin)
       const data = {oldPin, newPin}
       changePinNumber(data, token)
+      if(auth.isError){
+        alert(auth.errMessage)
+      }
     }
   }
   return(
