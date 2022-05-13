@@ -39,7 +39,6 @@ const PersonalInformation = ({auth}) => {
               <p>{lastName}</p>
               <p className='fw-bold'>Verified email</p>
               <FormInput id="email" value={email} onChange={() => setFirstEmail(document.getElementById("email").value)} variant={'px-0'}/>
-              <p>{auth.user.email}</p>
               <p className='fw-bold'>Phone number</p>
               {auth.phones.map((data)=>{
                 return(

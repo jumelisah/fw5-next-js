@@ -9,8 +9,7 @@ import defaultImage from "../../public/images/default-user.png"
 const TransferTo = () => {
   const {auth, users} = useSelector(state => state)
   const router = useRouter()
-  // const {id} = router.query
-  const [user, setUser] = useState(users.userList.find(el => el.id === parseInt(router.query.id)))
+  const user = users.userList.find(el => el.id === parseInt(router.query.id))
   // useEffect(() => {
   //   console.log(user)
   // })
@@ -25,10 +24,10 @@ const TransferTo = () => {
             <div className="p-3">
               <h1 className="fs-4">Transfer Money</h1>
               <div className="p-4 my-4 d-flex flex-row shadow rounded-3">
-                <Image src={user.image ? user.image : defaultImage} width={50} height={50} alt={user.fullName} className="rounded-3"/>
+                <Image src={user?.image ? user?.image : defaultImage} width={50} height={50} alt={user?.fullName} className="rounded-3"/>
                 <div className="ms-3">
-                  <p className="m-0 p-0">{user.fullName}</p>
-                  <p className="m-0 p-0">{user.phone[0]?.number || user.email}</p>
+                  <p className="m-0 p-0">{user?.fullName}</p>
+                  <p className="m-0 p-0">{user?.phone[0]?.number || user?.email}</p>
                 </div>
               </div>
               <div className="py-3">
