@@ -93,3 +93,14 @@ export const register = (data) => {
     payload: http().post('/auth/register', params)
   })
 }
+
+export const updateProfile = (data) => {
+  const params = new FormData()
+  for (const x in data) {
+    params.append(x, data[x])
+  }
+  return({
+    type: 'AUTH_UPDATE_PROFILE',
+    payload: http.patch('/profile', params)
+  })
+}
