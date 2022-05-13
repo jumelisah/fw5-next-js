@@ -60,9 +60,9 @@ const Register = ({registerForm, auth}) => {
               <Button variant='bg-secondary border-0'>Sign Up</Button>
             </div>
           </Form>
-            <p>Don’t have an account? Let’s 
+            <p>Have an account? Let’s 
               <Link href='/'>
-                <a className='text-color5' style={{textDecoration: 'none'}}> Sign Up</a>
+                <a className='text-color5' style={{textDecoration: 'none'}}> Login</a>
               </Link></p>
         </div>
       </div>

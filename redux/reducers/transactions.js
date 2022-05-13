@@ -38,7 +38,7 @@ const transactions = (state=initialState, action) => {
       state.isLoading = false
       state.isError = false
       state.history = data.results
-      return {...state}
+      return state
     }
     case 'GET_HISTORY_REJECTED': {
       state.isLoading = false

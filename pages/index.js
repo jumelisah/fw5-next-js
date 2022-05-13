@@ -110,8 +110,8 @@ export default function Home() {
         <p>“This is the most outstanding app that I’ve ever try in my live, this app is such an amazing masterpiece and it’s suitable for you who is bussy with their bussiness and must transfer money to another person aut there. Just try this app and see the power!”</p>
       </div>
     </div>
-    <Otp />
-    <BarChart data={[10,50,200,300]} labels={['1','2','3','4']} income={0} expense={0}/>
+    {/* <Otp />
+    <BarChart data={[10,50,200,300]} labels={['1','2','3','4']} income={0} expense={0}/> */}
     </Layout>
   )
 }

@@ -1,12 +1,14 @@
 import { useEffect, useState } from "react"
 import { connect, useDispatch, useSelector } from "react-redux"
-import Layout from "../components/Layout"
-import Sidebar from "../components/SideBar"
-import { getPhoneNumber, getUserData } from "../redux/actions/auth"
+import FormInput from "../../components/FormInput"
+import Layout from "../../components/Layout"
+import Sidebar from "../../components/SideBar"
+import { getPhoneNumber, getUserData } from "../../redux/actions/auth"
 
 const PersonalInformation = ({auth}) => {
-  const [firstName, setFirstName] = useState('')
+  const [firstName, setFirstName] = useState(auth.user.fullName)
   const [lastName, setLastName] = useState('')
+  const [email, setEmail] = useState(auth.user.email)
   const dispatch = useDispatch()
   useEffect (()=>{
     const token = window.localStorage.getItem('token')
@@ -32,10 +34,11 @@ const PersonalInformation = ({auth}) => {
             <p style={{maxWidth: '350px'}}>We got your personal information from the sign up proccess. If you want to make changes on your information, contact our support.</p>
             {!auth.isLoading && !auth.isError && <div>
               <p className='fw-bold'>First Name</p>
-              <p>{firstName}</p>
+              <FormInput id="name" value={firstName} onChange={() => setFirstName(document.getElementById("name").value)} variant={'px-0'}/>
               <p className='fw-bold'>Last Name</p>
               <p>{lastName}</p>
               <p className='fw-bold'>Verified email</p>
+              <FormInput id="email" value={email} onChange={() => setFirstEmail(document.getElementById("email").value)} variant={'px-0'}/>
               <p>{auth.user.email}</p>
               <p className='fw-bold'>Phone number</p>
               {auth.phones.map((data)=>{
