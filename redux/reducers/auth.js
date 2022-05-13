@@ -71,7 +71,7 @@ const auth = (state=initialState, action) => {
       return {...state}
     }
     case 'AUTH_GET_USER_REJECTED': {
-      const { data } = action.payload.response
+      const data = action.payload.response?.data || action.payload.toJSON
       state.isLoading = false
       state.isError = true
       state.errMessage = data.message
@@ -185,6 +185,21 @@ const auth = (state=initialState, action) => {
       state.isError = true
       state.errMessage = data.message
       return {...state}
+    }
+    case 'AUTH_CHANGE_PROFILE_PENDING': {
+      state.isLoading = true
+      state.isError = false
+    }
+    case 'AUTH_CHANGE_PROFILE_FULFILLED': {
+      const { data } = action.payload
+      state.isLoading = false
+      state.isError = false
+      state.message = data.message
+    }
+    case 'AUTH_CHANGE_PROFILE_PENDING': {
+      state.isLoading = false
+      state.isError = true
+      state.errMessage = data.message
     }
     case 'AUTH_LOGOUT': {
       state.token = null
