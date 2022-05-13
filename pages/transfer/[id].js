@@ -25,7 +25,7 @@ const TransferTo = () => {
             <div className="p-3">
               <h1 className="fs-4">Transfer Money</h1>
               <div className="p-4 my-4 d-flex flex-row shadow rounded-3">
-//                 <Image src={user.image ? user.image : defaultImage} width={50} height={50} alt={user.fullName} className="rounded-3"/> 
+                 
                 <div className="ms-3">
                   <p className="m-0 p-0">{user.fullName}</p>
                   <p className="m-0 p-0">{user.phone[0]?.number || user.email}</p>
