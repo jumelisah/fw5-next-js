@@ -31,13 +31,13 @@ const Sidebar = () => {
   }
   
   return(
-    <div className={`${styles.roundedten} position-relative container bg-white px-0 py-3 shadow`} style={{height: '100%'}}>
+    <div className={`${styles.roundedten} position-relative container bg-white px-0 py-3 shadow`} style={{height: '500px'}}>
       <div className="d-flex d-md-none align-items-center px-3 mb-3 border-start border-4" style={{cursor: "pointer"}} onClick={() => setShowMenu(!showMenu)}>
         <AiOutlineMenu />
         <p className="text-color4 p-0 m-0 ps-3">Menu</p>
         <IoChevronDownCircleSharp className="ms-auto"/>
       </div>
-      <ul className={`menu px-0 position-relative ${showMenu ? 'd-block' : 'd-none'} d-md-block`} style={{height: '100%'}}>
+      <ul className={`menu px-0 position-relative ${showMenu ? 'd-block' : 'd-none'} d-md-block`}>
         {dataLink.map(item => {
           const Icon = item.icon
           return (
@@ -60,7 +60,7 @@ const Sidebar = () => {
           )
         })}
       </ul>
-      <div className='position-absolute bottom-0 mb-3'>
+      <div className='position-absolute bottom-0 mb-3' onClick={() => dispatch({type: 'AUTH_LOGOUT'})} style={{cursor: 'pointer'}}>
         <div className='border-start border-4 text-secondary border-secondary ps-3 d-flex align-items-center'>
           <FiLogOut />
           <p className='m-0 p-0 ms-3'>Logout</p>

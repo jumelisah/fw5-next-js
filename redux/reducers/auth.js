@@ -127,6 +127,7 @@ const auth = (state=initialState, action) => {
       window.localStorage.removeItem('beWalletToken')
       window.localStorage.removeItem('beWalletUser')
       window.localStorage.removeItem('beWalletUsers')
+      window.localStorage.removeItem('beWalletHistory')
       return state
     }
     case 'RESET_AUTH_STATE':{

@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { useSelector } from "react-redux"
 import Layout from "../components/Layout"
 import Sidebar from "../components/SideBar"
@@ -10,6 +10,12 @@ const Transfer = () => {
   const [search, setSearch] = useState('')
   const {users} = useSelector(state => state)
   const router = useRouter()
+  useEffect(() => {
+    const token = window.localStorage.getItem('beWalletToken')
+    if (!token) {
+      router.push('/login')
+    }
+  })
   return(
     <Layout>
       <div className='container mb-5'>

@@ -57,21 +57,23 @@ const Dashboard = () => {
       </Head>
       <div className='container d-flex flex-column flex-md-row bg-color6 mb-5'>
         <div className='col-12 col-md-3'><Sidebar /></div>
-        <div className='col-12 col-md-9 ms-md-3 me-0 mb-3' style={{height: '500px'}}>
-          <div className={`${styles.roundedten} col-12 bg-color4 text-white mt-3 mt-md-0`} style={{width: '100%'}}>
-            <p>Balance</p>
+        <div className='col-12 col-md-9 ms-md-3 me-0' style={{height: '500px'}}>
+          <div className={`${styles.roundedten} col-12 bg-color4 text-white my-3 mt-md-0 px-3 py-4`}>
+            <p className='p-0 m-0'>Balance</p>
             <h3>Rp {Number(auth.balance).toLocaleString('id-ID')}</h3>
-            <p>{auth.phones.length>0 ? auth.phones[0].number : auth.user.email}</p>
+            <p className='p-0 m-0'>{auth.phones.length>0 ? auth.phones[0].number : auth.user.email}</p>
           </div>
-          <div className='col-12 col-md-6 p-0'>
-            <div className={`${styles.roundedten} bg-white shadow mt-3 me-1 p-3`} style={{height: '100%'}}>
-              <BarChart data={[100,50,200,300]} labels={['1','2','3','4']} income={totalIncome()} expense={totalExpense()}/>
+          <div className='col-12 d-flex flex-column flex-md-row p-0 m-0'>
+            <div className='col-12 col-md-6 pe-2'>
+              <div className={`${styles.roundedten} bg-white shadow p-3`} style={{height: '100%'}}>
+                <BarChart data={[100,50,200,300,200]} labels={['1','2','3','4','5']} income={totalIncome()} expense={totalExpense()}/>
+              </div>
             </div>
-          </div>
-          <div className='col-12 col-md-6 p-0'>
-            <div className={`${styles.roundedten} bg-white shadow mt-3 ms-1 p-3`} style={{height: '100%'}}>
-              <h3 className='fs-5'>Transaction History</h3>
-              <div className='overflow-auto' style={{height: '300px'}}><DataHistory dataHistory={transactions.history} dataUser={users.userList} /></div>
+            <div className='col-12 col-md-6 ps-2'>
+              <div className={`${styles.roundedten} bg-white shadow p-3`} style={{height: '100%'}}>
+                <h3 className='fs-5'>Transaction History</h3>
+                <div className='overflow-auto' style={{height: '300px'}}><DataHistory dataHistory={transactions.history} dataUser={users.userList} /></div>
+              </div>
             </div>
           </div>
         </div>
