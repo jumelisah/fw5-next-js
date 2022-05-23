@@ -37,9 +37,8 @@ const Login = ({auth}) => {
 
   const onLogin = async(e) => {
     e.preventDefault()
-    await dispatch(login(email, password))
+    dispatch(login(email, password))
     setItsError(true)
-    await router.push('/login')
   }
   return(
     <div className='d-flex flex-column-reverse flex-md-row p-0 m-0 position-relative'>

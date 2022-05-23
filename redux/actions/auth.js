@@ -14,6 +14,7 @@ export const login = (email, password) => {
         type: 'AUTH_LOADING'
       })
       const dataLogin = await http().post('/auth/login', data)
+      console.log(dataLogin)
       dispatch({
         type: 'AUTH_LOGIN',
         payload: dataLogin
@@ -24,7 +25,7 @@ export const login = (email, password) => {
     } catch (e) {
       dispatch({
         type: 'AUTH_ERROR',
-        payload: e.response.data.message
+        payload: dataLogin.data.message
       })
       dispatch({
         type: 'AUTH_LOADING'

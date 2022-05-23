@@ -1,18 +1,26 @@
 import Image from "next/image"
 import { useRouter } from "next/router"
 import { useEffect, useState } from "react"
-import { useSelector } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
+import Button from "../../components/Button"
 import Layout from "../../components/Layout"
 import Sidebar from "../../components/SideBar"
 import defaultImage from "../../public/images/default-user.png"
+import { getBalance } from "../../redux/actions/auth"
 
 const TransferTo = () => {
   const {auth, users} = useSelector(state => state)
   const router = useRouter()
+  const dispatch = useDispatch()
   const user = users.userList.find(el => el.id === parseInt(router.query.id))
-  // useEffect(() => {
-  //   console.log(user)
-  // })
+  useEffect(() => {
+    const token = window.localStorage.getItem('beWalletToken')
+    if(!token){
+      router.push('/login')
+    }else{
+      dispatch(getBalance(token))
+    }
+  }, [dispatch, router])
   return(
     <Layout>
       <div className='container mb-5'>
@@ -38,6 +46,7 @@ const TransferTo = () => {
                 <input type="number" placeholder="0.00" className="my-5 text-center fs-1 border-0 outline-none"/>
                 <p className="text-center">Rp {auth.balance.toLocaleString('id-ID')} Available</p>
               </div>
+              <Button>Transfer</Button>
             </div>
           </div>
         </div>
