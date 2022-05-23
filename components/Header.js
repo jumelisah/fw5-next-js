@@ -9,27 +9,29 @@ import { getHistory } from "../redux/actions/transactions"
 import { getAllUser } from "../redux/actions/users"
 import { useRouter } from 'next/router';
 
-const Header = ({auth, getUserData, getPhoneNumber, getBalance, getHistory, getAllUser}) => {
-  
+const Header = () => {
+  const {auth} = useSelector(state => state)
   const [isLogin, setIsLogin] = useState(true)
+  const [userData, setUserData] = useState()
   const dispatch = useDispatch()
   useEffect (()=> {
-    const token = window.localStorage.getItem('token')
+    const token = window.localStorage.getItem('beWalletToken')
+    setUserData(JSON.parse(window.localStorage.getItem('beWalletUser')))
     if(token){
-      getUserData(token)
-      getBalance(token)
-      getHistory(token)
-      getPhoneNumber(token)
-      getAllUser(token)
+      dispatch(getPhoneNumber(token))
+      // getUserData(token)
+      // getBalance(token)
+      // getHistory(token)
+      // getPhoneNumber(token)
+      // getAllUser(token)
     }else{
       setIsLogin(false)
     }
-  }, [getUserData, getBalance, getAllUser, getHistory, getPhoneNumber])
+  }, [dispatch])
   
   return (
     <>
     <nav className="navbar navbar-expand-lg navbar-light bg-color7">
-      {console.log(auth)}
       <div className="container">
         <Link  href='/'>
           <a className="navbar-brand fs-3 fw-bold text-color3">Zwallet</a>
@@ -51,18 +53,18 @@ const Header = ({auth, getUserData, getPhoneNumber, getBalance, getHistory, getA
               </Link>
             </li>
           </ul>}
-          {!auth.isLoading && !auth.isError && isLogin &&
+          {isLogin && userData &&
           <ul className="navbar-nav ms-auto mb-2 mb-lg-0 d-flex align-items-center">
             <li className="nav-item m-2">
               <Link href='/profile' passHref>
-              <a><Image src='/images/user.png' alt='user' width={45} height={45}/></a>
+              <a><Image src={userData?.picture || '/images/default-user.png'} alt='user' width={45} height={45} onError={e => e.target.src='/images/default-user.png'} className="rounded-3"/></a>
               </Link>
             </li>
             <li className="nav-item m-2">
               <Link href='/profile' passHref>
                 <a style={{textDecoration: 'none'}}>
-                  <p className="py-0 my-0 text-color3">{auth.user.fullName}</p>
-                  <p className="py-0 my-0 text-color3">{auth.phones.length>0 ? auth.phones[0].number : auth.user.email}</p>
+                  <p className="py-0 my-0 text-color3">{userData?.fullName}</p>
+                  <p className="py-0 my-0 text-color3">{auth.phones.length>0 ? auth.phones[0].number : userData?.email}</p>
                 </a>
               </Link>
             </li>
@@ -78,6 +80,5 @@ const Header = ({auth, getUserData, getPhoneNumber, getBalance, getHistory, getA
     </>
   )
 }
-const mapStateToProps = (state) => ({auth: state.auth})
-const mapDispatchToProps = {getUserData, getPhoneNumber, getBalance, getHistory, getAllUser}
-export default connect(mapStateToProps, mapDispatchToProps)(Header)
+
+export default Header

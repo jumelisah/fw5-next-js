@@ -1,34 +1,123 @@
 import http from "../../helpers/http"
+const { NEXT_PUBLIC_FRONTEND_URL } = process.env
 
 export const login = (email, password) => {
   const data= new URLSearchParams()
   data.append('email', email)
   data.append('password', password)
-  return({
-    type: 'AUTH_LOGIN',
-    payload: http().post('/auth/login', data)
-  })
+  return async (dispatch) => {
+    try{
+      dispatch({
+        type: 'RESET_AUTH_STATE'
+      })
+      dispatch({
+        type: 'AUTH_LOADING'
+      })
+      const dataLogin = await http().post('/auth/login', data)
+      dispatch({
+        type: 'AUTH_LOGIN',
+        payload: dataLogin
+      })
+      dispatch({
+        type: 'AUTH_LOADING'
+      })
+    } catch (e) {
+      dispatch({
+        type: 'AUTH_ERROR',
+        payload: e.response.data.message
+      })
+      dispatch({
+        type: 'AUTH_LOADING'
+      })
+    }
+  }
 }
 
 export const getUserData = (token) => {
-  return({
-    type: 'AUTH_GET_USER',
-    payload: http(token).get('/profile')
-  })
+  return async (dispatch) => {
+    try{
+      dispatch({
+        type: 'RESET_AUTH_STATE'
+      })
+      dispatch({
+        type: 'AUTH_LOADING'
+      })
+      const data = await http(token).get('/profile')
+      dispatch({
+        type: 'AUTH_GET_USER',
+        payload: data
+      })
+      dispatch({
+        type: 'AUTH_LOADING'
+      })
+    } catch (e) {
+      dispatch({
+        type: 'AUTH_ERROR',
+        payload: e.response.data.message
+      })
+      dispatch({
+        type: 'AUTH_LOADING'
+      })
+    }
+  }
 }
 
 export const getPhoneNumber = (token) => {
-  return({
-    type: 'AUTH_GET_PHONES',
-    payload: http(token).get('/profile/phones')
-  })
+  return async (dispatch) => {
+    try{
+      dispatch({
+        type: 'RESET_AUTH_STATE'
+      })
+      dispatch({
+        type: 'AUTH_LOADING'
+      })
+      const data = await http(token).get('/profile/phones')
+      dispatch({
+        type: 'AUTH_GET_PHONES',
+        payload: data
+      })
+      dispatch({
+        type: 'AUTH_LOADING'
+      })
+    } catch (e) {
+      dispatch({
+        type: 'AUTH_ERROR',
+        payload: e.response.data.message
+      })
+      dispatch({
+        type: 'AUTH_LOADING'
+      })
+    }
+  }
 }
 
 export const getBalance = (token) => {
-  return({
-    type: 'AUTH_GET_BALANCE',
-    payload: http(token).get('/profile/balance')
-  })
+  return async (dispatch) => {
+    try{
+      dispatch({
+        type: 'RESET_AUTH_STATE'
+      })
+      dispatch({
+        type: 'AUTH_LOADING'
+      })
+      const data = await http(token).get('/profile/balance')
+      dispatch({
+        type: 'AUTH_GET_BALANCE',
+        payload: data
+      })
+      dispatch({
+        type: 'AUTH_LOADING'
+      })
+    } catch (e) {
+      dispatch({
+        type: 'AUTH_ERROR',
+        payload: e.response.data.message
+      })
+      dispatch({
+        type: 'AUTH_LOADING'
+      })
+    }
+  }
 }
 
 export const registerForm = (data) => {
@@ -41,23 +130,69 @@ export const registerForm = (data) => {
 }
 
 export const forgotPassword = (email) => {
-  const params = new URLSearchParams()
-  params.append('email', email)
-  return({
-    type: 'AUTH_FORGOT_PASSWORD',
-    payload: http().post('auth/forgot-password?callback_url=http://localhost:3000', params)
-  })
+  const param = new URLSearchParams()
+  param.append('email', email)
+  return async (dispatch) => {
+    try {
+      dispatch({
+        type: 'RESET_AUTH_STATE'
+      })
+      dispatch({
+        type: 'AUTH_LOADING'
+      })
+      const data = await http().post(`auth/forgot-password?callback_url=${NEXT_PUBLIC_FRONTEND_URL}`, param)
+      dispatch({
+        type: 'AUTH_FORGOT_PASSWORD',
+        payload: data
+      })
+      dispatch({
+        type: 'AUTH_LOADING'
+      })
+    } catch (e) {
+      dispatch({
+        type: 'AUTH_ERROR',
+        payload: e.response.data.message
+      })
+      dispatch({
+        type: 'AUTH_LOADING'
+      })
+    }
+  };
 }
 
 export const createNewPassword = (data) => {
+  console.log(data)
   const params = new URLSearchParams()
   params.append('otp', data.otp)
   params.append('newPassword', data.newPassword)
   params.append('confirmPassword', data.confirmPassword)
-  return({
-    type: 'AUTH_NEW_PASSWORD',
-    payload: http().post('auth/forgot-password', params)
-  })
+  return async (dispatch) => {
+    try{
+      console.log('a')
+      dispatch({
+        type: 'RESET_AUTH_STATE'
+      })
+      dispatch({
+        type: 'AUTH_LOADING'
+      })
+      const data = await http().post('auth/forgot-password', params)
+      dispatch({
+        type: 'AUTH_NEW_PASSWORD',
+        payload: data
+      })
+      dispatch({
+        type: 'AUTH_LOADING'
+      })
+    } catch (e) {
+      dispatch({
+        type: 'AUTH_ERROR',
+        payload: e.response.data.message
+      })
+      dispatch({
+        type: 'AUTH_LOADING'
+      })
+    }
+  }
 }
 
 export const changePassword = (data, token) => {

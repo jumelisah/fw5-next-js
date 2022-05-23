@@ -12,30 +12,15 @@ const initialState = {
 
 const auth = (state=initialState, action) => {
   switch(action.type){
-    case 'AUTH_LOGIN_PENDING': {
-      state.isLoading = true
-      state.isError = false
-      return {...state}
-    }
-    case 'AUTH_LOGIN_FULFILLED': {
-      const { data } = action.payload
-      state.isLoading = false
-      if(data.results){
-        state.isError = false
-        state.errMessage = null
-        state.successMsg = data.results.message
-        state.token = data.results.token
-        window.localStorage.setItem('token', state.token)
-      }else{
-        state.token = null
-        state.isError = true
-        state.errMessage = data.message
-      }
+    case 'AUTH_LOGIN': {
+      const {data} = action.payload
+      state.errMessage = null
+      state.token = data.results.token
+      window.localStorage.setItem('beWalletToken', state.token)
       return {...state}
     }
     case 'REGISTER_FORM': {
       const { data } = action.payload
-      console.log(data)
       state.isLoading = false
       state.isError = false
       state.userForm = data
@@ -57,95 +42,30 @@ const auth = (state=initialState, action) => {
       state.isError = true
       return {...state}
     }
-    case 'AUTH_GET_USER_PENDING': {
-      state.isLoading = true
-      state.isError = false
-      return {...state}
-    }
-    case 'AUTH_GET_USER_FULFILLED': {
-      const { data } = action.payload
-      console.log(data)
-      state.isLoading = false
-      state.isError = false
+    case 'AUTH_GET_USER': {
+      const {data} = action.payload
       state.user = data.results
+      window.localStorage.setItem('beWalletUser', JSON.stringify(state.user))
       return {...state}
     }
-    case 'AUTH_GET_USER_REJECTED': {
-      const data = action.payload.response?.data || action.payload.toJSON
-      state.isLoading = false
-      state.isError = true
-      state.errMessage = data.message
-    }
-    case 'AUTH_GET_PHONES_PENDING': {
-      state.isLoading = true
-      state.isError = false
-      return {...state}
-    }
-    case 'AUTH_GET_PHONES_FULFILLED': {
+    case 'AUTH_GET_PHONES': {
       const { data } = action.payload
-      console.log(data)
-      state.isLoading = false
-      state.isError = false
       state.phones = data.results
       return {...state}
     }
-    case 'AUTH_GET_PHONES_REJECTED': {
+    case 'AUTH_GET_BALANCE': {
       const { data } = action.payload
-      state.isLoading = false
-      state.isError = true
-      state.errMessage = data.message
-    }
-    case 'AUTH_GET_BALANCE_PENDING': {
-      state.isLoading = true
-      state.isError = false
-      return {...state}
-    }
-    case 'AUTH_GET_BALANCE_FULFILLED': {
-      const { data } = action.payload
-      state.isLoading = false
-      state.isError = false
       state.balance = data.results
       return {...state}
     }
-    case 'AUTH_GET_BALANCE_REJECTED': {
-      state.isLoading = false
-      state.isError = true
-      return {...state}
-    }
-    case 'AUTH_FORGOT_PASSWORD_PENDING': {
-      state.isLoading = true
-      state.isError = false
-      return {...state}
-    }
-    case 'AUTH_FORGOT_PASSWORD_FULFILLED': {
+    case 'AUTH_FORGOT_PASSWORD': {
       const { data } = action.payload
-      state.isLoading = false
-      state.isError = false
       state.successMsg = data.message
       return {...state}
     }
-    case 'AUTH_FORGOT_PASSWORD_REJECTED': {
-      state.isLoading = false
-      state.isError = true
-      return {...state}
-    }
-    case 'AUTH_NEW_PASSWORD_PENDING': {
-      state.isLoading = true
-      state.isError = false
-      return {...state}
-    }
-    case 'AUTH_NEW_PASSWORD_FULFILLED': {
+    case 'AUTH_NEW_PASSWORD': {
       const { data } = action.payload
-      state.isLoading = false
-      state.isError = false
       state.successMsg = data.message
-      return {...state}
-    }
-    case 'AUTH_NEW_PASSWORD_REJECTED': {
-      const { data } = action.payload.response
-      state.isLoading = false
-      state.isError = true
-      state.errMessage = data.message
       return {...state}
     }
     case 'AUTH_CHANGE_PASSWORD_PENDING': {
@@ -204,11 +124,22 @@ const auth = (state=initialState, action) => {
     case 'AUTH_LOGOUT': {
       state.token = null
       state.userData = {}
-      window.localStorage.removeItem('token')
+      window.localStorage.removeItem('beWalletToken')
+      window.localStorage.removeItem('beWalletUser')
+      window.localStorage.removeItem('beWalletUsers')
       return state
     }
     case 'RESET_AUTH_STATE':{
       state = initialState
+      return {...state}
+    }
+    case 'AUTH_LOADING': {
+      state.isLoading = !state.isLoading
+      return {...state}
+    }
+    case 'AUTH_ERROR': {
+      state.errMessage = action.payload
+      state.isError = true
       return {...state}
     }
     default: {

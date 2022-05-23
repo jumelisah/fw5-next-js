@@ -67,19 +67,19 @@ return (
       <Row>
           <Col xs={6}>
               <div>
-                  <FaArrowDown color="#1EC15F" />
+                  <FaArrowDown className='text-color4' />
               </div>
               <div>Income</div>
-              <div>Rp. {Number(income).toLocaleString('id-ID')}</div>
+              <h5>Rp. {Number(income).toLocaleString('id-ID')}</h5>
           </Col>
           <Col xs={6}>
               <div>
-                  <FaArrowUp color="#FF5B37" />
+                  <FaArrowUp className='text-danger' />
               </div>
               <div>Expense</div>
-              <div>Rp. {Number(expense).toLocaleString('id-ID')}</div>
+              <h5>Rp. {Number(expense).toLocaleString('id-ID')}</h5>
           </Col>
-          <Col xs={12}>
+          <Col xs={12} className='mt-5'>
               <Bar options={options} data={data}  />
           </Col>
       </Row>
