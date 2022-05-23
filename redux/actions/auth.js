@@ -23,6 +23,7 @@ export const login = (email, password) => {
         type: 'AUTH_LOADING'
       })
     } catch (e) {
+      const dataLogin = await http().post('/auth/login', data)
       dispatch({
         type: 'AUTH_ERROR',
         payload: dataLogin.data.message
