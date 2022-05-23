@@ -28,38 +28,19 @@ const transactions = (state=initialState, action) => {
       state.errMessage = data.message
       return state
     }
-    case 'GET_HISTORY_PENDING': {
-      state.isLoading = true
-      state.isError = false
-      return {...state}
-    }
-    case 'GET_HISTORY_FULFILLED': {
+    case 'GET_HISTORY': {
       const { data } = action.payload
-      state.isLoading = false
-      state.isError = false
       state.history = data.results
-      return state
+      window.localStorage.setItem('beWalletHistory', JSON.stringify(state.history))
+      return {...state}
     }
-    case 'GET_HISTORY_REJECTED': {
-      state.isLoading = false
+    case 'HISTORY_LOADING': {
+      state.isLoading = !state.isLoading
+      return {...state}
+    }
+    case 'HISTORY_ERROr': {
       state.isError = true
-      return {...state}
-    }
-    case 'GET_ALL_USERS_PENDING': {
-      state.isLoading = true
-      state.isError = false
-      return {...state}
-    }
-    case 'GET_ALL_USERS_FULFILLED': {
-      const { data } = action.payload
-      state.isLoading = false
-      state.isError = false
-      state.users = data.results
-      return {...state}
-    }
-    case 'GET_ALL_USERS_REJECTED': {
-      state.isLoading = false
-      state.isError = true
+      state.errMessage = action.payload
       return {...state}
     }
     default: {

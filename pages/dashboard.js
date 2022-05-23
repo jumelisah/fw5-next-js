@@ -3,45 +3,76 @@ import Sidebar from "../components/SideBar"
 import styles from "../styles/Dashboard.module.css"
 import { AiOutlineArrowDown, AiOutlineArrowUp } from "react-icons/ai"
 import { connect, useDispatch, useSelector } from "react-redux"
-import { useEffect } from "react"
-import { getBalance, getPhoneNumber } from "../redux/actions/auth"
+import { useEffect, useState } from "react"
+import { getBalance, getUserData } from "../redux/actions/auth"
 import { useRouter } from "next/router"
 import { getHistory } from "../redux/actions/transactions"
 import { getAllUser } from "../redux/actions/users"
 import transactions from "../redux/reducers/transactions"
 import { DataHistory } from "../components/History"
+import { Router } from "react-router-dom"
+import Head from "next/head"
+import BarChart from "../components/Chart"
 
-const Dashboard = ({getHistory, getAllUser, getBalance, getPhoneNumber, auth, transactions, users}) => {
+const Dashboard = () => {
+  const {auth, transactions, users} = useSelector(state => state)
+  const [histories, setHistories] = useState()
+  const [income, setIncome] = useState(0)
   const dispatch = useDispatch()
-  const route = useRouter()
- 
+  const router = useRouter()
+  useEffect(() => {
+    const token = window.localStorage.getItem('beWalletToken')
+    setHistories(JSON.parse(window.localStorage.getItem('beWalletHistory')))
+    if(!token){
+      router.push('/login')
+    }else{
+      dispatch(getUserData(token))
+      dispatch(getBalance(token))
+      dispatch(getHistory(token))
+      dispatch(getAllUser(token))
+    }
+  }, [router, dispatch])
+  const totalIncome = () => {
+    let income = 0
+    transactions.history.forEach(el => {
+      if ((el.userId === auth.user.id && el.typeId === 1) || el.userId !== auth.user.id){
+        income += el.amount
+      }
+    });
+     return income
+  }
+  const totalExpense = () => {
+    let expense = 0
+    transactions.history.forEach(el => {
+      if (el.userId === auth.user.id && el.typeId !== 1){
+        expense += el.amount
+      }
+    });
+    return expense
+  }
   return(
     <Layout>
+      <Head>
+        <title>Dashboard | Be Wallet</title>
+      </Head>
       <div className='container d-flex flex-column flex-md-row bg-color6 mb-5'>
         <div className='col-12 col-md-3'><Sidebar /></div>
-        <div className='row col-12 col-md-8 mx-auto me-md-0'>
+        <div className='col-12 col-md-9 ms-md-3 me-0 mb-3' style={{height: '500px'}}>
           <div className={`${styles.roundedten} col-12 bg-color4 text-white mt-3 mt-md-0`} style={{width: '100%'}}>
             <p>Balance</p>
             <h3>Rp {Number(auth.balance).toLocaleString('id-ID')}</h3>
             <p>{auth.phones.length>0 ? auth.phones[0].number : auth.user.email}</p>
           </div>
-          <div className={`${styles.roundedten} col-12 col-lg-6 bg-white mt-4`}>
-            <div className='d-flex'>
-              <div>
-                <AiOutlineArrowDown className='fs-3 text-color4'/>
-                <p>Income</p>
-                <h4>Rp 2.120.000</h4>
-              </div>
-              <div className='ms-auto'>
-                <AiOutlineArrowUp className='fs-3 text-danger'/>
-                <p>Expense</p>
-                <h4>Rp 2.120.000</h4>
-              </div>
+          <div className='col-12 col-md-6 p-0'>
+            <div className={`${styles.roundedten} bg-white shadow mt-3 me-1 p-3`} style={{height: '100%'}}>
+              <BarChart data={[100,50,200,300]} labels={['1','2','3','4']} income={totalIncome()} expense={totalExpense()}/>
             </div>
           </div>
-          <div className={`${styles.roundedten} bg-white col-12 col-lg-5 ms-lg-auto mt-4`}>
-            <h3 className='fs-5'>Transaction History</h3>
-            <div><DataHistory dataHistory={transactions.history} dataUser={users.userList} /></div>
+          <div className='col-12 col-md-6 p-0'>
+            <div className={`${styles.roundedten} bg-white shadow mt-3 ms-1 p-3`} style={{height: '100%'}}>
+              <h3 className='fs-5'>Transaction History</h3>
+              <div className='overflow-auto' style={{height: '300px'}}><DataHistory dataHistory={transactions.history} dataUser={users.userList} /></div>
+            </div>
           </div>
         </div>
       </div>
@@ -49,6 +80,4 @@ const Dashboard = ({getHistory, getAllUser, getBalance, getPhoneNumber, auth, tr
   )
 }
 
-const mapStateToProps = (state) => ({auth: state.auth, transactions: state.transactions, users: state.users})
-const mapDispatchToProps = {getHistory, getAllUser, getBalance, getPhoneNumber}
-export default connect(mapStateToProps, mapDispatchToProps)(Dashboard)
+export default Dashboard

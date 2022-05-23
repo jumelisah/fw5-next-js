@@ -18,8 +18,10 @@ export default function Home() {
   ]
   return (
     <Layout>
+      <Head>
+        <title>Be Wallet</title>
+      </Head>
     <div className='container'>
-      
       <div className='top-wrapper d-flex flex-column-reverse flex-md-row justify-content-center align-items-center'>
         <div className='left-section col-md-6'>
           <Image src='/images/png-phone.png' alt='phone' width={250} height={600} layout='fixed' priority/>

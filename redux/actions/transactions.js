@@ -10,9 +10,28 @@ export const topUp = (amount, token) =>{
 }
 
 export const getHistory = (token) => {
-  return({
-    type: 'GET_HISTORY',
-    payload: http(token).get('/transactions/history')
-  })
+  return async (dispatch) => {
+    try {
+      dispatch({
+        type: 'HISTORY_LOADING'
+      })
+      const data = await http(token).get('/transactions/history')
+      dispatch({
+        type: 'GET_HISTORY',
+        payload: data
+      })
+      dispatch({
+        type: 'HISTORY_LOADING'
+      })
+    } catch (e) {
+      dispatch({
+        type: 'HISTORY_ERROR',
+        payload: e.response.data.message
+      })
+      dispatch({
+        type: 'HISTORY_LOADING'
+      })
+    }
+  }
 }
 
