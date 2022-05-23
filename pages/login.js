@@ -13,7 +13,8 @@ import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import Head from 'next/head';
 
-const Login = ({auth}) => {
+const Login = () => {
+  const {auth} = useSelector(state=>state)
   const dispatch = useDispatch()
   const router = useRouter()
   const [email, setEmail] = useState()
@@ -21,11 +22,10 @@ const Login = ({auth}) => {
   const [itsError, setItsError] = useState(false)
 
   useEffect ( () => {
-    const token = window.localStorage.getItem('beWalletToken')
     if(!email || !password){
       setItsError(true)
     }
-    if (token) {
+    if (auth.token) {
       router.push('/dashboard')
     }
     if(!auth.successMsg) {
@@ -33,7 +33,7 @@ const Login = ({auth}) => {
         type: 'RESET_AUTH_STATE'
       })
     }
-  }, [router, email, password, dispatch, auth.successMsg])
+  }, [router, email, password, dispatch, auth.successMsg, auth.token])
 
   const onLogin = async(e) => {
     e.preventDefault()
@@ -102,5 +102,4 @@ const Login = ({auth}) => {
   )
 }
 
-const mapStateToProps = (state) => ({auth: state.auth})
-export default connect(mapStateToProps)(Login)
+export default Login
