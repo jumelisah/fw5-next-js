@@ -34,13 +34,24 @@ const transactions = (state=initialState, action) => {
       window.localStorage.setItem('beWalletHistory', JSON.stringify(state.history))
       return {...state}
     }
-    case 'HISTORY_LOADING': {
+    case 'TRANSFER': {
+      const { data } = action.payload
+      state.message = data.message
+      return {...state}
+    }
+    case 'TRANSACTION_LOADING': {
       state.isLoading = !state.isLoading
       return {...state}
     }
-    case 'HISTORY_ERROr': {
+    case 'TRANSACTION_ERROR': {
       state.isError = true
       state.errMessage = action.payload
+      return {...state}
+    }
+    case 'TRANSACTION_CLEAR': {
+      state.isError = false
+      state.errMessage = null
+      state.message = null
       return {...state}
     }
     default: {

@@ -31,8 +31,8 @@ const Sidebar = () => {
   }
   
   return(
-    <div className={`${styles.roundedten} position-relative container bg-white px-0 py-3 shadow`} style={{height: '500px'}}>
-      <div className="d-flex d-md-none align-items-center px-3 mb-3 border-start border-4" style={{cursor: "pointer"}} onClick={() => setShowMenu(!showMenu)}>
+    <div className={`${styles.roundedten} position-relative container bg-white px-0 py-3 shadow`} style={{height: '100%'}}>
+      <div className="d-flex d-md-none align-items-center px-3 my-3 border-start border-4" style={{cursor: "pointer"}} onClick={() => setShowMenu(!showMenu)}>
         <AiOutlineMenu />
         <p className="text-color4 p-0 m-0 ps-3">Menu</p>
         <IoChevronDownCircleSharp className="ms-auto"/>
@@ -49,23 +49,22 @@ const Sidebar = () => {
                 {item.name}
               </a>
             </Link>}
-            {/* {item.url==='' &&
-            <div onClick={onLogout} style={{cursor: 'pointer'}} className='pb-3'>
-              <a className={`border-start border-4 ${linkActive===item.url?'text-color4 border-color4':'text-secondary border-secondary'} ps-3`} style={{textDecoration: 'none'}}>
-                <Icon className='me-3' />
-                {item.name}
-              </a>
-          </div>} */}
           </li>
           )
         })}
       </ul>
-      <div className='position-absolute bottom-0 mb-3' onClick={() => dispatch({type: 'AUTH_LOGOUT'})} style={{cursor: 'pointer'}}>
+      <div className={`d-none d-md-block position-absolute bottom-0 mb-3`} onClick={onLogout} style={{cursor: 'pointer'}}>
         <div className='border-start border-4 text-secondary border-secondary ps-3 d-flex align-items-center'>
           <FiLogOut />
           <p className='m-0 p-0 ms-3'>Logout</p>
         </div>
       </div>
+      {showMenu && <div className={`d-block d-md-none pb-3`} onClick={onLogout} style={{cursor: 'pointer'}}>
+        <div className='border-start border-4 text-secondary border-secondary ps-3 d-flex align-items-center'>
+          <FiLogOut />
+          <p className='m-0 p-0 ms-3'>Logout</p>
+        </div>
+      </div>}
     </div>
   )
 

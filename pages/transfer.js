@@ -8,14 +8,16 @@ import { useRouter } from "next/router"
 
 const Transfer = () => {
   const [search, setSearch] = useState('')
-  const {users} = useSelector(state => state)
+  const [users, setUsers] = useState()
   const router = useRouter()
   useEffect(() => {
     const token = window.localStorage.getItem('beWalletToken')
+    const userList = JSON.parse(window.localStorage.getItem('beWalletUsers'))
+    setUsers(userList)
     if (!token) {
       router.push('/login')
     }
-  })
+  }, [router])
   return(
     <Layout>
       <div className='container mb-5'>
@@ -23,11 +25,11 @@ const Transfer = () => {
           <div className='col-12 col-md-3'>
             <Sidebar />
           </div>
-          <div className='col-12 col-md-9 bg-white' style={{borderRadius: '10px'}}>
+          <div className='col-12 col-md-9 bg-white shadow' style={{borderRadius: '10px'}}>
             <div className="p-3">
               <input type="text" value={search} onChange={e => setSearch(e.target.value)} className="bg-light rounded-3 px-3 py-2" style={{width: "100%"}}/>
               <div className="py-3 overflow-auto" style={{height: 400}}>
-                {users.userList.map((user, idx) => {
+                {users?.map((user, idx) => {
                   if(user.fullName.toLowerCase().includes(search) || user.fullName.toUpperCase().includes(search) || user.phone[0]?.number.includes(search)) return(
                     <div key={user.id} className="d-flex flex-row py-2" style={{cursor: "pointer"}} onClick={() => router.push(`/transfer/${[user.id]}`)}>
                       <Image src={user.picture || defaultUser} width={50} height={50} alt={user.id} className="rounded-3"/>
