@@ -12,6 +12,7 @@ import { Router, useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import { forgotPassword } from '../redux/actions/auth';
+import Title from '../components/Title';
 
 const ResetPassword = () => {
   const {auth} = useSelector(state => state)
@@ -46,6 +47,7 @@ const ResetPassword = () => {
   }
   return(
     <div className='d-flex flex-column-reverse flex-md-row p-0 m-0'>
+      <Title title="Reset Password" />
       <div className={`${styles.leftSection} left-section col-12 col-md-7 px-5 d-flex align-items-center vh-md-100`}>
         <div className='px-md-5'>
         <Link href='/'>

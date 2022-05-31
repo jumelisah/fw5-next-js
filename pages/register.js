@@ -7,11 +7,10 @@ import Link from 'next/link';
 import Button from '../components/Button';
 import Image from 'next/image';
 import styles from '../styles/Login.module.css'
-import { connect, useDispatch } from 'react-redux';
+import { connect } from 'react-redux';
 import { registerForm } from '../redux/actions/auth';
-import { useNavigate } from 'react-router-dom';
 import { useRouter } from 'next/router';
-import { useState } from 'react';
+import Title from '../components/Title';
 
 const Register = ({registerForm, auth}) => {
   const navigate = useRouter()
@@ -33,6 +32,7 @@ const Register = ({registerForm, auth}) => {
   }
   return(
     <div className='d-flex flex-column-reverse flex-md-row p-0 m-0'>
+      <Title title="Register" />
       <div className={`${styles.leftSection} left-section col-12 col-md-7 px-5 d-flex align-items-center vh-md-100 position-fixed`}>
         <div className='px-md-5'>
         <Link href='/'>

@@ -1,12 +1,32 @@
 import http from "../../helpers/http"
 
 export const topUp = (amount, token) =>{
-  const data = new URLSearchParams()
-  data.append('amount', amount)
-  return({
-    type: 'TOP_UP',
-    payload: http(token).post('/transactions/topup', data)
-  })
+  const params = new URLSearchParams()
+  params.append('amount', amount)
+  return async(dispatch) => {
+    try {
+      dispatch({
+        type: 'TRANSACTION_LOADING'
+      })
+      const data = await http(token).post('/transactions/topup', params)
+      dispatch({
+        type: 'TOP_UP',
+        payload: data
+      })
+      dispatch({
+        type: 'TRANSACTION_LOADING'
+      })
+    } catch (e) {
+      console.log(e)
+      dispatch({
+        type: 'TRANSACTION_ERROR',
+        payload: e.response.data.message || e.toString()
+      })
+      dispatch({
+        type: 'TRANSACTION_LOADING'
+      })
+    }
+  }
 }
 
 export const getHistory = (token) => {

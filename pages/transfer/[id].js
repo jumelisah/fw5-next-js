@@ -11,6 +11,7 @@ import { getBalance } from "../../redux/actions/auth"
 import { transferBalance } from "../../redux/actions/transactions"
 import { BsFillPatchCheckFill, BsXOctagonFill } from "react-icons/bs"
 import Head from "next/head"
+import ErrorModal from "../../components/ErrorModal"
 
 const TransferTo = () => {
   const {auth, users, transactions} = useSelector(state => state)
@@ -115,12 +116,12 @@ const TransferTo = () => {
             <p className="fw-bold p-0 m-0">Notes</p>
             <p className="p-0 m-0">{notes}</p>
             </div>
-            <Button variant="bg-color5">Close</Button>
+            <Button variant="bg-color5" onClick={() => setShowModalTr(false)}>Close</Button>
           </div>}
           {transactions.isError && !askPin && <div className="text-center">
-            <BsXOctagonFill size={30} className="text-danger" />
-            <p className="fs-4 fw-bold text-danger">{transactions.errMessage}</p>
-            <Button variant="bg-color5" onClick={() => setAskPin(true)}>Try Again</Button>
+            <ErrorModal message={transactions.errMessage}>
+              <Button variant="bg-color5" onClick={transferModal}>Try Again</Button>
+            </ErrorModal>
           </div>}
         </div>
       </div>}

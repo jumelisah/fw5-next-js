@@ -1,18 +1,15 @@
 import Layout from "../components/Layout"
 import Sidebar from "../components/SideBar"
 import styles from "../styles/Dashboard.module.css"
-import { AiOutlineArrowDown, AiOutlineArrowUp } from "react-icons/ai"
-import { connect, useDispatch, useSelector } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 import { useEffect, useState } from "react"
 import { getBalance, getUserData } from "../redux/actions/auth"
 import { useRouter } from "next/router"
 import { getHistory } from "../redux/actions/transactions"
 import { getAllUser } from "../redux/actions/users"
-import transactions from "../redux/reducers/transactions"
 import { DataHistory } from "../components/History"
-import { Router } from "react-router-dom"
-import Head from "next/head"
 import BarChart from "../components/Chart"
+import Title from "../components/Title"
 
 const Dashboard = () => {
   const {auth, transactions, users} = useSelector(state => state)
@@ -52,9 +49,7 @@ const Dashboard = () => {
   }
   return(
     <Layout>
-      <Head>
-        <title>Dashboard | Be Wallet</title>
-      </Head>
+      <Title title="Dahboard" />
       <div className='container d-flex flex-column flex-md-row bg-color6 mb-5'>
         <div className='col-12 col-md-3'><Sidebar /></div>
         <div className='col-12 col-md-9 ms-md-3 me-0 overflow-auto' style={{height: '500px'}}>

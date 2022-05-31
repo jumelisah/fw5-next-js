@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react"
-import { useSelector } from "react-redux"
 import Layout from "../components/Layout"
 import Sidebar from "../components/SideBar"
 import defaultUser from "../public/images/default-user.png"
 import Image from "next/image"
 import { useRouter } from "next/router"
+import Title from "../components/Title"
 
 const Transfer = () => {
   const [search, setSearch] = useState('')
@@ -20,6 +20,7 @@ const Transfer = () => {
   }, [router])
   return(
     <Layout>
+      <Title title="Transfer" />
       <div className='container mb-5'>
         <div className='row'>
           <div className='col-12 col-md-3'>

@@ -1,76 +1,57 @@
 import { useEffect, useState } from "react"
 import { Form } from "react-bootstrap"
 import { useDispatch, useSelector } from "react-redux"
+import Image from "next/image"
 import Button from "../components/Button"
 import FormInput from "../components/FormInput"
 import Layout from "../components/Layout"
 import Sidebar from "../components/SideBar"
 import { topUp } from "../redux/actions/transactions"
 import { BsCheckCircle } from 'react-icons/bs'
+import Title from "../components/Title"
+import Modal from "../components/Modal"
+import transactions from "../redux/reducers/transactions"
+import ErrorModal from "../components/ErrorModal"
+import SuccessModal from "../components/SuccessModal"
 
 const Topup = () => {
-  const { auth } = useSelector(state => state.auth)
+  const { auth, transactions } = useSelector(state => state)
   const dispatch = useDispatch()
   const [errTopup, setErrTopUp] = useState(false)
   const [successTopup, setSuccessTopUp] = useState(false)
-
-  // useEffect(()=>{
-  //   const token = window.localStorage.getItem('token')
-  //   if(token){
-      
-  //   }
-  // })
-  const topup = (e) => {
-    e.preventDefault()
-    const token = window.localStorage.getItem('token')
-    const amount = e.target.elements['amount'].value
-    if(amount < 10000){
-      setErrTopUp(true)
-    }else{
-      dispatch(topUp(amount, token))
-      setSuccessTopUp(true)
-    }
-  }
-  const closeErr = () => {
-    setErrTopUp(false)
-  }
-  const closeSuccess = () => {
-    setSuccessTopUp(false)
+  const [amount, setAmount] = useState()
+  const [showModal, setShowModal] = useState(false)
+  
+  const topup = () => {
+    const token = window.localStorage.getItem('beWalletToken')
+    dispatch(topUp(amount, token))
+    setShowModal(true)
   }
   return(
-    <div className='position-relative'>
     <Layout>
-      <div className='container'>
+      <Title title="Topup" />
+      <div className='container mb-5'>
         <div className='row'>
           <div className='col-12 col-md-3'><Sidebar /></div>
-          <div className='col-12 col-md-9 bg-white'>
+          <div className='col-12 col-md-9 bg-white shadow rounded-3 p-4 mt-3 mt-md-0 d-flex justify-content-center align-items-center' style={{height: 500}}>
             <div>
               <h1 className='fs-5'>Top Up</h1>
               <p>Enter the amount of money, and click submit</p>
-              <Form onSubmit={topup}>
-                <FormInput type='number' name='amount' variant='border' />
-                <Button variant='bg-color4'>Submit</Button>
-              </Form>
+              <FormInput type='number' name='amount' variant='border p-2 text-center' value={amount} onChange={e => setAmount(e.target.value)} />
+              {amount < 10000 && <p className="text-danger">Minimum topup enable is Rp 10.000</p>}
+              <Button variant={`${amount >= 10000 ? 'bg-color5' : 'border-0'}`} onClick={() => {if (amount >=10000) topup()}}>Topup</Button>
             </div>
           </div>
         </div>
       </div>
+      {showModal && <Modal handleClose={() => {setShowModal(false); dispatch({type: 'TRANSACTION_CLEAR'})}}>
+        <div>
+        {transactions.isLoading && <Image src='/images/loading-buffering.gif' alt='loading' width={100} height={100} />}
+        {transactions.isError && !transactions.isLoading && <ErrorModal message={transactions.errMessage} />}
+        {!transactions.isError && !transactions.isLoading && <SuccessModal message={transactions.message} />}
+        </div>
+      </Modal>}
     </Layout>
-    {errTopup && <div className='bg-secondary bg-opacity-10 position-absolute top-0 d-flex justify-content-center align-items-center vh-100 vw-100' onClick={closeErr}>
-      <div className='bg-white p-3' style={{borderRadius:'10px'}}>
-        <h1 className='border border-4 border-color5 text-danger rounded-pill text-center mx-auto' style={{width: '60px', height: '60px', lineHeight: '50px'}}>X</h1>
-        <h1 className='fs-4 text-danger text-center'>FAILED</h1>
-        <p>Minimum top up amount is Rp. 10.000</p>
-        </div>
-    </div>}
-    {successTopup && <div className='bg-secondary bg-opacity-10 position-absolute top-0 d-flex justify-content-center align-items-center vh-100 vw-100' onClick={closeSuccess}>
-      <div className='bg-white p-3 text-center' style={{borderRadius:'10px', width: '250px'}}>
-        <h1 className='text-color3 rounded-pill mx-auto' style={{width: '60px', height: '60px', lineHeight: '50px'}}><BsCheckCircle /></h1>
-        <h1 className='fs-4 text-color3'>SUCCESS</h1>
-        <p>Top up success</p>
-        </div>
-    </div>}
-    </div>
   )
 }
 

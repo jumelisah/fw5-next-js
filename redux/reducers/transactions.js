@@ -9,34 +9,20 @@ const initialState = {
 
 const transactions = (state=initialState, action) => {
   switch(action.type){
-    case 'TOP_UP_PENDING': {
-      state.isLoading = true
-      state.isError = false
-      return state
-    }
-    case 'TOP_UP_FULFILLED': {
+    case 'TOP_UP': {
       const { data } = action.payload
-      state.isLoading = false
-      state.isError = false
-      state.message = data.results
-      return state
-    }
-    case 'TOP_UP_REJECTED': {
-      const { data } = action.payload
-      state.isLoading = false
-      state.isError = true
-      state.errMessage = data.message
-      return state
-    }
-    case 'GET_HISTORY': {
-      const { data } = action.payload
-      state.history = data.results
-      window.localStorage.setItem('beWalletHistory', JSON.stringify(state.history))
+      state.message = data.message
       return {...state}
     }
     case 'TRANSFER': {
       const { data } = action.payload
       state.message = data.message
+      return {...state}
+    }
+    case 'GET_HISTORY': {
+      const { data } = action.payload
+      state.history = data.results
+      window.localStorage.setItem('beWalletHistory', JSON.stringify(state.history))
       return {...state}
     }
     case 'TRANSACTION_LOADING': {
