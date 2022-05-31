@@ -1,12 +1,11 @@
 import { useState } from 'react';
 import OtpInput from 'react-otp-input'
-const Otp = () =>{
-  const [state, setState] = useState({otp: null})
-  const handleChange = (otp) => setState({ otp });
+
+const Otp = ({value, onChange}) =>{
   return (
     <OtpInput
-      value={state.otp}
-      onChange={handleChange}
+      value={value}
+      onChange={onChange}
       numInputs={6}
       separator={<span>-</span>}
     />

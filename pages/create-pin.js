@@ -13,6 +13,7 @@ import { useNavigate } from 'react-router-dom';
 import { useRouter } from 'next/router';
 import OtpInput from 'react-otp-input';
 import { useState } from 'react';
+import Title from '../components/Title';
 
 const CreatePin = ({register, auth}) => {
   const [state, setState] = useState({otp: null})
@@ -29,6 +30,7 @@ const CreatePin = ({register, auth}) => {
   }
   return(
     <div className='d-flex flex-column-reverse flex-md-row p-0 m-0'>
+      <Title title="Create PIN" />
       <div className={`${styles.leftSection} left-section col-12 col-md-7 px-5 d-flex align-items-center vh-md-100 position-fixed`}>
         <div className='px-md-5'>
         <Link href='/'>

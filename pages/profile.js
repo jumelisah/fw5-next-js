@@ -8,6 +8,7 @@ import auth from "../redux/reducers/auth"
 import { useSelector } from "react-redux"
 import { useEffect, useState } from "react"
 import Head from "next/head"
+import Title from "../components/Title"
 
 const Profile = () => {
   const {auth} = useSelector(state => state)
@@ -30,9 +31,7 @@ const Profile = () => {
 	}
   return(
     <Layout>
-      <Head>
-        <title>Profile | Be Wallet</title>
-      </Head>
+      <Title title="Profile" />
       <div className='container'>
         <div className='row'>
           <div className='col-12 col-md-3'><Sidebar /></div>

@@ -6,6 +6,7 @@ import FormInput from "../components/FormInput"
 import { DataHistory } from "../components/History"
 import Layout from "../components/Layout"
 import Sidebar from "../components/SideBar"
+import Title from "../components/Title"
 import transactions from "../redux/reducers/transactions"
 import styles from "../styles/Dashboard.module.css"
 
@@ -15,6 +16,7 @@ const History = ({transactions, users, auth}) =>{
   }, [transactions])
   return(
     <Layout>
+      <Title title="History" />
       <div className='container'>
         <div className='row'>
           <div className='col-12 col-md-3'>

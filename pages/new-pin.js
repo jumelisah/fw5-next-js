@@ -7,6 +7,7 @@ import Button from "../components/Button"
 import { useState } from "react"
 import { useRouter } from 'next/router';
 import OtpInput from 'react-otp-input';
+import Title from "../components/Title"
 
 const NewPin = () => {
   const [state, setState] = useState({otp: null})
@@ -25,6 +26,7 @@ const NewPin = () => {
   }
   return(
     <Layout>
+      <Title title="New PIN" />
       <div className='container'>
         <div className='row'>
           <div className='col-12 col-md-3'><Sidebar /></div>

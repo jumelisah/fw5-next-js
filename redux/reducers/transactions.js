@@ -9,24 +9,15 @@ const initialState = {
 
 const transactions = (state=initialState, action) => {
   switch(action.type){
-    case 'TOP_UP_PENDING': {
-      state.isLoading = true
-      state.isError = false
-      return state
-    }
-    case 'TOP_UP_FULFILLED': {
+    case 'TOP_UP': {
       const { data } = action.payload
-      state.isLoading = false
-      state.isError = false
-      state.message = data.results
-      return state
+      state.message = data.message
+      return {...state}
     }
-    case 'TOP_UP_REJECTED': {
+    case 'TRANSFER': {
       const { data } = action.payload
-      state.isLoading = false
-      state.isError = true
-      state.errMessage = data.message
-      return state
+      state.message = data.message
+      return {...state}
     }
     case 'GET_HISTORY': {
       const { data } = action.payload
@@ -34,13 +25,19 @@ const transactions = (state=initialState, action) => {
       window.localStorage.setItem('beWalletHistory', JSON.stringify(state.history))
       return {...state}
     }
-    case 'HISTORY_LOADING': {
+    case 'TRANSACTION_LOADING': {
       state.isLoading = !state.isLoading
       return {...state}
     }
-    case 'HISTORY_ERROr': {
+    case 'TRANSACTION_ERROR': {
       state.isError = true
       state.errMessage = action.payload
+      return {...state}
+    }
+    case 'TRANSACTION_CLEAR': {
+      state.isError = false
+      state.errMessage = null
+      state.message = null
       return {...state}
     }
     default: {
