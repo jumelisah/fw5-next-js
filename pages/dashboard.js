@@ -47,6 +47,35 @@ const Dashboard = () => {
     });
     return expense
   }
+  const weeklyReport = () => {
+    const today = new Date()
+    const thisWeek = new Date(today.getTime() - ((today.getDay()-1)*24*60*60*1000))
+    const earlyWeek = new Date(`${thisWeek.getFullYear()}-${thisWeek.getMonth()+1}-${thisWeek.getDate()}`)
+    const endOfWeek = new Date(earlyWeek.getTime() +(6*24*60*60*1000))
+    let balance = 0;
+    const report = []
+    for(let i=1;i<8;i++){
+      transactions.history?.forEach(el => {
+        if (new Date(el.createdAt) >= earlyWeek && new Date(el.createdAt) <= endOfWeek && new Date(el.createdAt).getMonth()===earlyWeek.getMonth() && new Date(el.createdAt).getDay()===i){
+          if(el.userId === auth.user.id && el.typeId !== 1){
+            balance+=el.amount
+          }else if((el.userId === auth.user.id && el.typeId === 1) || el.userId !== auth.user.id){
+            balance-=el.amount
+          }
+          // console.log(new Date(el.createdAt).getDay())
+          // console.log(new Date(el.createdAt).getMonth())
+          // console.log(earlyWeek.getMonth())
+          // console.log(el.createdAt)
+        }
+        // console.log('a',el.createdAt)
+
+      })
+      report.push(balance)
+      balance=0
+    }
+    // const data = 
+    return {report, day: ['Mon', 'Tue', 'Wed','Thus', 'Fri', 'Sat', 'Sun']}
+  }
   return(
     <Layout>
       <Title title="Dahboard" />
@@ -61,7 +90,7 @@ const Dashboard = () => {
           <div className='col-12 d-flex flex-column flex-md-row p-0 m-0'>
             <div className='col-12 col-md-6 pe-2'>
               <div className={`${styles.roundedten} bg-white shadow p-3`} style={{height: '100%'}}>
-                <BarChart data={[100000,50000,200000,300000,200, -200000]} labels={['1','2','3','4','5','6','7']} income={totalIncome()} expense={totalExpense()}/>
+                <BarChart data={weeklyReport().report} labels={weeklyReport().day} income={totalIncome()} expense={totalExpense()}/>
               </div>
             </div>
             <div className='col-12 col-md-6 ps-md-2 mt-3 mt-md-0'>
