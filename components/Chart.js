@@ -70,14 +70,14 @@ return (
                   <FaArrowDown className='text-color4' />
               </div>
               <div>Income</div>
-              <h5>Rp. {Number(income).toLocaleString('id-ID')}</h5>
+              <h6>Rp. {Number(income).toLocaleString('id-ID')}</h6>
           </Col>
           <Col xs={6}>
               <div>
                   <FaArrowUp className='text-danger' />
               </div>
               <div>Expense</div>
-              <h5>Rp. {Number(expense).toLocaleString('id-ID')}</h5>
+              <h6>Rp. {Number(expense).toLocaleString('id-ID')}</h6>
           </Col>
           <Col xs={12} className='mt-5'>
               <Bar options={options} data={data}  />

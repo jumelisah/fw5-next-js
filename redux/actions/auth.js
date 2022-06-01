@@ -224,20 +224,39 @@ export const register = (data) => {
   params.append('email', data.email)
   params.append('password', data.password)
   params.append('pin', data.pin)
-
   return({
     type: 'AUTH_REGISTER',
     payload: http().post('/auth/register', params)
   })
 }
 
-export const updateProfile = (data) => {
-  const params = new FormData()
-  for (const x in data) {
-    params.append(x, data[x])
+export const updateProfile = (userData, token) => {
+  return async (dispatch) => {
+    try{
+      const params = new FormData()
+      for (const x in userData) {
+        params.append(x, userData[x])
+      }
+      dispatch({
+        type: 'AUTH_LOADING'
+      })
+      const data = await http(token).patch('/profile', params)
+      dispatch({
+        type: 'AUTH_CHANGE_PROFILEs',
+        payload: data
+      })
+      dispatch({
+        type: 'AUTH_LOADING'
+      })
+    } catch (e) {
+      console.log(e)
+      dispatch({
+        type: 'AUTH_ERROR',
+        payload: e.response?.data
+      })
+      dispatch({
+        type: 'AUTH_LOADING'
+      })
+    }
   }
-  return({
-    type: 'AUTH_UPDATE_PROFILE',
-    payload: http.patch('/profile', params)
-  })
 }

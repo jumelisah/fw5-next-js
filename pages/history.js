@@ -1,34 +1,38 @@
-import Image from "next/image"
-import { useEffect } from "react"
-import { Form } from "react-bootstrap"
-import { connect, useSelector } from "react-redux"
-import FormInput from "../components/FormInput"
+import { useEffect, useState } from "react"
+import { useDispatch, useSelector } from "react-redux"
 import { DataHistory } from "../components/History"
 import Layout from "../components/Layout"
 import Sidebar from "../components/SideBar"
 import Title from "../components/Title"
-import transactions from "../redux/reducers/transactions"
-import styles from "../styles/Dashboard.module.css"
+import { useRouter } from "next/router"
+import { getHistory } from "../redux/actions/transactions"
 
-const History = ({transactions, users, auth}) =>{
+const History = () =>{
+  const {transactions} = useSelector(state => state)
+  const [users, setUsers] = useState([])
+  const router = useRouter()
+  const dispatch = useDispatch()
   useEffect(()=>{
-    console.log(transactions)
-  }, [transactions])
+    const token = window.localStorage.getItem('beWalletToken')
+    setUsers(JSON.parse(window.localStorage.getItem('beWalletUsers')))
+    if(!token){
+      router.push('/login')
+    }
+    dispatch(getHistory(token))
+  }, [router, dispatch])
   return(
     <Layout>
       <Title title="History" />
-      <div className='container'>
+      <div className='container mb-3'>
         <div className='row'>
           <div className='col-12 col-md-3'>
             <Sidebar />
           </div>
-          <div className='col-12 col-md-9 bg-white mt-4 mt-md-0 p-3' style={{borderRadius: '10px'}}>
+          <div className='col-12 col-md-9 bg-white mt-4 mt-md-0 p-3 shadow' style={{borderRadius: '10px', height: 500}}>
             <h1 className='fs-3'>Transaction History</h1>
-            <Form>
-              <FormInput name='search' type='text' />
-            </Form>
-            {!auth.isLoading &&
-            <DataHistory dataHistory={transactions.history} dataUser={users.userList} />}
+            <div className='overflow-auto mt-3' style={{maxHeight: '400px'}}>
+              <DataHistory dataHistory={transactions.history} dataUser={users} />
+            </div>
           </div>
         </div>
       </div>
@@ -36,5 +40,4 @@ const History = ({transactions, users, auth}) =>{
   )
 }
 
-const mapStateToProps = (state) => ({transactions: state.transactions, users: state.users, auth: state.auth})
-export default connect(mapStateToProps)(History)
+export default History
