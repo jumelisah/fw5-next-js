@@ -44,6 +44,7 @@ const auth = (state=initialState, action) => {
     }
     case 'AUTH_GET_USER': {
       const {data} = action.payload
+      console.log(data)
       state.user = data.results
       window.localStorage.setItem('beWalletUser', JSON.stringify(state.user))
       return {...state}
@@ -106,20 +107,11 @@ const auth = (state=initialState, action) => {
       state.errMessage = data.message
       return {...state}
     }
-    case 'AUTH_CHANGE_PROFILE_PENDING': {
-      state.isLoading = true
-      state.isError = false
-    }
-    case 'AUTH_CHANGE_PROFILE_FULFILLED': {
+    case 'AUTH_CHANGE_PROFILE': {
       const { data } = action.payload
-      state.isLoading = false
-      state.isError = false
-      state.message = data.message
-    }
-    case 'AUTH_CHANGE_PROFILE_PENDING': {
-      state.isLoading = false
-      state.isError = true
-      state.errMessage = data.message
+      state.user = data.results
+      window.localStorage.setItem('beWalletUser', JSON.stringify(state.user))
+      // state.message = data.message
     }
     case 'AUTH_LOGOUT': {
       state.token = null
@@ -131,7 +123,10 @@ const auth = (state=initialState, action) => {
       return state
     }
     case 'RESET_AUTH_STATE':{
-      state = initialState
+      state.isError = false
+      state.isLoading = false
+      state.errMessage = null
+      state.message = null
       return {...state}
     }
     case 'AUTH_LOADING': {

@@ -62,12 +62,12 @@ const Login = () => {
             <FormInput type='email'
             name='email'
             icon={<AiOutlineMail className={`${itsError && auth.errMessage ? 'text-danger' : email ? 'text-color4' : ''}`}/>}
-            placeholder='Enter your e-mail' variant={`ps-4 ${itsError && auth.errMessage ? 'border-danger text-danger' : email ? 'border-color4 text-color4' : ''}`}
+            placeholder='Enter your e-mail' variant={`border-0 border-bottom ps-4 ${itsError && auth.errMessage ? 'border-danger text-danger' : email ? 'border-color4 text-color4' : ''}`}
             onChange={e=>setEmail(e.target.value)}/>
             <FormInput type='password'
             name='password'
             icon={<FiLock className={`${itsError && auth.errMessage ? 'text-danger' : password ? 'border-color4 text-color4' : ''}`}/>}
-            placeholder='Enter your password' variant={`ps-4 ${itsError && auth.errMessage ? 'border-danger text-danger' : password ? 'border-color4 text-color4' : ''}`}
+            placeholder='Enter your password' variant={`border-0 border-bottom ps-4 ${itsError && auth.errMessage ? 'border-danger text-danger' : password ? 'border-color4 text-color4' : ''}`}
             onChange={e=>setPassword(e.target.value)}/>
             <div className='text-md-end'>
             <Link href='/reset-password'>

@@ -3,9 +3,13 @@ import Header from "./Header"
 
 const Layout = ({children}) => {
   return(
-    <div className='bg-color7 vh-100'>
+    <div className='bg-color7'>
       <Header />
-      {children}
+      <div className="my-5">
+        <div className="pt-5">
+        {children}
+        </div>
+      </div>
       <Footer/>
     </div>
   )

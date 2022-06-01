@@ -3,11 +3,8 @@ import Image from "next/image"
 import Link from "next/link"
 import { useEffect, useState } from "react"
 import { FiBell } from "react-icons/fi"
-import { connect, useDispatch, useSelector } from "react-redux"
-import { getUserData, getPhoneNumber, getBalance } from "../redux/actions/auth"
-import { getHistory } from "../redux/actions/transactions"
-import { getAllUser } from "../redux/actions/users"
-import { useRouter } from 'next/router';
+import { useDispatch, useSelector } from "react-redux"
+import { getPhoneNumber } from "../redux/actions/auth"
 
 const Header = () => {
   const {auth} = useSelector(state => state)
@@ -19,11 +16,6 @@ const Header = () => {
     setUserData(JSON.parse(window.localStorage.getItem('beWalletUser')))
     if(token){
       dispatch(getPhoneNumber(token))
-      // getUserData(token)
-      // getBalance(token)
-      // getHistory(token)
-      // getPhoneNumber(token)
-      // getAllUser(token)
     }else{
       setIsLogin(false)
     }
@@ -31,7 +23,7 @@ const Header = () => {
   
   return (
     <>
-    <nav className="navbar navbar-expand-lg navbar-light bg-color7">
+    <nav className="navbar navbar-expand-lg navbar-light bg-color7 position-fixed top-0 col-12" style={{zIndex: 999}}>
       <div className="container">
         <Link  href='/'>
           <a className="navbar-brand fs-3 fw-bold text-color3">Zwallet</a>
@@ -57,14 +49,14 @@ const Header = () => {
           <ul className="navbar-nav ms-auto mb-2 mb-lg-0 d-flex align-items-center">
             <li className="nav-item m-2">
               <Link href='/profile' passHref>
-              <a><Image src={userData?.picture || '/images/default-user.png'} alt='user' width={45} height={45} onError={e => e.target.src='/images/default-user.png'} className="rounded-3"/></a>
+              <a><Image src={userData?.picture || '/images/default-user.png'} alt='user' width={45} height={45} layout='fixed' objectFit='cover' onError={e => e.target.src='/images/default-user.png'} className="rounded-3"/></a>
               </Link>
             </li>
             <li className="nav-item m-2">
               <Link href='/profile' passHref>
                 <a style={{textDecoration: 'none'}}>
                   <p className="py-0 my-0 text-color3">{userData?.fullName}</p>
-                  <p className="py-0 my-0 text-color3">{auth.phones.length>0 ? auth.phones[0].number : userData?.email}</p>
+                  <p className="py-0 my-0 text-color3">{auth.phones.length>0 ? `+62${parseInt(auth.phones[0].number)}` : userData?.email}</p>
                 </a>
               </Link>
             </li>
