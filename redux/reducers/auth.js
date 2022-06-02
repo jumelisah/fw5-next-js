@@ -74,23 +74,9 @@ const auth = (state=initialState, action) => {
       state.message = data.message
       return {...state}
     }
-    case 'AUTH_CHANGE_PIN_PENDING': {
-      state.isLoading = true
-      state.isError = false
-      return {...state}
-    }
-    case 'AUTH_CHANGE_PIN_FULFILLED': {
+    case 'AUTH_CHANGE_PIN': {
       const { data } = action.payload
-      state.isLoading = false
-      state.isError = false
       state.message = data.message
-      return {...state}
-    }
-    case 'AUTH_CHANGE_PIN_REJECTED': {
-      const { data } = action.payload.response
-      state.isLoading = false
-      state.isError = true
-      state.errMessage = data.message
       return {...state}
     }
     case 'AUTH_CHANGE_PROFILE': {
