@@ -24,7 +24,7 @@ const Topup = () => {
   const [showModal, setShowModal] = useState(false)
   
   const topup = () => {
-    const token = window.localStorage.getItem('beWalletToken')
+    const token = window.sessionStorage.getItem('beWalletToken')
     dispatch(topUp(amount, token))
     setShowModal(true)
   }

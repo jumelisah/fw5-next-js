@@ -20,7 +20,7 @@ const CreateNewPassword = ({auth}) => {
   const [errMessage, setErrMessage] = useState()
   
   useEffect(() => {
-    const token = window.localStorage.getItem('beWalletToken')
+    const token = window.sessionStorage.getItem('beWalletToken')
     if(!newPassword || !confirmPassword){
       setIsError(true)
       dispatch({

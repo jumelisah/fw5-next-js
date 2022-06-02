@@ -5,7 +5,7 @@ import defaultUser from "../public/images/default-user.png"
 export const DataHistory = ({dataHistory, dataUser, limit=dataHistory?.length}) => {
   const [userData, setUserData] = useState()
   useEffect(() => {
-    setUserData(JSON.parse(window.localStorage.getItem('beWalletUser')))
+    setUserData(JSON.parse(window.sessionStorage.getItem('beWalletUser')))
   }, [dataHistory])
   return(
     <div className='container'>

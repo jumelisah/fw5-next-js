@@ -12,8 +12,8 @@ const Header = () => {
   const [userData, setUserData] = useState()
   const dispatch = useDispatch()
   useEffect (()=> {
-    const token = window.localStorage.getItem('beWalletToken')
-    setUserData(JSON.parse(window.localStorage.getItem('beWalletUser')))
+    const token = window.sessionStorage.getItem('beWalletToken')
+    setUserData(JSON.parse(window.sessionStorage.getItem('beWalletUser')))
     if(token){
       dispatch(getPhoneNumber(token))
     }else{
@@ -26,7 +26,7 @@ const Header = () => {
     <nav className="navbar navbar-expand-lg navbar-light bg-color7 position-fixed top-0 col-12" style={{zIndex: 999}}>
       <div className="container">
         <Link  href='/'>
-          <a className="navbar-brand fs-3 fw-bold text-color3">Zwallet</a>
+          <a className="navbar-brand fs-3 fw-bold text-color3">Be Wallet</a>
         </Link>
         <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
           <span className="navbar-toggler-icon"></span>

@@ -21,13 +21,13 @@ const ChangePin = () => {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const changePin = () => {
     setShowModal(true)
-    const token = window.localStorage.getItem('beWalletToken')
+    const token = window.sessionStorage.getItem('beWalletToken')
     if (oldPin && newPin?.length === 6) {
     dispatch(changePinNumber({oldPin, newPin}, token))
     }
   }
   useEffect(() => {
-    const token = window.localStorage.getItem('beWalletToken')
+    const token = window.sessionStorage.getItem('beWalletToken')
     if(!token) {
       router.push('/login')
     }
@@ -49,7 +49,7 @@ const ChangePin = () => {
     <SideBarLayout>
       <div className='p-4'>
         <h1 className='fs-6'>Change Pin</h1>
-        <p style={{maxWidth: '350px'}}>{!oldPin || oldPin.length < 6 ? 'Enter your current 6 digits Zwallet PIN below to continue to the next steps.' : 'Type your new 6 digits security PIN to use in Zwallet..'}</p>
+        <p style={{maxWidth: '350px'}}>{!oldPin || oldPin.length < 6 ? 'Enter your current 6 digits Be Wallet PIN below to continue to the next steps.' : 'Type your new 6 digits security PIN to use in Be Wallet..'}</p>
         <div className='d-flex flex-column justify-content-center align-items-center mt-5 pt-5'>
           {(!oldPin || oldPin.length < 6) && <Otp value={oldPin} onChange={otp => setOldPin(otp)} />}
           {oldPin && oldPin.length === 6 && <Otp value={newPin} onChange={otp => setNewPin(otp)} />}

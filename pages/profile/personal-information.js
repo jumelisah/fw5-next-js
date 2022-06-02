@@ -26,8 +26,8 @@ const PersonalInformation = ({auth}) => {
   const dispatch = useDispatch()
   const router = useRouter()
   useEffect (()=>{
-    const token = window.localStorage.getItem('beWalletToken')
-    const userData = JSON.parse(window.localStorage.getItem('beWalletUser'))
+    const token = window.sessionStorage.getItem('beWalletToken')
+    const userData = JSON.parse(window.sessionStorage.getItem('beWalletUser'))
     if(token){
       setUserToken(token)
       dispatch(getPhoneNumber(token))

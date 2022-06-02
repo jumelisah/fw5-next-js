@@ -14,9 +14,9 @@ const Transfer = () => {
   const [userData, setUserData] = useState()
   const router = useRouter()
   useEffect(() => {
-    const token = window.localStorage.getItem('beWalletToken')
-    const userList = JSON.parse(window.localStorage.getItem('beWalletUsers'))
-    setUserData(JSON.parse(window.localStorage.getItem('beWalletUser')))
+    const token = window.sessionStorage.getItem('beWalletToken')
+    const userList = JSON.parse(window.sessionStorage.getItem('beWalletUsers'))
+    setUserData(JSON.parse(window.sessionStorage.getItem('beWalletUser')))
     setUsers(userList)
     if (!token) {
       router.push('/login')
@@ -29,7 +29,7 @@ const Transfer = () => {
         <div className="p-4">
           <h5>Search Receiver</h5>
           <FormInput value={search} onChange={e => setSearch(e.target.value)} variant="rounded-3 border border-color5 p-2 mt-2 bg-color6"/>
-          <div className="py-2 overflow-auto" style={{height: 350}}>
+          <div className="py-2 overflow-auto" style={{height: 330}}>
             {users?.map((user, idx) => {
               if(user.id !== userData.id && (user.fullName.toLowerCase().includes(search.toLocaleLowerCase()) || user.phone[0]?.number.includes(search))){
                 return(

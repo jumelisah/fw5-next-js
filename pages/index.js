@@ -12,9 +12,9 @@ import BarChart from '../components/Chart'
 
 export default function Home() {
   const data = [
-    {id: 1, subtitle: 'Small Fee', content: 'We only charge 5% of every success transaction done in Zwallet app.'},
-    {id: 2, subtitle: 'Small Fee', content: 'We only charge 5% of every success transaction done in Zwallet app.'},
-    {id: 3, subtitle: 'Small Fee', content: 'We only charge 5% of every success transaction done in Zwallet app.'}
+    {id: 1, subtitle: 'Small Fee', content: 'We only charge 5% of every success transaction done in Be Wallet app.'},
+    {id: 2, subtitle: 'Small Fee', content: 'We only charge 5% of every success transaction done in Be Wallet app.'},
+    {id: 3, subtitle: 'Small Fee', content: 'We only charge 5% of every success transaction done in Be Wallet app.'}
   ]
   return (
     <Layout>
@@ -84,10 +84,12 @@ export default function Home() {
     </div>
     <div className='bg-color6'>
       <div className='container py-5'>
-        <div className='d-flex flex-column flex-md-row'>
-          <Image src='/images/Group54.png' alt='phone54' width={250} height={500} layout='fixed' objectFit='cover'/>
-          <div className='my-auto ms-5'>
-            <h1 style={{maxWidth: '300px'}}>All The Great Zwallet Features.</h1>
+        <div className='d-flex flex-column flex-md-row justify-content-center align-items-center p-3'>
+          <div className='col-12 col-md-6 ms-auto'>
+            <Image src='/images/Group54.png' alt='phone54' width={250} height={450} layout='fixed' objectFit='cover'/>
+          </div>
+          <div className='my-auto ms-0 ms-md-5 col-12 col-md-6'>
+            <h1 style={{maxWidth: '300px'}}>All The Great Be Wallet Features.</h1>
             <div>
               {data.map((exp) => {
                 return(

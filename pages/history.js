@@ -13,8 +13,8 @@ const History = () =>{
   const router = useRouter()
   const dispatch = useDispatch()
   useEffect(()=>{
-    const token = window.localStorage.getItem('beWalletToken')
-    setUsers(JSON.parse(window.localStorage.getItem('beWalletUsers')))
+    const token = window.sessionStorage.getItem('beWalletToken')
+    setUsers(JSON.parse(window.sessionStorage.getItem('beWalletUsers')))
     if(!token){
       router.push('/login')
     }

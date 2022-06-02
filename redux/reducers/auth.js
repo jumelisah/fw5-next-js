@@ -16,7 +16,7 @@ const auth = (state=initialState, action) => {
       const {data} = action.payload
       state.errMessage = null
       state.token = data.results.token
-      window.localStorage.setItem('beWalletToken', state.token)
+      window.sessionStorage.setItem('beWalletToken', state.token)
       return {...state}
     }
     case 'REGISTER_FORM': {
@@ -46,7 +46,7 @@ const auth = (state=initialState, action) => {
       const {data} = action.payload
       console.log(data)
       state.user = data.results
-      window.localStorage.setItem('beWalletUser', JSON.stringify(state.user))
+      window.sessionStorage.setItem('beWalletUser', JSON.stringify(state.user))
       return {...state}
     }
     case 'AUTH_GET_PHONES': {
@@ -96,17 +96,17 @@ const auth = (state=initialState, action) => {
     case 'AUTH_CHANGE_PROFILE': {
       const { data } = action.payload
       state.user = data.results
-      window.localStorage.setItem('beWalletUser', JSON.stringify(data.results))
+      window.sessionStorage.setItem('beWalletUser', JSON.stringify(data.results))
       state.message = data.message
       return {...state}
     }
     case 'AUTH_LOGOUT': {
       state.token = null
       state.userData = {}
-      window.localStorage.removeItem('beWalletToken')
-      window.localStorage.removeItem('beWalletUser')
-      window.localStorage.removeItem('beWalletUsers')
-      window.localStorage.removeItem('beWalletHistory')
+      window.sessionStorage.removeItem('beWalletToken')
+      window.sessionStorage.removeItem('beWalletUser')
+      window.sessionStorage.removeItem('beWalletUsers')
+      window.sessionStorage.removeItem('beWalletHistory')
       return state
     }
     case 'RESET_AUTH_STATE':{
