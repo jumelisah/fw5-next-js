@@ -10,7 +10,7 @@ const SideBarLayout = ({children}) => {
             <Sidebar />
           </div>
           <div className="col-12 col-md-9 m-0 p-0 p-3 py-md-0">
-            <div className='bg-white shadow overflow-auto' style={{borderRadius: '10px', height: 500}}>
+            <div className='bg-white shadow' style={{borderRadius: '10px', height: 500}}>
               {children}
             </div>
           </div>

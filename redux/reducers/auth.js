@@ -7,7 +7,7 @@ const initialState = {
   isLoading: false,
   isError: false,
   errMessage: null,
-  successMsg: null
+  message: null
 }
 
 const auth = (state=initialState, action) => {
@@ -61,31 +61,17 @@ const auth = (state=initialState, action) => {
     }
     case 'AUTH_FORGOT_PASSWORD': {
       const { data } = action.payload
-      state.successMsg = data.message
+      state.message = data.message
       return {...state}
     }
     case 'AUTH_NEW_PASSWORD': {
       const { data } = action.payload
-      state.successMsg = data.message
+      state.message = data.message
       return {...state}
     }
-    case 'AUTH_CHANGE_PASSWORD_PENDING': {
-      state.isLoading = true
-      state.isError = false
-      return {...state}
-    }
-    case 'AUTH_CHANGE_PASSWORD_FULFILLED': {
+    case 'AUTH_CHANGE_PASSWORD': {
       const { data } = action.payload
-      state.isLoading = false
-      state.isError = false
-      state.successMsg = data.message
-      return {...state}
-    }
-    case 'AUTH_CHANGE_PASSWORD_REJECTED': {
-      const { data } = action.payload.response
-      state.isLoading = false
-      state.isError = true
-      state.errMessage = data.message
+      state.message = data.message
       return {...state}
     }
     case 'AUTH_CHANGE_PIN_PENDING': {
@@ -97,7 +83,7 @@ const auth = (state=initialState, action) => {
       const { data } = action.payload
       state.isLoading = false
       state.isError = false
-      state.successMsg = data.message
+      state.message = data.message
       return {...state}
     }
     case 'AUTH_CHANGE_PIN_REJECTED': {
@@ -110,8 +96,9 @@ const auth = (state=initialState, action) => {
     case 'AUTH_CHANGE_PROFILE': {
       const { data } = action.payload
       state.user = data.results
-      window.localStorage.setItem('beWalletUser', JSON.stringify(state.user))
-      // state.message = data.message
+      window.localStorage.setItem('beWalletUser', JSON.stringify(data.results))
+      state.message = data.message
+      return {...state}
     }
     case 'AUTH_LOGOUT': {
       state.token = null

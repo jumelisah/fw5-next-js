@@ -26,7 +26,7 @@ const Profile = () => {
     {title: 'Logout', url: '/logout'},
   ]
   useEffect(() => {
-    if (!auth.isLoading && !image) {
+    if (!image) {
       dispatch({
         type: 'RESET_AUTH_STATE'
       })

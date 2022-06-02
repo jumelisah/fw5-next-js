@@ -26,7 +26,7 @@ export const login = (email, password) => {
       const dataLogin = await http().post('/auth/login', data)
       dispatch({
         type: 'AUTH_ERROR',
-        payload: dataLogin.data.message
+        payload: e.response?.data.message || dataLogin?.data.message
       })
       dispatch({
         type: 'AUTH_LOADING'
@@ -55,7 +55,7 @@ export const getUserData = (token) => {
     } catch (e) {
       dispatch({
         type: 'AUTH_ERROR',
-        payload: e.response.data.message
+        payload: e.response?.data.message || String(e)
       })
       dispatch({
         type: 'AUTH_LOADING'
@@ -84,7 +84,7 @@ export const getPhoneNumber = (token) => {
     } catch (e) {
       dispatch({
         type: 'AUTH_ERROR',
-        payload: e.response.data.message
+        payload: e.response?.data.message || String(e)
       })
       dispatch({
         type: 'AUTH_LOADING'
@@ -113,7 +113,7 @@ export const getBalance = (token) => {
     } catch (e) {
       dispatch({
         type: 'AUTH_ERROR',
-        payload: e.response.data.message
+        payload: e.response?.data.message || String(e)
       })
       dispatch({
         type: 'AUTH_LOADING'
@@ -153,7 +153,7 @@ export const forgotPassword = (email) => {
     } catch (e) {
       dispatch({
         type: 'AUTH_ERROR',
-        payload: e.response.data.message
+        payload: e.response?.data.message || String(e)
       })
       dispatch({
         type: 'AUTH_LOADING'
@@ -188,7 +188,7 @@ export const createNewPassword = (data) => {
     } catch (e) {
       dispatch({
         type: 'AUTH_ERROR',
-        payload: e.response.data.message
+        payload: e.response?.data.message || String(e)
       })
       dispatch({
         type: 'AUTH_LOADING'
@@ -197,25 +197,66 @@ export const createNewPassword = (data) => {
   }
 }
 
-export const changePassword = (data, token) => {
+export const changePassword = (dataPassword, token) => {
+  console.log(dataPassword)
   const params = new URLSearchParams()
-  params.append('oldPassword', data.oldPassword)
-  params.append('newPassword', data.newPassword)
-  params.append('confirmPassword', data.confirmPassword)
-  return({
-    type: 'AUTH_CHANGE_PASSWORD',
-    payload: http(token).patch('/profile/change-password', params)
-  })
+  for(let x in dataPassword) {
+    console.log(x, dataPassword[x])
+    params.append(x, dataPassword[x])
+  }
+  return async (dispatch) => {
+    try{
+      dispatch({
+        type: 'AUTH_LOADING'
+      })
+      const data = await http(token).patch('/profile/change-password', params)
+      dispatch({
+        type: 'AUTH_CHANGE_PASSWORD',
+        payload: data
+      })
+      dispatch({
+        type: 'AUTH_LOADING'
+      })
+    } catch (e) {
+      dispatch({
+        type: 'AUTH_ERROR',
+        payload: e.response?.data.message || String(e)
+      })
+      dispatch({
+        type: 'AUTH_LOADING'
+      })
+    }
+  }
 }
 
-export const changePinNumber = (data, token) => {
+export const changePinNumber = (dataPin, token) => {
+  console.log(token)
   const params = new URLSearchParams()
-  params.append('oldPin', data.oldPin)
-  params.append('newPin', data.newPin)
-  return({
-    type: 'AUTH_CHANGE_PIN',
-    payload: http(token).patch('/profile/change-pin', params)
-  })
+  params.append('oldPin', dataPin.oldPin)
+  params.append('newPin', dataPin.newPin)
+  return async (dispatch) => {
+    try{
+      dispatch({
+        type: 'AUTH_LOADING'
+      })
+      const data = await http(token).patch('/profile/change-pin', params)
+      dispatch({
+        type: 'AUTH_CHANGE_PIN',
+        payload: data
+      })
+      dispatch({
+        type: 'AUTH_LOADING'
+      })
+    } catch (e) {
+      dispatch({
+        type: 'AUTH_ERROR',
+        payload: e.response?.data.message || String(e)
+      })
+      dispatch({
+        type: 'AUTH_LOADING'
+      })
+    }
+  }
 }
 
 export const register = (data) => {
@@ -242,17 +283,16 @@ export const updateProfile = (userData, token) => {
       })
       const data = await http(token).patch('/profile', params)
       dispatch({
-        type: 'AUTH_CHANGE_PROFILEs',
+        type: 'AUTH_CHANGE_PROFILE',
         payload: data
       })
       dispatch({
         type: 'AUTH_LOADING'
       })
     } catch (e) {
-      console.log(e)
       dispatch({
         type: 'AUTH_ERROR',
-        payload: e.response?.data
+        payload: e.response?.data.message || String(e)
       })
       dispatch({
         type: 'AUTH_LOADING'
