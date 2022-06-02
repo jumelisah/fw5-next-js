@@ -18,6 +18,14 @@ const ChangePin = () => {
   const [showModal, setShowModal] = useState(false)
   const router = useRouter()
   const dispatch = useDispatch()
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const changePin = () => {
+    setShowModal(true)
+    const token = window.localStorage.getItem('beWalletToken')
+    if (oldPin && newPin?.length === 6) {
+    dispatch(changePinNumber({oldPin, newPin}, token))
+    }
+  }
   useEffect(() => {
     const token = window.localStorage.getItem('beWalletToken')
     if(!token) {
@@ -27,14 +35,7 @@ const ChangePin = () => {
       changePin()
     }
   }, [router, dispatch, newPin, oldPin, changePin])
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  const changePin = () => {
-    setShowModal(true)
-    const token = window.localStorage.getItem('beWalletToken')
-    if (oldPin && newPin?.length === 6) {
-    dispatch(changePinNumber({oldPin, newPin}, token))
-    }
-  }
+  
   const closeModal = () => {
     if (!auth.isLoading){
       setShowModal(false)
