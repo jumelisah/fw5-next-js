@@ -31,8 +31,8 @@ const Profile = () => {
         type: 'RESET_AUTH_STATE'
       })
     }
-    const token = window.localStorage.getItem('beWalletToken')
-    setUserData(JSON.parse(window.localStorage.getItem('beWalletUser')))
+    const token = window.sessionStorage.getItem('beWalletToken')
+    setUserData(JSON.parse(window.sessionStorage.getItem('beWalletUser')))
     if(!token){
       router.push('/login')
     }else{

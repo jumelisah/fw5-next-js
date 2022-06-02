@@ -15,10 +15,12 @@ import SideBarLayout from "../components/SidebarLayout"
 
 const Dashboard = () => {
   const {auth, transactions, users} = useSelector(state => state)
+  const [histories, setHistories] = useState()
   const dispatch = useDispatch()
   const router = useRouter()
   useEffect(() => {
-    const token = window.localStorage.getItem('beWalletToken')
+    const token = window.sessionStorage.getItem('beWalletToken')
+    setHistories(JSON.parse(window.sessionStorage.getItem('beWalletHistory')))
     if(!token){
       router.push('/login')
     }else{
@@ -70,7 +72,7 @@ const Dashboard = () => {
   }
   return(
     <div>
-      <SideBarLayout>
+      <SideBarLayout variant="no-padding">
         <div className="bg-color7" style={{height: '100%', height: '100%'}}>
           <div className={`${styles.roundedten} col-12 bg-color4 text-white mt-3 mt-md-0 p-3`} style={{height: '25%'}}>
             <p className='p-0 m-0'>Balance</p>
@@ -95,7 +97,7 @@ const Dashboard = () => {
                     </Link>
                   </div>
                 </div>
-                <DataHistory dataHistory={transactions?.history} dataUser={users.userList} limit={5} />
+                <DataHistory dataHistory={histories} dataUser={users.userList} limit={5} />
               </div>
             </div>
           </div>

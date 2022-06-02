@@ -29,9 +29,9 @@ const TransferTo = () => {
   const [user, setUser] = useState()
   const [userToken, setUserToken] = useState()
   useEffect(() => {
-    const token = window.localStorage.getItem('beWalletToken')
-    const userList = JSON.parse(window.localStorage.getItem('beWalletUsers'))
-    const userData = JSON.parse(window.localStorage.getItem('beWalletUser'))
+    const token = window.sessionStorage.getItem('beWalletToken')
+    const userList = JSON.parse(window.sessionStorage.getItem('beWalletUsers'))
+    const userData = JSON.parse(window.sessionStorage.getItem('beWalletUser'))
     setUser(userList.find(el => el.id === parseInt(router.query.id)))
     setUserToken(token)
     if(userData.id === parseInt(router.query.id)){
@@ -58,23 +58,23 @@ const TransferTo = () => {
       <title>Transfer - {user?.fullName} | Be Wallet</title>
     </Head>
     <SideBarLayout>
-      <div>
-        {!stepTwo && !stepThree && <div className="p-3">
+      <div className="p-4">
+        {!stepTwo && !stepThree && <div>
           <h1 className="fs-4">Transfer Money</h1>
-          <div className="p-2 my-4 d-flex flex-row shadow rounded-3">
+          <div className="p-2 my-3 d-flex flex-row shadow rounded-3">
             <Image src={user?.image ? user?.image : defaultImage} width={50} height={50} alt={user?.fullName} className="rounded-3"/>
             <div className="ms-3">
               <p className="m-0 p-0 fw-bold">{user?.fullName}</p>
               <p className="m-0 p-0 py-1" style={{fontSize: 12}}>{user?.phone[0]?.number || user?.email}</p>
             </div>
           </div>
-          <div className="py-3">
+          <div className="py-2">
             <p className="m-0 p-0">Type the amount you want to transfer and then</p>
             <p className="m-0 p-0">press continue to the next step</p>
           </div>
           <div className="d-flex flex-column justify-content-center align-items-center">
             <FormInput type="number" placeholder="0.00" value={amount} onChange={e => setAmount(e.target.value)} variant="py-3 fs-2 text-center border-0" />
-            <p className="text-center">Rp {(auth.balance-amount).toLocaleString('id-ID')} Available</p>
+            <p className="text-center">Rp {(amount ? auth.balance-amount : auth.balance).toLocaleString('id-ID')} Available</p>
             <div className="col-4">
             <FormInput icon={<BiPencil />} placeholder="Add some notes" value={notes} onChange={e => setNotes(e.target.value)} variant="px-4 border-0 border-bottom text-center" />
             </div>
@@ -84,11 +84,11 @@ const TransferTo = () => {
             <Button variant={amount >= 10000 ? 'bg-color5 text-white' : 'border-0'} onClick={()=> setStepTwo(true)}>Continue</Button>
           </div>
         </div>}
-        {(stepTwo || stepThree) && <div className="px-3 py-5">
+        {(stepTwo || stepThree) && <div>
           {stepThree && transactions.message && <SuccessModal message={transactions.message} />}
           {stepThree && transactions.isError && <ErrorModal message={transactions.errMessage} />}
           {stepTwo && !stepThree && <div>
-            <h5>Transfer To</h5>
+            <h6>Transfer To</h6>
             <div className="p-2 my-4 d-flex flex-row shadow rounded-3">
               <Image src={user?.image ? user?.image : defaultImage} width={50} height={50} alt={user?.fullName} className="rounded-3"/>
               <div className="ms-3">
@@ -115,7 +115,7 @@ const TransferTo = () => {
           <h5 className={`m-0 py-1 ${!notes ? 'py-3' : ''}`}>{notes}</h5>
           </div>
           {stepThree && <div>
-            <h5>Transfer To</h5>
+            <h6>Transfer To</h6>
             <div className="p-2 my-4 d-flex flex-row shadow-sm rounded-3">
               <Image src={user?.image ? user?.image : defaultImage} width={50} height={50} alt={user?.fullName} className="rounded-3"/>
               <div className="ms-3">

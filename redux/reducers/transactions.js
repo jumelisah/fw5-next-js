@@ -22,7 +22,7 @@ const transactions = (state=initialState, action) => {
     case 'GET_HISTORY': {
       const { data } = action.payload
       state.history = data.results
-      window.localStorage.setItem('beWalletHistory', JSON.stringify(state.history.sort((a,b) => b.id - a.id)))
+      window.sessionStorage.setItem('beWalletHistory', JSON.stringify(state.history.sort((a,b) => b.id - a.id)))
       return {...state}
     }
     case 'TRANSACTION_LOADING': {

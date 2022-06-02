@@ -32,7 +32,7 @@ const NewPin = () => {
           <div className='col-12 col-md-3'><Sidebar /></div>
           <div className='col-12 col-md-9 bg-white'>
             <h1 className='fs-6'>Change Pin</h1>
-            <p style={{maxWidth: '350px'}}>Type your new 6 digits security PIN to use in Zwallet..</p>
+            <p style={{maxWidth: '350px'}}>Type your new 6 digits security PIN to use in Be Wallet..</p>
             <Form onSubmit={changePin}>
             <OtpInput className='text-center'
             value={state.otp}

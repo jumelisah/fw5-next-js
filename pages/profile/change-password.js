@@ -24,7 +24,7 @@ const ChangePassword = () => {
     e.preventDefault()
     if(oldPassword && newPassword && confirmPassword && newPassword === confirmPassword){
       setShowModal(true)
-      const token = window.localStorage.getItem('beWalletToken')
+      const token = window.sessionStorage.getItem('beWalletToken')
       const data = {oldPassword, newPassword, confirmPassword}
       dispatch(changePassword(data, token))
     }

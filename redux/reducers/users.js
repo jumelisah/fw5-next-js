@@ -11,7 +11,7 @@ const users = (state=initialState, action) => {
     case 'GET_ALL_USERS': {
       const { data } = action.payload
       state.userList = data.results
-      window.localStorage.setItem('beWalletUsers', JSON.stringify(data.results))
+      window.sessionStorage.setItem('beWalletUsers', JSON.stringify(data.results))
       return {...state}
     }
     case 'GET_ALL_USERS_REJECTED': {
