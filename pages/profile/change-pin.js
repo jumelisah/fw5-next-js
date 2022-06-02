@@ -1,76 +1,68 @@
-import { Form } from "react-bootstrap"
-import FormInput from "../../components/FormInput"
-import Layout from "../../components/Layout"
-import Sidebar from "../../components/SideBar"
-import { FiLock } from "react-icons/fi"
 import Button from "../../components/Button"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { useRouter } from 'next/router';
-import OtpInput from 'react-otp-input';
 import { changePinNumber } from "../../redux/actions/auth"
-import { connect } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
+import Otp from "../../components/Otp"
+import SideBarLayout from "../../components/SidebarLayout"
+import Title from "../../components/Title"
+import Modal from "../../components/Modal";
+import ErrorModal from "../../components/ErrorModal";
+import Image from "next/image";
+import SuccessModal from "../../components/SuccessModal";
 
-const ChangePin = ({changePinNumber, auth}) => {
-  const [state, setState] = useState({otp: null})
+const ChangePin = () => {
+  const {auth} = useSelector(state => state)
   const [oldPin, setOldPin] = useState(null)
   const [newPin, setNewPin] = useState(null)
-  const [newPinPage, setNewPinPage] = useState(false)
-  const handleChange = (otp) => setState({ otp })
+  const [showModal, setShowModal] = useState(false)
   const router = useRouter()
-  const [errPin, setErrPin] = useState(false)
-  const changePin = (e) => {
-    e.preventDefault()
-    const pin = state.otp
-    if(!pin){
-      setErrPin(true)
-    }else{
-      setOldPin(pin)
-      setNewPinPage(true)
-      setState({otp: null})
+  const dispatch = useDispatch()
+  useEffect(() => {
+    const token = window.localStorage.getItem('beWalletToken')
+    if(!token) {
+      router.push('/login')
     }
-    // console.log(register(data))
-    // router.push('/create-pin')
+    if (oldPin && newPin?.length === 6) {
+      changePin()
+    }
+  }, [router, dispatch, newPin, oldPin, changePin])
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const changePin = () => {
+    setShowModal(true)
+    const token = window.localStorage.getItem('beWalletToken')
+    if (oldPin && newPin?.length === 6) {
+    dispatch(changePinNumber({oldPin, newPin}, token))
+    }
   }
-  const getNewPin = (e) => {
-    e.preventDefault()
-    const token = window.localStorage.getItem('token')
-    const pin = state.otp
-    if(!pin){
-      setErrPin(true)
-    }else{
-      setNewPin(pin)
-      const data = {oldPin, newPin}
-      changePinNumber(data, token)
-      if(auth.isError){
-        alert(auth.errMessage)
-      }
+  const closeModal = () => {
+    if (!auth.isLoading){
+      setShowModal(false)
+      setOldPin()
+      setNewPin()
     }
   }
   return(
-    <Layout>
-      <div className='container'>
-        <div className='row'>
-          <div className='col-12 col-md-3'><Sidebar /></div>
-          <div className='col-12 col-md-9 bg-white'>
-            <h1 className='fs-6'>Change Pin</h1>
-            <p style={{maxWidth: '350px'}}>{!newPinPage ? 'Enter your current 6 digits Zwallet PIN below to continue to the next steps.' : 'Type your new 6 digits security PIN to use in Zwallet..'}</p>
-            <Form onSubmit={!newPinPage? changePin : getNewPin}>
-            <OtpInput className='text-center'
-            value={state.otp}
-            onChange={handleChange}
-            numInputs={6}
-            separator={<span>-</span>}
-          />
-            {errPin && <p className='text-danger'>Please input the field</p>}
-              <Button variant={`${state.otp && state.otp.length===6 ? 'bg-color3 text-white' : ''}`}>Change Pin</Button>
-            </Form>
-          </div>
+    <>
+    <Title title="Change PIN" />
+    <SideBarLayout>
+      <div className='p-4'>
+        <h1 className='fs-6'>Change Pin</h1>
+        <p style={{maxWidth: '350px'}}>{!oldPin || oldPin.length < 6 ? 'Enter your current 6 digits Zwallet PIN below to continue to the next steps.' : 'Type your new 6 digits security PIN to use in Zwallet..'}</p>
+        <div className='d-flex flex-column justify-content-center align-items-center mt-5 pt-5'>
+          {(!oldPin || oldPin.length < 6) && <Otp value={oldPin} onChange={otp => setOldPin(otp)} />}
+          {oldPin && oldPin.length === 6 && <Otp value={newPin} onChange={otp => setNewPin(otp)} />}
+          <Button variant={`mt-5 ${oldPin && newPin ? 'bg-color5 text-white' : ''}`} onClick={changePin}>Change PIN</Button>
         </div>
       </div>
-    </Layout>
+    </SideBarLayout>
+    {showModal && <Modal handleClose={closeModal}>
+      {!auth.isLoading && auth.isError && <ErrorModal message={auth.errMessage} />}
+      {auth.isLoading && <Image src='/images/loading-buffering.gif' alt='loading' width={100} height={100} />}
+      {!auth.isLoading && !auth.isError && <SuccessModal message={auth.message} />}
+    </Modal>}
+    </>
   )
 }
 
-const mapStateToProps = (state) => ({auth: state.auth})
-const mapDispatchToProps = {changePinNumber}
-export default connect(mapStateToProps, mapDispatchToProps)(ChangePin)
+export default ChangePin

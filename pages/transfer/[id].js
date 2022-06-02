@@ -126,7 +126,7 @@ const TransferTo = () => {
         </div>}
       </div>
     </SideBarLayout>
-      {(askPin || transactions.isLoading) && <Modal handleClose={() => setAskPin(false)}>
+      {(askPin || transactions.isLoading) && <Modal handleClose={() => setAskPin(false)} loadingParam={transactions}>
         <div>
           {!transactions.isLoading && <div className="d-flex flex-column justify-content-center align-items-center">
             <p className="fs-5">Input your pin</p>

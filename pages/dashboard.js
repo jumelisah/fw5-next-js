@@ -15,13 +15,10 @@ import SideBarLayout from "../components/SidebarLayout"
 
 const Dashboard = () => {
   const {auth, transactions, users} = useSelector(state => state)
-  const [histories, setHistories] = useState()
-  const [income, setIncome] = useState(0)
   const dispatch = useDispatch()
   const router = useRouter()
   useEffect(() => {
     const token = window.localStorage.getItem('beWalletToken')
-    setHistories(JSON.parse(window.localStorage.getItem('beWalletHistory')))
     if(!token){
       router.push('/login')
     }else{
@@ -33,7 +30,7 @@ const Dashboard = () => {
   }, [router, dispatch])
   const totalIncome = () => {
     let income = 0
-    histories?.forEach(el => {
+    transactions.history?.forEach(el => {
       if ((el.userId === auth.user.id && el.typeId === 1) || el.userId !== auth.user.id){
         income += el.amount
       }
@@ -42,7 +39,7 @@ const Dashboard = () => {
   }
   const totalExpense = () => {
     let expense = 0
-    histories?.forEach(el => {
+    transactions.history?.forEach(el => {
       if (el.userId === auth.user.id && el.typeId !== 1){
         expense += el.amount
       }
@@ -57,7 +54,7 @@ const Dashboard = () => {
     const report = []
     for(let i=1;i<8;i++){
       let balance = 0;
-      histories?.forEach(el => {
+      transactions.history?.forEach(el => {
         if (new Date(el.createdAt) >= earlyWeek && new Date(el.createdAt) <= endOfWeek && new Date(el.createdAt).getDay()===i){
           if(el.userId === auth.user.id && el.typeId !== 1){
             balance+=el.amount
@@ -90,53 +87,20 @@ const Dashboard = () => {
             </div>
             <div className="col-12 col-lg-6 pt-4 ps-lg-2" style={{height: '100%'}}>
               <div className={`${styles.roundedten} bg-white shadow p-3`} style={{height: '100%'}}>
-                <div className="d-flex flex-row py-2">
+                <div className="d-flex flex-row py-2 mb-3">
                   <h3 className='fs-5'>Transaction History</h3>
                   <div className="ms-auto">
-                    <Link href="/history">See All</Link>
+                    <Link href="/history">
+                      <a className="text-color3 fw-bold">See All</a>
+                    </Link>
                   </div>
                 </div>
-                <div className='overflow-auto' style={{height: '250px'}}>
-                  <DataHistory dataHistory={histories} dataUser={users.userList} />
-                </div>
+                <DataHistory dataHistory={transactions?.history} dataUser={users.userList} limit={5} />
               </div>
             </div>
           </div>
         </div>
       </SideBarLayout>
-    <Layout>
-      <Title title="Dahboard" />
-      <div className='container d-flex flex-column flex-md-row bg-color6 mb-5'>
-        <div className='col-12 col-md-3'><Sidebar /></div>
-        <div className='col-12 col-md-9 ms-md-3 me-0 overflow-auto' style={{height: '600px'}}>
-          <div className={`${styles.roundedten} col-12 bg-color4 text-white my-3 mt-md-0 px-3 py-4`}>
-            <p className='p-0 m-0'>Balance</p>
-            <h3>Rp {Number(auth.balance).toLocaleString('id-ID')}</h3>
-            <p className='p-0 m-0'>{auth.phones.length>0 ? `+62${parseInt(auth.phones[0].number)}` : auth.user.email}</p>
-          </div>
-          <div className='col-12 d-flex flex-column flex-md-row p-0 m-0'>
-            <div className='col-12 col-md-6 pe-2'>
-              <div className={`${styles.roundedten} bg-white shadow p-3`}>
-                <BarChart data={weeklyReport().report} labels={weeklyReport().day} income={totalIncome()} expense={totalExpense()}/>
-              </div>
-            </div>
-            <div className='col-12 col-md-6 ps-md-2 mt-3 mt-md-0'>
-              <div className={`${styles.roundedten} bg-white shadow p-3`}>
-                <div className="d-flex flex-row py-2">
-                  <h3 className='fs-5'>Transaction History</h3>
-                  <div className="ms-auto">
-                    <Link href="/history">See All</Link>
-                  </div>
-                </div>
-                <div className='overflow-auto' style={{maxHeight: '300px'}}>
-                  <DataHistory dataHistory={histories} dataUser={users.userList} />
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </Layout>
     </div>
   )
 }

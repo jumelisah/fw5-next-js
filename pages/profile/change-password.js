@@ -1,61 +1,65 @@
 import { Form } from "react-bootstrap"
 import FormInput from "../../components/FormInput"
-import Layout from "../../components/Layout"
-import Sidebar from "../../components/SideBar"
 import { FiLock } from "react-icons/fi"
 import Button from "../../components/Button"
 import { useState } from "react"
 import { changePassword } from "../../redux/actions/auth"
-import { connect } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
+import Modal from "../../components/Modal"
+import Image from "next/image"
+import SuccessModal from "../../components/SuccessModal"
+import ErrorModal from "../../components/ErrorModal"
+import Title from "../../components/Title"
+import SideBarLayout from "../../components/SidebarLayout"
 
-const ChangePassword = ({auth, changePassword}) => {
-  const [errPassword, setErrPassword] = useState(false)
-  const [successPass, setSuccessPass] = useState(false)
-  const [formFilled, setFormFilled] = useState(false)
+const ChangePassword = () => {
+  const {auth} = useSelector(state => state)
+  const [showModal, setShowModal] = useState(false)
+  const [oldPassword, setOldPassword] = useState()
+  const [newPassword, setNewPassword] = useState()
+  const [confirmPassword, setConfirmPassword] = useState()
+  const dispatch = useDispatch()
 
   const onChangePassword = (e) => {
     e.preventDefault()
-    const token = window.localStorage.getItem('token')
-    const oldPassword = e.target.elements['oldPassword'].value
-    const newPassword = e.target.elements['newPassword'].value
-    const confirmPassword = e.target.elements['confirmPassword'].value
-    const data = {oldPassword, newPassword, confirmPassword}
-    if(newPassword!==confirmPassword){
-      setErrPassword(true)
-    }else if(newPassword.length < 6 || confirmPassword.length< 6){
-      alert('Password should contain minimum 6 characters')
-      setErrPassword(false)
+    if(oldPassword && newPassword && confirmPassword && newPassword === confirmPassword){
+      setShowModal(true)
+      const token = window.localStorage.getItem('beWalletToken')
+      const data = {oldPassword, newPassword, confirmPassword}
+      dispatch(changePassword(data, token))
     }
-    else{
-      setErrPassword(false)
-      changePassword(data, token)
-      setSuccessPass(true)
-      
+  }
+  const closeModal = () => {
+    if (!auth.isLoading){
+      setShowModal(false)
+      setOldPassword()
+      setNewPassword()
+      setConfirmPassword()
     }
   }
   return(
-    <Layout>
-      <div className='container'>
-        <div className='row'>
-          <div className='col-12 col-md-3'><Sidebar /></div>
-          <div className='col-12 col-md-9 bg-white'>
-            <h1 className='fs-6'>Change Password</h1>
-            <p style={{maxWidth: '350px'}}>You must enter your current password and then type your new password twice.</p>
-            <Form onSubmit={onChangePassword}>
-              <p className={`text-danger ${successPass ? 'd-block' : 'd-none'}`}>Password Changed</p>
-              <FormInput name='oldPassword' type='password' variant='border-0 border-bottom' icon={<FiLock />} placeholder='Current Password'/>
-              <FormInput name='newPassword' type='password' variant='border-0 border-bottom' icon={<FiLock />} placeholder='New Password'/>
-              <FormInput name='confirmPassword' type='password' variant='border-0 border-bottom' icon={<FiLock />} placeholder='Repeat New Password'/>
-              <p className={`text-danger ${errPassword ? 'd-block' : 'd-none'}`}>Password not match</p>
-              <Button>Change Password</Button>
-            </Form>
-          </div>
-        </div>
+    <>
+    <Title title="Change Password" />
+    <SideBarLayout>
+      <div className="p-4">
+        <h1 className='fs-6'>Change Password</h1>
+        <p style={{maxWidth: '350px'}} className="pb-2">You must enter your current password and then type your new password twice.</p>
+        <Form onSubmit={onChangePassword}>
+          <FormInput type='password' variant={`border-0 border-bottom ps-4 my-2 ${oldPassword? 'text-color5 border-color5' : ''}`} icon={<FiLock className={`${oldPassword ? 'text-color5' : ''}`} />} placeholder='Current Password' value={oldPassword} onChange={e => setOldPassword(e.target.value)}/>
+          <FormInput type='password' variant={`border-0 border-bottom ps-4 my-2 ${(newPassword && !confirmPassword) || (confirmPassword && newPassword === confirmPassword)? 'text-color5 border-color5' : confirmPassword && confirmPassword !== newPassword ? 'text-danger' : ''}`} icon={<FiLock className={`${(newPassword && !confirmPassword) || (confirmPassword && newPassword === confirmPassword) ? 'text-color5' : newPassword !== confirmPassword ? 'text-danger' : ''}`} />} placeholder='New Password' value={newPassword} onChange={e => setNewPassword(e.target.value)}/>
+          <FormInput type='password' variant={`border-0 border-bottom ps-4 my-2 ${confirmPassword && confirmPassword===newPassword? 'text-color5 border-color5' : confirmPassword!==newPassword ? 'text-danger' : ''}`} icon={<FiLock className={`${oldPassword && newPassword === confirmPassword ? 'text-color5' : newPassword !== confirmPassword ? 'text-danger' : ''}`} />} placeholder='Repeat New Password' value={confirmPassword} onChange={e => setConfirmPassword(e.target.value)}/>
+          {newPassword && confirmPassword && (newPassword !== confirmPassword) && <p className="text-danger">Password not match</p>}
+          <Button variant={`${oldPassword && newPassword && confirmPassword && newPassword===confirmPassword ? 'bg-color5' : ''}`}>Change Password</Button>
+        </Form>
       </div>
-    </Layout>
+    </SideBarLayout>
+    {showModal && <Modal handleClose={closeModal}>
+      {auth.isLoading && <Image src='/images/loading-buffering.gif' alt='loading' width={100} height={100} />}
+      {!auth.isLoading && !auth.isError && <SuccessModal message={auth.message} />}
+      {!auth.isLoading && auth.isError && <ErrorModal message={auth.errMessage}/>}
+    </Modal>}
+    </>
   )
 }
 
-const mapStateToProps = (state) => ({auth: state.auth})
-const mapDispatchToProps = {changePassword}
-export default connect(mapStateToProps, mapDispatchToProps)(ChangePassword)
+export default ChangePassword
