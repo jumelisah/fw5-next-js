@@ -85,7 +85,7 @@ export default function Home() {
     <div className='bg-color6'>
       <div className='container py-5'>
         <div className='d-flex flex-column flex-md-row'>
-          <Image src='/images/Group54.png' alt='phone54' width={250} height={600} layout='fixed'/>
+          <Image src='/images/Group54.png' alt='phone54' width={250} height={500} layout='fixed' objectFit='cover'/>
           <div className='my-auto ms-5'>
             <h1 style={{maxWidth: '300px'}}>All The Great Zwallet Features.</h1>
             <div>
