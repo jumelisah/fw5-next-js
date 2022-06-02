@@ -18,24 +18,19 @@ const ChangePin = () => {
   const [showModal, setShowModal] = useState(false)
   const router = useRouter()
   const dispatch = useDispatch()
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  const changePin = () => {
-    setShowModal(true)
-    const token = window.sessionStorage.getItem('beWalletToken')
-    if (oldPin && newPin?.length === 6) {
-    dispatch(changePinNumber({oldPin, newPin}, token))
-    }
-  }
   useEffect(() => {
     const token = window.sessionStorage.getItem('beWalletToken')
     if(!token) {
       router.push('/login')
     }
+  }, [router])
+  const changePin = () => {
+    setShowModal(true)
+    const token = window.sessionStorage.getItem('beWalletToken')
     if (oldPin && newPin?.length === 6) {
-      changePin()
+      dispatch(changePinNumber({oldPin, newPin}, token))
     }
-  }, [router, dispatch, newPin, oldPin, changePin])
-  
+  }
   const closeModal = () => {
     if (!auth.isLoading){
       setShowModal(false)

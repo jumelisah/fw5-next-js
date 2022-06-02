@@ -237,6 +237,9 @@ export const changePinNumber = (dataPin, token) => {
   return async (dispatch) => {
     try{
       dispatch({
+        type: 'RESET_AUTH_STATE'
+      })
+      dispatch({
         type: 'AUTH_LOADING'
       })
       const data = await http(token).patch('/profile/change-pin', params)
