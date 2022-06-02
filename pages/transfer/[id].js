@@ -31,8 +31,12 @@ const TransferTo = () => {
   useEffect(() => {
     const token = window.localStorage.getItem('beWalletToken')
     const userList = JSON.parse(window.localStorage.getItem('beWalletUsers'))
+    const userData = JSON.parse(window.localStorage.getItem('beWalletUser'))
     setUser(userList.find(el => el.id === parseInt(router.query.id)))
     setUserToken(token)
+    if(userData.id === parseInt(router.query.id)){
+      router.push('/transfer')
+    }
     if(!token){
       router.push('/login')
     }else{
@@ -70,7 +74,7 @@ const TransferTo = () => {
           </div>
           <div className="d-flex flex-column justify-content-center align-items-center">
             <FormInput type="number" placeholder="0.00" value={amount} onChange={e => setAmount(e.target.value)} variant="py-3 fs-2 text-center border-0" />
-            <p className="text-center">Rp {auth.balance.toLocaleString('id-ID')} Available</p>
+            <p className="text-center">Rp {(auth.balance-amount).toLocaleString('id-ID')} Available</p>
             <div className="col-4">
             <FormInput icon={<BiPencil />} placeholder="Add some notes" value={notes} onChange={e => setNotes(e.target.value)} variant="px-4 border-0 border-bottom text-center" />
             </div>
@@ -100,7 +104,7 @@ const TransferTo = () => {
           </div>
           <div className="shadow-sm px-3 py-2 rounded-3 mb-2">
             <p className="m-0 p-0">Balance Left</p>
-            <h5 className="m-0 py-1">Rp {auth.balance.toLocaleString('id-ID')}</h5>
+            <h5 className="m-0 py-1">Rp {(auth.balance-amount).toLocaleString('id-ID')}</h5>
           </div>
           <div className="shadow-sm px-3 py-2 rounded-3 mb-2">
             <p className="m-0 p-0">Date & Time</p>

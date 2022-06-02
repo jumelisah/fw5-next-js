@@ -24,7 +24,7 @@ export default function Home() {
     <div className='container'>
       <div className='top-wrapper d-flex flex-column-reverse flex-md-row justify-content-center align-items-center'>
         <div className='left-section col-md-6'>
-          <Image src='/images/png-phone.png' alt='phone' width={250} height={600} layout='fixed' priority/>
+          <Image src='/images/png-phone.png' alt='phone' width={250} height={500} layout='fixed' objectFit='cover'/>
         </div>
         <div className='right-side col-12 col-md-6'>
           <h1 className='fw-bolder'>Awesome App</h1>
