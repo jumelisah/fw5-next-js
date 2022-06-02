@@ -84,8 +84,10 @@ export default function Home() {
     </div>
     <div className='bg-color6'>
       <div className='container py-5'>
-        <div className='d-flex flex-column flex-md-row justify-content-center align-items-center'>
-          <Image src='/images/Group54.png' alt='phone54' width={250} height={450} layout='fixed' objectFit='cover'/>
+        <div className='d-flex flex-column flex-md-row justify-content-center align-items-center p-3'>
+          <div className='col-12 col-md-6 ms-auto'>
+            <Image src='/images/Group54.png' alt='phone54' width={250} height={450} layout='fixed' objectFit='cover'/>
+          </div>
           <div className='my-auto ms-0 ms-md-5 col-12 col-md-6'>
             <h1 style={{maxWidth: '300px'}}>All The Great Be Wallet Features.</h1>
             <div>
