@@ -58,6 +58,8 @@ const Profile = () => {
               <p style={{cursor: 'pointer'}}><RiPencilLine /> Edit</p>
               <input className="position-absolute top-0 start-50 translate-middle-x opacity-0" type="file" onChange={onFileChange} onError={e => e.target.value(userData.picture)} style={{width: '100px', cursor: 'pointer'}}/>
             </div>
+            {auth.message && <p className="text-success">{auth.message}</p>}
+            {auth.errMessage && <p className="text-danger">{auth.errMessage}</p>}
             {image && (image?.type !== 'image/jpeg' && image?.type !== 'image/jpg' && image?.type !== 'image/png') && <p className="text-danger">You can only upload .jpg, .jpeg or .png file</p>}
             {image?.size > 2097152 && <p className="text-danger">File too large. Max size allowed: 2MB</p>}
             <p className="m-0 p-0">{userData?.fullName}</p>
