@@ -59,19 +59,21 @@ const Dashboard = () => {
       transactions.history?.forEach(el => {
         if (new Date(el.createdAt) >= earlyWeek && new Date(el.createdAt) <= endOfWeek && new Date(el.createdAt).getDay()===i){
           if(el.userId === auth.user.id && el.typeId !== 1){
-            balance+=el.amount
-          }else if((el.userId === auth.user.id && el.typeId === 1) || el.userId !== auth.user.id){
             balance-=el.amount
+          }else if((el.userId === auth.user.id && el.typeId === 1) || el.userId !== auth.user.id){
+            balance+=el.amount
           }
         }
       })
       report.push(balance)
     }
+    console.log(report)
     // const data = 
     return {report, day: ['Mon', 'Tue', 'Wed','Thus', 'Fri', 'Sat', 'Sun']}
   }
   return(
     <div>
+      <Title title="Dashboard" />
       <SideBarLayout variant="no-padding">
         <div className="bg-color7" style={{height: '100%', height: '100%'}}>
           <div className={`${styles.roundedten} col-12 bg-color4 text-white mt-3 mt-md-0 p-3`} style={{height: '25%'}}>

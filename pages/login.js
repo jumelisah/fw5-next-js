@@ -21,6 +21,10 @@ const Login = () => {
   const [itsError, setItsError] = useState(false)
 
   useEffect ( () => {
+    if (router.query.email) {
+      setEmail(router.query.email)
+      console.log(router.query.email)
+    }
     if(!email || !password){
       setItsError(true)
     }

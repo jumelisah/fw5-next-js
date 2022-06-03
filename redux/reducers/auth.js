@@ -20,26 +20,14 @@ const auth = (state=initialState, action) => {
       return {...state}
     }
     case 'REGISTER_FORM': {
+      console.log(action.payload)
+      const data = action.payload
+      state.userForm = action.payload
+      return {...state}
+    }
+    case 'AUTH_REGISTER': {
       const { data } = action.payload
-      state.isLoading = false
-      state.isError = false
-      state.userForm = data
-      return {...state}
-    }
-    case 'AUTH_REGISTER_PENDING': {
-      state.isLoading = false
-      state.isError = false
-      return {...state}
-    }
-    case 'AUTH_REGISTER_FULFILLED': {
-      const { data } = action.payload
-      state.isLoading = false
-      state.isError = false
-      return {...state}
-    }
-    case 'AUTH_REGISTER_REJECTED': {
-      state.isLoading = false
-      state.isError = true
+      state.message = data.message
       return {...state}
     }
     case 'AUTH_GET_USER': {
