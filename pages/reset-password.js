@@ -20,7 +20,6 @@ const ResetPassword = () => {
   const route = useRouter()
   const [itsError, setItsError] = useState(false)
   const [email, setEmail] = useState()
-  // const navigate = useNavigate()
 
   useEffect ( () => {
   const token = window.localStorage.getItem('beWalletToken')
@@ -31,15 +30,6 @@ const ResetPassword = () => {
       setItsError(true)
     }
   }, [route, email])
-
-  // const onLogin = (e) => {
-  //   e.preventDefault()
-  //   const email = e.target.elements['email'].value
-  //   const password = e.target.elements['password'].value
-  //   dispatch(login(email, password))
-  //   route.push('/dashboard')
-  // }
-
   const handleForgotPassword = (e) => {
     e.preventDefault()
     dispatch(forgotPassword(email))
@@ -65,20 +55,15 @@ const ResetPassword = () => {
           <h1 className='fs-4 fw-bold'>Did You Forgot Your Password? Don’t Worry, You Can Reset Your Password In a Minutes.</h1>
           <p className='py-4 m-0'>To reset your password, you must type your e-mail and we will send a link to your email and you will be directed to the reset password screens.</p>
           <Form onSubmit={handleForgotPassword}>
-            <FormInput type='email' name='email' icon={<AiOutlineMail className={`${itsError && auth.errMessage ? 'text-danger' : email ? 'text-color4' : ''}`}/>} placeholder='Enter your e-mail' variant={`ps-4 ${itsError && auth.errMessage ? 'border-danger text-danger' : email ? 'border-color4 text-color4' : ''}`} value={email} onChange={e => setEmail(e.target.value)}/>
-            <div className='text-end'>
-              <Link href='/'>
-                <a className='text-dark' style={{textDecoration: 'none'}}>Forgot password?</a>
-              </Link>
-            </div>
+            <FormInput type='email' name='email' icon={<AiOutlineMail className={`${itsError && auth.errMessage ? 'text-danger' : email ? 'text-color4' : ''}`}/>} placeholder='Enter your e-mail' variant={`border-0 border-bottom ps-4 ${itsError && auth.errMessage ? 'border-danger text-danger' : email ? 'border-color4 text-color4' : ''}`} value={email} onChange={e => setEmail(e.target.value)}/>
             <div className={`text-danger text-center ${itsError && auth.errMessage ? 'visible' : 'invisible'}`} style={{height: '40px'}}>
               <p>{auth.errMessage}</p>
             </div>
-            <div className={`text-color4 text-center ${auth.successMsg ? 'visible' : 'invisible'}`} style={{height: '40px'}}>
-              <p>{auth.successMsg}</p>
+            <div className={`text-color4 text-center fw-bold ${auth.message ? 'visible' : 'invisible'}`} style={{height: '40px'}}>
+              <p>{auth.message}</p>
             </div>
             <div className='my-4 p-0'>
-              <Button variant='bg-secondary border-0'>Confirm</Button>
+              <Button variant={`${email ? 'bg-color5' : 'bg-secondary'}`}>Confirm</Button>
             </div>
           </Form>
             <p>Don’t have an account? Let’s 

@@ -14,35 +14,25 @@ import Title from '../components/Title';
 const CreateNewPassword = ({auth}) => {
   const dispatch = useDispatch()
   const router = useRouter()
-  const [isError, setIsError] = useState(false)
   const [newPassword, setNewPassword] = useState()
   const [confirmPassword, setConfirmPassword] = useState()
-  const [errMessage, setErrMessage] = useState()
   
   useEffect(() => {
     const token = window.sessionStorage.getItem('beWalletToken')
-    if(!newPassword || !confirmPassword){
-      setIsError(true)
-      dispatch({
-        type: 'RESET_AUTH_STATE'
-      })
-    }
-    if (auth.successMsg) {
+    dispatch({
+      type: 'RESET_AUTH_STATE'
+    })
+    if (auth.message) {
       router.push('/login')
     }
     if (token) {
       router.push('/dashboard')
     }
-  }, [router, newPassword, confirmPassword, dispatch, auth.successMsg])
+  }, [router, dispatch, auth.message])
 
   const onNewPassword = (e) => {
     e.preventDefault()
-    setErrMessage()
-    if(!newPassword || !confirmPassword) {
-      setErrMessage('Input new password!')
-    }else if(newPassword!==confirmPassword){
-      setErrMessage('Password not match')
-    }else{
+    if(newPassword && confirmPassword && newPassword===confirmPassword && newPassword.length >= 6){
       const data = {
         otp: router.query.otp,
         newPassword, confirmPassword
@@ -75,21 +65,21 @@ const CreateNewPassword = ({auth}) => {
           <h1 className='fs-4 fw-bold'>Did You Forgot Your Password? Don’t Worry, You Can Reset Your Password In a Minutes.</h1>
           <p className='py-4 m-0'>Now you can create a new password for your Be Wallet account. Type your password twice so we can confirm your new passsword.</p>
           <Form onSubmit={onNewPassword}>
-            <FormInput type='password' name='newPassword'  icon={<FiLock className={`${(isError && auth.errMessage) || errMessage ? 'text-danger' : newPassword ? 'border-color4 text-color4' : ''}`}/>} placeholder='Create New Password' required variant={`ps-4 ${(isError && auth.errMessage) || errMessage ? 'border-danger text-danger' : newPassword ? 'border-color4 text-color4' : ''}`} value={newPassword} onChange={e => setNewPassword(e.target.value)}/>
-            <FormInput type='password' name='confirmPassword'  icon={<FiLock className={`${(isError && auth.errMessage) || errMessage ? 'text-danger' : confirmPassword ? 'border-color4 text-color4' : ''}`}/>} placeholder='Confirm New Password' required variant={`ps-4 ${(isError && auth.errMessage) || errMessage ? 'border-danger text-danger' : confirmPassword ? 'border-color4 text-color4' : ''}`} value={confirmPassword} onChange={e => setConfirmPassword(e.target.value)} />
+            <FormInput type='password' name='newPassword'  icon={<FiLock className={`${auth.errMessage || (newPassword && confirmPassword && newPassword !== confirmPassword) ? 'text-danger' : newPassword ? 'border-color4 text-color4' : ''}`}/>} placeholder='Create New Password' required variant={`ps-4 border-0 border-bottom ${auth.errMessage || (newPassword && confirmPassword && newPassword !== confirmPassword) ? 'border-danger text-danger' : newPassword ? 'border-color4 text-color4' : ''}`} value={newPassword} onChange={e => setNewPassword(e.target.value)}/>
+            <FormInput type='password' name='confirmPassword'  icon={<FiLock className={`${auth.errMessage || (newPassword && confirmPassword && newPassword !== confirmPassword) ? 'text-danger' : confirmPassword ? 'border-color4 text-color4' : ''}`}/>} placeholder='Confirm New Password' required variant={`ps-4 border-0 border-bottom ${auth.errMessage || (newPassword && confirmPassword && newPassword !== confirmPassword) ? 'border-danger text-danger' : confirmPassword ? 'border-color4 text-color4' : ''}`} value={confirmPassword} onChange={e => setConfirmPassword(e.target.value)} />
             <div className='text-end'>
               <Link href='/'>
                 <a className='text-dark' style={{textDecoration: 'none'}}>Back to home</a>
               </Link>
             </div>
-            <div className={`text-danger text-center ${errMessage ? 'visible' : 'invisible'}`} style={{height: '40px'}}>
-              <p>{errMessage}</p>
+            <div className={`text-danger text-center ${newPassword && confirmPassword && newPassword !== confirmPassword ? 'visible' : 'invisible'}`} style={{height: '40px'}}>
+              <p>Password not match</p>
             </div>
-            <div className={`text-danger text-center ${isError && auth.errMessage ? 'visible' : 'invisible'}`} style={{height: '40px'}}>
+            <div className={`text-danger text-center ${auth.errMessage ? 'visible' : 'invisible'}`} style={{height: '40px'}}>
               <p>{auth.errMessage}</p>
             </div>
             <div className='my-4 p-0'>
-              <Button variant='bg-secondary border-0'>Confirm</Button>
+              <Button variant={`${newPassword && confirmPassword && newPassword===confirmPassword && newPassword.length >= 6 ? 'bg-color5 text-white' : 'bg-secondary'}`}>Confirm</Button>
             </div>
           </Form>
             <p>Don’t have an account? Let’s 
