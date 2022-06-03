@@ -31,12 +31,12 @@ const Login = () => {
     if (auth.token) {
       router.push('/dashboard')
     }
-    if(!auth.successMsg) {
+    if(!auth.message) {
       dispatch({
         type: 'RESET_AUTH_STATE'
       })
     }
-  }, [router, email, password, dispatch, auth.successMsg, auth.token])
+  }, [router, email, password, dispatch, auth.message, auth.token])
 
   const onLogin = async(e) => {
     e.preventDefault()
@@ -62,6 +62,7 @@ const Login = () => {
         <div className='container'>
           <h1 className='fs-4 fw-bold'>Start Accessing Banking Needs With All Devices and All Platforms With 30.000+ Users</h1>
           <p className='py-4 m-0'>Transfering money is eassier than ever, you can access BeWallet wherever you are. Desktop, laptop, mobile phone? we cover all of that for you!</p>
+          {auth.message && <p className='text-success'>{auth.message}</p>}
           <Form onSubmit={onLogin}>
             <FormInput type='email'
             name='email'
