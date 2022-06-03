@@ -123,12 +123,17 @@ export const getBalance = (token) => {
 }
 
 export const registerForm = (data) => {
-  return({
-    type: 'REGISTER_FORM',
-    payload: {
-      data: data
+  return async dispatch => {
+    try{
+      dispatch({
+        type: 'REGISTER_FORM',
+        payload: data
+      })
+
+    } catch (e) {
+      console.log(e)
     }
-  })
+  }
 }
 
 export const forgotPassword = (email) => {
@@ -262,25 +267,46 @@ export const changePinNumber = (dataPin, token) => {
   }
 }
 
-export const register = (data) => {
+export const register = (newData) => {
   const params = new URLSearchParams()
-  params.append('fullName', data.fullName)
-  params.append('email', data.email)
-  params.append('password', data.password)
-  params.append('pin', data.pin)
-  return({
-    type: 'AUTH_REGISTER',
-    payload: http().post('/auth/register', params)
-  })
+  for (let x in newData){
+    params.append(x, newData[x])
+  }
+  return async (dispatch) => {
+    try{
+      dispatch({
+        type: 'RESET_AUTH_STATE'
+      })
+      dispatch({
+        type: 'AUTH_LOADING'
+      })
+      const data = await http().post('/auth/register', params)
+      dispatch({
+        type: 'AUTH_REGISTER',
+        payload: data
+      })
+      dispatch({
+        type: 'AUTH_LOADING'
+      })
+    } catch (e) {
+      dispatch({
+        type: 'AUTH_ERROR',
+        payload: e.response?.data.message || String(e)
+      })
+      dispatch({
+        type: 'AUTH_LOADING'
+      })
+    }
+  }
 }
 
 export const updateProfile = (userData, token) => {
+  const params = new FormData()
+  for (const x in userData) {
+    params.append(x, userData[x])
+  }
   return async (dispatch) => {
     try{
-      const params = new FormData()
-      for (const x in userData) {
-        params.append(x, userData[x])
-      }
       dispatch({
         type: 'AUTH_LOADING'
       })

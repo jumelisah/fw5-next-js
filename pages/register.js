@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { Form } from 'react-bootstrap'
 import { AiOutlineMail } from 'react-icons/ai'
 import FormInput from '../components/FormInput'
@@ -7,26 +8,27 @@ import Link from 'next/link';
 import Button from '../components/Button';
 import Image from 'next/image';
 import styles from '../styles/Login.module.css'
-import { connect } from 'react-redux';
 import { registerForm } from '../redux/actions/auth';
 import { useRouter } from 'next/router';
 import Title from '../components/Title';
+import { useDispatch, useSelector } from 'react-redux';
 
-const Register = ({registerForm, auth}) => {
+const Register = () => {
+  const {auth} = useSelector(state => state)
+  const [itsError, setItsError] = useState(false)
+  const [firstName, setFirstName] = useState()
+  const [lastName, setLastName] = useState()
+  const [email, setEmail] = useState()
+  const [password, setPassword] = useState()
+  const [confirmPassword, setConfirmPassword] = useState()
   const navigate = useRouter()
+  const dispatch = useDispatch()
   const onRegister = (e) => {
     e.preventDefault()
-    const firstName = e.target.elements['firstName'].value
-    const lastName = e.target.elements['lastName'].value
-    const email = e.target.elements['email'].value
-    const password = e.target.elements['password'].value
-    const fullName = firstName+' '+lastName
-    const data = {fullName, email, password}
-    if(password.length < 6){
-      alert('Password should contain at least 6 characters')
-    }else{
-      registerForm(data)
-      console.log(auth)
+    if(firstName && email && password && confirmPassword && confirmPassword===password && password?.length >=6){
+      const fullName = `${firstName}${lastName ? ` ${lastName}` : ''}`
+      const data = {fullName, email, password}
+      dispatch(registerForm(data))
       navigate.push('/create-pin')
     }
   }
@@ -50,14 +52,17 @@ const Register = ({registerForm, auth}) => {
           <h1 className='fs-4 fw-bold'>Start Accessing Banking Needs With All Devices and All Platforms With 30.000+ Users</h1>
           <p className='py-4 m-0'>Transfering money is eassier than ever, you can access BeWallet wherever you are. Desktop, laptop, mobile phone? we cover all of that for you!</p>
           <Form onSubmit={onRegister}>
-            <FormInput type='text' name='firstName' icon={<BiUser />} placeholder='Enter your first name' variant='border-0 border-bottom' required />
-            <FormInput type='text' name='lastName' icon={<BiUser />} placeholder='Enter your last name' variant='border-0 border-bottom' />
-            <FormInput type='email' name='email' icon={<AiOutlineMail />} placeholder='Enter your e-mail' variant='border-0 border-bottom' required/>
-            <FormInput type='password' name='password' icon={<FiLock />} placeholder='Create your password' variant='border-0 border-bottom' required />
+            <FormInput type='text' name='firstName' icon={<BiUser className={`${itsError && auth.errMessage ? 'text-danger' : firstName ? 'text-color4' : ''}`}/>} placeholder='Enter your first name' variant={`border-0 border-bottom ps-4 ${itsError && auth.errMessage ? 'border-danger text-danger' : firstName ? 'border-color4 text-color4' : ''}`} value={firstName} onChange={e => setFirstName(e.target.value)} required />
+            <FormInput type='text' name='lastName' icon={<BiUser className={`${itsError && auth.errMessage ? 'text-danger' : lastName ? 'text-color4' : ''}`}/>} placeholder='Enter your last name' variant={`border-0 border-bottom ps-4 ${itsError && auth.errMessage ? 'border-danger text-danger' : lastName ? 'border-color4 text-color4' : ''}`} value={lastName} onChange={e => setLastName(e.target.value)} />
+            <FormInput type='email' name='email' icon={<AiOutlineMail className={`${itsError && auth.errMessage ? 'text-danger' : email ? 'text-color4' : ''}`}/>} placeholder='Enter your email' variant={`border-0 border-bottom ps-4 ${itsError && auth.errMessage ? 'border-danger text-danger' : email ? 'border-color4 text-color4' : ''}`} value={email} onChange={e => setEmail(e.target.value)} required/>
+            <FormInput type='password' name='password' icon={<FiLock className={`${(itsError && auth.errMessage) || (password && confirmPassword && password!==confirmPassword) ? 'text-danger' : password ? 'text-color4' : ''}`}/>} placeholder='Password' variant={`border-0 border-bottom ps-4 ${(itsError && auth.errMessage) || (password && confirmPassword && password!==confirmPassword) ? 'border-danger text-danger' : password ? 'border-color4 text-color4' : ''}`} value={password} onChange={e => setPassword(e.target.value)} required />
+            <FormInput type='password' icon={<FiLock className={`${(itsError && auth.errMessage) || (password && confirmPassword && password!==confirmPassword) ? 'text-danger' : confirmPassword ? 'text-color4' : ''}`}/>} placeholder='Confirm password' variant={`border-0 border-bottom ps-4 ${(itsError && auth.errMessage) || (password && confirmPassword && password!==confirmPassword) ? 'border-danger text-danger' : confirmPassword ? 'border-color4 text-color4' : ''}`} value={confirmPassword} onChange={e => setConfirmPassword(e.target.value)} required />
+            {password && password.length < 6 && <p className='text-danger'>Password should contain 6 characters or more</p>}
+            {password && confirmPassword && password!==confirmPassword && <p className='text-danger'>Password not match</p>}
             <div className='text-end'>
             </div>
             <div className='my-4 p-0'>
-              <Button variant='bg-secondary border-0'>Sign Up</Button>
+              <Button variant={`${firstName && email && password && confirmPassword && confirmPassword===password &&password?.length >=6 ? 'bg-color5 text-white' : 'bg-secondary border-0'}`}>Sign Up</Button>
             </div>
           </Form>
             <p>Have an account? Let’s 
@@ -70,6 +75,4 @@ const Register = ({registerForm, auth}) => {
   )
 }
 
-const mapStateToProps = (state) => ({auth: state.auth})
-const mapDispatchToProps = {registerForm}
-export default connect(mapStateToProps, mapDispatchToProps)(Register)
+export default Register

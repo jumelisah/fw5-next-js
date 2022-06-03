@@ -26,23 +26,20 @@ const Profile = () => {
     {title: 'Logout', url: '/logout'},
   ]
   useEffect(() => {
-    if (!image) {
-      dispatch({
-        type: 'RESET_AUTH_STATE'
-      })
-    }
     const token = window.sessionStorage.getItem('beWalletToken')
     setUserData(JSON.parse(window.sessionStorage.getItem('beWalletUser')))
     if(!token){
       router.push('/login')
     }else{
       if (image && image.size <= 2097152 && (image.type === 'image/jpeg' || image.type === 'image/jpg' || image.type === 'image/png')){
-        console.log(image)
+        dispatch({
+          type: 'RESET_AUTH_STATE'
+        })
         dispatch(updateProfile({picture: image}, token))
         setImage()
       }
     }
-  }, [dispatch, router, auth.isLoading, picture, image])
+  }, [dispatch, router, auth.isLoading, picture, image, auth.message])
 	const onFileChange = e => {
 		setImage(e.target.files[0])
 		setPicture(URL.createObjectURL(e.target.files[0]))
@@ -53,7 +50,7 @@ const Profile = () => {
       <div>
         <div className='pt-5'>
           <div className='text-center'>
-            <Image className='rounded ' src={auth.isLoading? '/images/loading-buffering.gif' : picture ? picture : userData?.picture ? userData.picture : '/images/default-user.png'} alt='user' width={60} height={60} layout='fixed' objectFit='cover' />
+            <Image className='rounded ' src={auth.isLoading && !auth.message? '/images/loading-buffering.gif' : picture ? picture : userData?.picture ? userData.picture : '/images/default-user.png'} alt='user' width={60} height={60} layout='fixed' objectFit='cover' onError={() => setPicture(userData.picture || '/images/default-user.png')}/>
             <div className="position-relative">
               <p style={{cursor: 'pointer'}}><RiPencilLine /> Edit</p>
               <input className="position-absolute top-0 start-50 translate-middle-x opacity-0" type="file" onChange={onFileChange} onError={e => e.target.value(userData.picture)} style={{width: '100px', cursor: 'pointer'}}/>
