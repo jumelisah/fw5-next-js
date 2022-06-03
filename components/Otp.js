@@ -8,6 +8,7 @@ const Otp = ({value, onChange}) =>{
       onChange={onChange}
       numInputs={6}
       separator={<span>-</span>}
+      isInputNum={true}
       inputStyle={{width: 40, height: 40, border: '1px solid green'}}
     />
   )
