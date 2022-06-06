@@ -27,7 +27,7 @@ export const DataHistory = ({dataHistory, dataUser, limit=dataHistory?.length}) 
               }else if(users.id!==userData?.id && users.id===history.userId && history.anotherUserId){
                 return(
                   <div key={history.id} className='d-flex mb-2 align-items-center'>
-                    <Image className="rounded-3" src={users?.picture || defaultUser} alt={users.fullName} width={40} height={40} layout='fixed'/>
+                    <Image className="rounded-3" src={users?.picture || defaultUser} alt={users.fullName} width={40} height={40} layout='fixed' objectFit="cover"/>
                     <div className='ms-2'>
                       <p className='m-0 p-0 fw-bold' style={{fontSize: 14}}>{users.fullName}</p>
                       <p className='m-0 p-0' style={{fontSize: 12}}>Accept</p>
@@ -38,7 +38,7 @@ export const DataHistory = ({dataHistory, dataUser, limit=dataHistory?.length}) 
               } else if(users.id!==userData?.id && users.id===history.anotherUserId) {
                 return(
                   <div key={history.id} className='d-flex mb-2 align-items-center'>
-                    <Image className="rounded-3" src={users?.picture || defaultUser} alt={users.fullName} width={40} height={40} layout='fixed'/>
+                    <Image className="rounded-3" src={users?.picture || defaultUser} alt={users.fullName} width={40} height={40} layout='fixed' objectFit="cover"/>
                     <div className='ms-2'>
                       <p className='m-0 p-0 fw-bold' style={{fontSize: 14}}>{users.fullName}</p>
                       <p className='m-0 p-0' style={{fontSize: 12}}>{history.mutation_type.name}</p>
