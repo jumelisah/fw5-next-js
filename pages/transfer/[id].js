@@ -81,7 +81,7 @@ const TransferTo = () => {
           </div>
           {amount < 10000 && <p className="text-danger position-absolute start-0 top-50 bg-color6 shadow p-3 m-3 rounded">Minimum balance to transfer is Rp 10.000</p>}
           <div className="col-md-6 col-lg-3 ms-auto mt-3">
-            <Button variant={amount >= 10000 ? 'bg-color5 text-white' : 'border-0'} onClick={()=> setStepTwo(true)}>Continue</Button>
+            <Button variant={amount >= 10000 ? 'bg-color5 text-white' : 'border-0'} onClick={()=> {if(amount && amount>=10000) setStepTwo(true)}}>Continue</Button>
           </div>
         </div>}
         {(stepTwo || stepThree) && <div>
