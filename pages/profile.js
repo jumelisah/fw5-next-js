@@ -26,6 +26,11 @@ const Profile = () => {
     {title: 'Logout', url: '/logout'},
   ]
   useEffect(() => {
+    if(!auth.message){
+      dispatch({
+        type: 'RESET_AUTH_STATE'
+      })
+    }
     const token = window.sessionStorage.getItem('beWalletToken')
     setUserData(JSON.parse(window.sessionStorage.getItem('beWalletUser')))
     if(!token){
